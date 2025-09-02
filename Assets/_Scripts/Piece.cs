@@ -10,12 +10,13 @@ public class Piece : ScriptableObject
     [SerializeField] Vector3Int[] _attackAreas;
     public string _PieceName => _pieceName;
     public Func<int> _MoveCount;
-    public Vector3Int[] _MoveAreas => _moveAreas;
-    public Vector3Int[] _AttackAreas => _attackAreas;
-
+    public Func<Vector3Int[]> _MoveAreas;
+    public Func<Vector3Int[]> _AttackAreas;
     void OnEnable()
     {
         _pieceName = name;
         _MoveCount = () => _moveCount;
+        _MoveAreas = () => _moveAreas;
+        _AttackAreas = () => _attackAreas;
     }
 }

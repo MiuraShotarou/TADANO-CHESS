@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionEvent : MonoBehaviour
+public class CollisionEvent : OpenSelectableArea
 {
-    [SerializeField] OpenSelectableArea _openSelectableArea;
     void OnCollisionEnter(Collision collision)
     {
-        _openSelectableArea.JudgmentGroup(collision.gameObject);
+        JudgmentGroup(collision.gameObject);
     }
 }
