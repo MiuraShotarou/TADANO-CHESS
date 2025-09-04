@@ -8,27 +8,33 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// _canSelectedTileBaseを描画するためのクラス
 /// </summary>
-public class OpenSelectableArea : MonoBehaviour
+public class OpenSelectableArea : ColorPallet
 {
     [SerializeField] Tilemap _tilemap;
-    [SerializeField] TileBase  _canSelectedTileBase;
+    [SerializeField] TileBase _canSelectedTileBase;
+    [SerializeField] Sprite _canSelectedSprite;//これはあって良い
     [SerializeField] TileBase  _selectedTileBase;
     [SerializeField] GameObject _collider2DPrefab;
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
     GameObject _selectedPieceObj;
+    SpriteRenderer[][] _deceptionTileFieldArrays;
     Piece _selectedPiece;
     Squere _selectedSquere;
     Vector3Int[] _attackAreas;
     Vector3Int[] _moveAreas;
-    List<Vector3Int> _renderingAreas = new List<Vector3Int>();
+    List<Vector3Int> _renderingAreas = new List<Vector3Int>(); //Propatiesにしておけ
     int _pieceMoveCount = 0;
     int _prefabCount = 0;
     int _PrefabCount {get {return _prefabCount;} set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();};}}
+    public Tilemap _Tilemap => _tilemap;
+    public TileBase _CanSelectedTileBase => _canSelectedTileBase;
+    public TileBase _SelectedTileBase => _selectedTileBase;
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
+        _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
     }
     /// <summary>
     /// 駒を選択してから一回だけ呼ばれる
@@ -129,7 +135,7 @@ public class OpenSelectableArea : MonoBehaviour
             }
             if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
             {
-                Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePosition;
+                Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
                 GameObject collider2DObj = Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
                 Destroy(collider2DObj, i);
                 _attackAreas[i] =  new Vector3Int(0, 0, -1);
@@ -138,7 +144,6 @@ public class OpenSelectableArea : MonoBehaviour
             {
                 _PrefabCount--;
             }
-            Debug.Log(_prefabCount);
         }
     }
     /// <summary>
@@ -168,19 +173,27 @@ public class OpenSelectableArea : MonoBehaviour
     /// </summary>
     void RenderingOneLine()
     {
-        _pieceMoveCount--;
-        if (_renderingAreas.Count <= 0
-            ||
-            _pieceMoveCount == 0)
+        Debug.Log("");
+        if (_renderingAreas.Count == 0)
         {
             _inGameManager.StartSelectTileRelay();
             return;
         }
         for (int i = 0; i < _renderingAreas.Count; i++)
         {
-            _tilemap.SetTile(_renderingAreas[i], _canSelectedTileBase);
+            _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].color = _CanSelectedTileColor;
+            _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = true;
+        }
+        _pieceMoveCount--;
+        if (_pieceMoveCount == 0)
+        {
+            return;
         }
         _renderingAreas.Clear();
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
+    }
+    public void TurnDesideRelay()
+    {
+        
     }
 }
