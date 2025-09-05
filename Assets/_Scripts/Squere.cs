@@ -18,6 +18,13 @@ public class Squere : ScriptableObject
     void OnEnable()
     {
         _squereID = name;
-        _isOnPiece = false;
+        if ("a,b,g,h".Contains(_SquereID))
+        {
+            _isOnPiece = true;
+        }
+        else
+        {
+            _isOnPiece = false;
+        }
     }
 }

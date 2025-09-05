@@ -42,7 +42,6 @@ public class SelectTileController : ColorPallet
             mousePosZ = 6;
         }
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, mousePosZ));//7 ~ 9
-        Debug.Log(mousePos.y);
         RaycastHit2D hit2D = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 15, _maskID);
         if (!hit2D)
         {

@@ -7,7 +7,6 @@ public class InGameManager : MonoBehaviour
 {
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
-    [SerializeField] Sprite _canSelectedTileSprite;
     [SerializeField] SpriteRenderer[] _setDeceptionTileFields; //プロパティにしておけ
     Dictionary<string, Piece> _pieceDict = new Dictionary<string, Piece>();
     Squere[][] _squereArrays;
@@ -52,12 +51,11 @@ public class InGameManager : MonoBehaviour
     }
     public void StartSelectTileRelay()
     {
-        // Debug.Log("Start Select Tile Relay");
         _selectTileController.enabled = true;
     }
-
     public void TestDebug()
     {
         // Debug.Log("TestDebug");
     }
 }
+// 初期化処理はデリゲート登録をして個個別別に作っていくべきなのか？

@@ -11,9 +11,7 @@ using UnityEngine.Tilemaps;
 public class OpenSelectableArea : ColorPallet
 {
     [SerializeField] Tilemap _tilemap;
-    [SerializeField] TileBase _canSelectedTileBase;
     [SerializeField] Sprite _canSelectedSprite;//これはあって良い
-    [SerializeField] TileBase  _selectedTileBase;
     [SerializeField] GameObject _collider2DPrefab;
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
@@ -28,8 +26,6 @@ public class OpenSelectableArea : ColorPallet
     int _prefabCount = 0;
     int _PrefabCount {get {return _prefabCount;} set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();};}}
     public Tilemap _Tilemap => _tilemap;
-    public TileBase _CanSelectedTileBase => _canSelectedTileBase;
-    public TileBase _SelectedTileBase => _selectedTileBase;
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
@@ -43,9 +39,13 @@ public class OpenSelectableArea : ColorPallet
     public void StartOpenArea(GameObject pieceObj)
     {
         if (pieceObj == _selectedPieceObj){ return; }
+        if (_selectedPieceObj)
+        {
+            BeforeRendereringClear();
+        }
         _selectedPieceObj = pieceObj;
         string[] search = _selectedPieceObj.name.Split("_");
-        if (!_selectedPiece 
+        if (!_selectedPiece
             ||
             search[0] != _selectedPiece.name)
         {
@@ -65,11 +65,23 @@ public class OpenSelectableArea : ColorPallet
         _selectedSquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
         _pieceMoveCount = _selectedPiece._MoveCount();
         Initialize();
+        DrawOutline(_selectedPieceObj);
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
         //pieceObjの移動可能領域を検索 → 移動可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
         //pieceObjの攻撃可能領域を検索 → 攻撃可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
         //移動可能領域に_selectedTileを描画する
         //Animatoinの再生（描画が出来れば良い）
+    }
+    void BeforeRendereringClear()
+    {
+        SpriteRenderer spriteRenderer = _selectedPieceObj.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = _UnSelectedPieceColor;
+        // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
+        for (int i = 0; i < _renderingAreas.Count; i++)
+        {
+            _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].color = Color.clear;
+            _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = false;
+        }
     }
     /// <summary>
     /// fieldにあるコレクションをすべて初期化する
@@ -122,6 +134,7 @@ public class OpenSelectableArea : ColorPallet
         {
             if (_attackAreas[i].z == -1)
             {
+                _prefabCount--;
                 continue;
             }
             _attackAreas[i] += _selectedPiece._AttackAreas()[i];
@@ -130,11 +143,12 @@ public class OpenSelectableArea : ColorPallet
             if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number))//盤外のマスであるならば
             {
                 _PrefabCount--;
-                _attackAreas[i] =  new Vector3Int(0, 0, -1);
+                _attackAreas[i] = new Vector3Int(0, 0, -1);
                 continue;
             }
             if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
             {
+                Debug.Log("kore");
                 Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
                 GameObject collider2DObj = Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
                 Destroy(collider2DObj, i);
@@ -173,7 +187,6 @@ public class OpenSelectableArea : ColorPallet
     /// </summary>
     void RenderingOneLine()
     {
-        Debug.Log("");
         if (_renderingAreas.Count == 0)
         {
             _inGameManager.StartSelectTileRelay();
@@ -189,8 +202,11 @@ public class OpenSelectableArea : ColorPallet
         {
             return;
         }
-        _renderingAreas.Clear();
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
+    }
+    private void Update()
+    {
+        // Debug.Log(_prefabCount);
     }
     public void TurnDesideRelay()
     {
