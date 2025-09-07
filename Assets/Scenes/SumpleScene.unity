@@ -946,7 +946,8 @@ GameObject:
   - component: {fileID: 47018813}
   - component: {fileID: 47018810}
   - component: {fileID: 47018808}
-  m_Layer: 0
+  - component: {fileID: 47018814}
+  m_Layer: 6
   m_Name: P_5_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -970,9 +971,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 47018807}
@@ -995,7 +996,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1115,6 +1116,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &47018814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47018807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &61264315
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,7 +1217,7 @@ GameObject:
   - component: {fileID: 76338906}
   - component: {fileID: 76338905}
   - component: {fileID: 76338904}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_0_0 (1)
   m_TagString: R
   m_Icon: {fileID: 0}
@@ -1242,9 +1256,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 76338902}
@@ -1267,7 +1281,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2681,7 +2695,8 @@ GameObject:
   - component: {fileID: 133879117}
   - component: {fileID: 133879114}
   - component: {fileID: 133879112}
-  m_Layer: 0
+  - component: {fileID: 133879118}
+  m_Layer: 6
   m_Name: P_2_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -2705,9 +2720,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 133879111}
@@ -2730,7 +2745,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2850,6 +2865,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &133879118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133879111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &138621962
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,7 +3096,7 @@ GameObject:
   - component: {fileID: 159223849}
   - component: {fileID: 159223848}
   - component: {fileID: 159223847}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_6_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -3107,9 +3135,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 159223845}
@@ -3132,7 +3160,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3419,7 +3447,8 @@ GameObject:
   - component: {fileID: 172668783}
   - component: {fileID: 172668782}
   - component: {fileID: 172668781}
-  m_Layer: 0
+  - component: {fileID: 172668786}
+  m_Layer: 6
   m_Name: K_3_0
   m_TagString: K
   m_Icon: {fileID: 0}
@@ -3443,9 +3472,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 172668780}
@@ -3513,7 +3542,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 40e529eb67402834aa84e754d0911de5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3588,6 +3617,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &172668786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172668780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &173954678
 GameObject:
   m_ObjectHideFlags: 0
@@ -6879,7 +6921,8 @@ GameObject:
   - component: {fileID: 412427736}
   - component: {fileID: 412427733}
   - component: {fileID: 412427731}
-  m_Layer: 0
+  - component: {fileID: 412427737}
+  m_Layer: 6
   m_Name: R_7_0
   m_TagString: R
   m_Icon: {fileID: 0}
@@ -6903,9 +6946,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 412427730}
@@ -6928,7 +6971,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -7110,6 +7153,19 @@ PolygonCollider2D:
       - {x: -0.23846154, y: 0.16707693}
       - {x: -0.24153847, y: 0.16707693}
   m_UseDelaunayMesh: 0
+--- !u!114 &412427737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412427730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &412661967
 GameObject:
   m_ObjectHideFlags: 0
@@ -7670,7 +7726,8 @@ GameObject:
   - component: {fileID: 449951569}
   - component: {fileID: 449951568}
   - component: {fileID: 449951567}
-  m_Layer: 0
+  - component: {fileID: 449951572}
+  m_Layer: 6
   m_Name: B_5_0
   m_TagString: B
   m_Icon: {fileID: 0}
@@ -7694,9 +7751,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 449951566}
@@ -7764,7 +7821,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -7839,6 +7896,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &449951572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449951566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &461777719
 GameObject:
   m_ObjectHideFlags: 0
@@ -7932,106 +8002,6 @@ Transform:
   - {fileID: 1018026009}
   - {fileID: 1749145613}
   - {fileID: 33424434}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
---- !u!1 &477432992
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 477432996}
-  - component: {fileID: 477432995}
-  - component: {fileID: 477432994}
-  m_Layer: 0
-  m_Name: RayCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &477432994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477432992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EventMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_MaxRayIntersections: 0
---- !u!20 &477432995
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477432992}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &477432996
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477432992}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: 0, y: 6.54, z: -8.77}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
 --- !u!1 &490817059
@@ -8799,7 +8769,8 @@ GameObject:
   - component: {fileID: 529438579}
   - component: {fileID: 529438576}
   - component: {fileID: 529438574}
-  m_Layer: 0
+  - component: {fileID: 529438580}
+  m_Layer: 6
   m_Name: N_6_0
   m_TagString: N
   m_Icon: {fileID: 0}
@@ -8823,9 +8794,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 529438573}
@@ -8984,6 +8955,19 @@ PolygonCollider2D:
       - {x: 0.14666668, y: -0.017333323}
       - {x: 0.20666668, y: -0.017333323}
   m_UseDelaunayMesh: 0
+--- !u!114 &529438580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529438573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &553371363
 GameObject:
   m_ObjectHideFlags: 0
@@ -10379,7 +10363,7 @@ GameObject:
   - component: {fileID: 614912956}
   - component: {fileID: 614912955}
   - component: {fileID: 614912954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_5_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -10418,9 +10402,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 614912952}
@@ -10443,7 +10427,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -11413,7 +11397,8 @@ GameObject:
   - component: {fileID: 669127267}
   - component: {fileID: 669127264}
   - component: {fileID: 669127262}
-  m_Layer: 0
+  - component: {fileID: 669127268}
+  m_Layer: 6
   m_Name: P_0_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -11437,9 +11422,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 669127261}
@@ -11462,7 +11447,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -11582,6 +11567,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &669127268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669127261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &671965040
 GameObject:
   m_ObjectHideFlags: 0
@@ -11595,7 +11593,7 @@ GameObject:
   - component: {fileID: 671965044}
   - component: {fileID: 671965043}
   - component: {fileID: 671965042}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_3_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -11634,9 +11632,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 671965040}
@@ -11659,7 +11657,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -12041,7 +12039,7 @@ GameObject:
   - component: {fileID: 733407937}
   - component: {fileID: 733407936}
   - component: {fileID: 733407935}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_0_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -12080,9 +12078,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 733407933}
@@ -12105,7 +12103,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -12637,7 +12635,8 @@ GameObject:
   - component: {fileID: 780438270}
   - component: {fileID: 780438269}
   - component: {fileID: 780438268}
-  m_Layer: 0
+  - component: {fileID: 780438273}
+  m_Layer: 6
   m_Name: B_2_0
   m_TagString: B
   m_Icon: {fileID: 0}
@@ -12661,9 +12660,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 780438267}
@@ -12731,7 +12730,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -12806,6 +12805,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &780438273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780438267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &780661973
 GameObject:
   m_ObjectHideFlags: 0
@@ -12819,7 +12831,7 @@ GameObject:
   - component: {fileID: 780661977}
   - component: {fileID: 780661976}
   - component: {fileID: 780661975}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: N_1_0 (1)
   m_TagString: N
   m_Icon: {fileID: 0}
@@ -12858,9 +12870,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 780661973}
@@ -13638,7 +13650,7 @@ GameObject:
   - component: {fileID: 846725929}
   - component: {fileID: 846725928}
   - component: {fileID: 846725927}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: N_6_0 (1)
   m_TagString: N
   m_Icon: {fileID: 0}
@@ -13677,9 +13689,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 846725925}
@@ -14050,7 +14062,7 @@ GameObject:
   - component: {fileID: 865202210}
   - component: {fileID: 865202209}
   - component: {fileID: 865202208}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: B_2_0 (1)
   m_TagString: B
   m_Icon: {fileID: 0}
@@ -14089,9 +14101,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 865202206}
@@ -14159,7 +14171,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -14307,7 +14319,8 @@ GameObject:
   - component: {fileID: 889909047}
   - component: {fileID: 889909044}
   - component: {fileID: 889909042}
-  m_Layer: 0
+  - component: {fileID: 889909048}
+  m_Layer: 6
   m_Name: P_4_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -14331,9 +14344,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 889909041}
@@ -14356,7 +14369,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -14476,6 +14489,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &889909048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889909041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &900961609
 GameObject:
   m_ObjectHideFlags: 0
@@ -17135,7 +17161,7 @@ GameObject:
   - component: {fileID: 1099086950}
   - component: {fileID: 1099086949}
   - component: {fileID: 1099086948}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Q_4_0 (1)
   m_TagString: Q
   m_Icon: {fileID: 0}
@@ -17174,9 +17200,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1099086946}
@@ -17234,7 +17260,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: df2e56dbc633e524396a4c0e59ece0a6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -17951,7 +17977,8 @@ GameObject:
   - component: {fileID: 1143464745}
   - component: {fileID: 1143464742}
   - component: {fileID: 1143464740}
-  m_Layer: 0
+  - component: {fileID: 1143464746}
+  m_Layer: 6
   m_Name: N_1_0
   m_TagString: N
   m_Icon: {fileID: 0}
@@ -17975,9 +18002,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1143464739}
@@ -18136,6 +18163,19 @@ PolygonCollider2D:
       - {x: 0.14666668, y: -0.017333323}
       - {x: 0.20666668, y: -0.017333323}
   m_UseDelaunayMesh: 0
+--- !u!114 &1143464746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143464739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1191561083
 GameObject:
   m_ObjectHideFlags: 0
@@ -18326,6 +18366,7 @@ GameObject:
   - component: {fileID: 1218987141}
   - component: {fileID: 1218987142}
   - component: {fileID: 1218987143}
+  - component: {fileID: 1218987144}
   - component: {fileID: 1218987135}
   m_Layer: 0
   m_Name: InGameManager
@@ -18531,9 +18572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbf7aef752e7464093c8f4ecea93571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tilemap: {fileID: 2121305340}
   _canSelectedSprite: {fileID: 0}
-  _collider2DPrefab: {fileID: 4683045687927758297, guid: 120f97c7a4903544991abd5056b44280, type: 3}
 --- !u!114 &1218987142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18553,12 +18592,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218987132}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a6c4687d22662c4f8c3dd6547f13778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rayCamera: {fileID: 477432995}
+--- !u!114 &1218987144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218987132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03624b9f7c122ec4db564c406b2b5fba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1224334115
 GameObject:
   m_ObjectHideFlags: 0
@@ -19599,7 +19649,7 @@ GameObject:
   - component: {fileID: 1301552880}
   - component: {fileID: 1301552879}
   - component: {fileID: 1301552878}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_2_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -19638,9 +19688,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1301552876}
@@ -19663,7 +19713,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -24140,7 +24190,7 @@ GameObject:
   - component: {fileID: 1345505759}
   - component: {fileID: 1345505758}
   - component: {fileID: 1345505757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: K_3_0 (1)
   m_TagString: K
   m_Icon: {fileID: 0}
@@ -24179,9 +24229,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1345505755}
@@ -24249,7 +24299,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 40e529eb67402834aa84e754d0911de5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -24536,7 +24586,7 @@ GameObject:
   - component: {fileID: 1372169883}
   - component: {fileID: 1372169882}
   - component: {fileID: 1372169881}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: B_5_0 (1)
   m_TagString: B
   m_Icon: {fileID: 0}
@@ -24575,9 +24625,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1372169879}
@@ -24645,7 +24695,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -25153,7 +25203,8 @@ GameObject:
   - component: {fileID: 1405931210}
   - component: {fileID: 1405931207}
   - component: {fileID: 1405931205}
-  m_Layer: 0
+  - component: {fileID: 1405931211}
+  m_Layer: 6
   m_Name: P_7_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -25177,9 +25228,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1405931204}
@@ -25202,7 +25253,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -25322,6 +25373,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &1405931211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405931204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1409169530
 GameObject:
   m_ObjectHideFlags: 0
@@ -26243,7 +26307,8 @@ GameObject:
   - component: {fileID: 1505631224}
   - component: {fileID: 1505631221}
   - component: {fileID: 1505631219}
-  m_Layer: 0
+  - component: {fileID: 1505631225}
+  m_Layer: 6
   m_Name: P_3_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -26267,9 +26332,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1505631218}
@@ -26292,7 +26357,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -26412,6 +26477,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &1505631225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505631218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1507472397
 GameObject:
   m_ObjectHideFlags: 0
@@ -27906,7 +27984,7 @@ GameObject:
   - component: {fileID: 1606238201}
   - component: {fileID: 1606238200}
   - component: {fileID: 1606238199}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_1_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -27945,9 +28023,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1606238197}
@@ -27970,7 +28048,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -28088,7 +28166,7 @@ GameObject:
   - component: {fileID: 1610893091}
   - component: {fileID: 1610893090}
   - component: {fileID: 1610893089}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_7_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -28127,9 +28205,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1610893087}
@@ -28152,7 +28230,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -28270,7 +28348,8 @@ GameObject:
   - component: {fileID: 1637118415}
   - component: {fileID: 1637118414}
   - component: {fileID: 1637118413}
-  m_Layer: 0
+  - component: {fileID: 1637118418}
+  m_Layer: 6
   m_Name: Q_4_0
   m_TagString: Q
   m_Icon: {fileID: 0}
@@ -28294,9 +28373,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1637118412}
@@ -28354,7 +28433,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: df2e56dbc633e524396a4c0e59ece0a6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -28429,6 +28508,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637118418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637118412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1645841621
 GameObject:
   m_ObjectHideFlags: 0
@@ -29356,7 +29448,7 @@ GameObject:
   - component: {fileID: 1761793640}
   - component: {fileID: 1761793639}
   - component: {fileID: 1761793638}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_7_0 (1)
   m_TagString: R
   m_Icon: {fileID: 0}
@@ -29395,9 +29487,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1761793636}
@@ -29420,7 +29512,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -29600,7 +29692,7 @@ GameObject:
   - component: {fileID: 1785975202}
   - component: {fileID: 1785975201}
   - component: {fileID: 1785975200}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_4_1 (1)
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -29639,9 +29731,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1785975198}
@@ -29664,7 +29756,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -31115,7 +31207,8 @@ GameObject:
   - component: {fileID: 1906882882}
   - component: {fileID: 1906882879}
   - component: {fileID: 1906882877}
-  m_Layer: 0
+  - component: {fileID: 1906882883}
+  m_Layer: 6
   m_Name: R_0_0
   m_TagString: R
   m_Icon: {fileID: 0}
@@ -31139,9 +31232,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 1906882876}
@@ -31164,7 +31257,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -31346,6 +31439,19 @@ PolygonCollider2D:
       - {x: -0.23846154, y: 0.16707693}
       - {x: -0.24153847, y: 0.16707693}
   m_UseDelaunayMesh: 0
+--- !u!114 &1906882883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906882876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1918484274
 GameObject:
   m_ObjectHideFlags: 0
@@ -32179,7 +32285,8 @@ GameObject:
   - component: {fileID: 2047094474}
   - component: {fileID: 2047094471}
   - component: {fileID: 2047094469}
-  m_Layer: 0
+  - component: {fileID: 2047094475}
+  m_Layer: 6
   m_Name: P_6_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -32203,9 +32310,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 2047094468}
@@ -32228,7 +32335,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -32348,6 +32455,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &2047094475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047094468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &2053065528
 GameObject:
   m_ObjectHideFlags: 0
@@ -34747,7 +34867,8 @@ GameObject:
   - component: {fileID: 2107785049}
   - component: {fileID: 2107785046}
   - component: {fileID: 2107785044}
-  m_Layer: 0
+  - component: {fileID: 2107785050}
+  m_Layer: 6
   m_Name: P_1_1
   m_TagString: P
   m_Icon: {fileID: 0}
@@ -34771,9 +34892,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1218987141}
-          m_TargetAssemblyTypeName: OpenSelectableArea, Assembly-CSharp
-          m_MethodName: StartOpenArea
+        - m_Target: {fileID: 1218987139}
+          m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+          m_MethodName: PieceObjectPressed
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 2107785043}
@@ -34796,7 +34917,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -34916,6 +35037,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.275}
   m_EdgeRadius: 0
+--- !u!114 &2107785050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107785043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &2114914413
 GameObject:
   m_ObjectHideFlags: 0
@@ -35359,7 +35493,6 @@ SceneRoots:
   - {fileID: 1218987140}
   - {fileID: 1373574077}
   - {fileID: 355234211}
-  - {fileID: 477432996}
   - {fileID: 1598636792}
   - {fileID: 172668785}
   - {fileID: 1637118417}

@@ -9,21 +9,19 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class SelectTileController : ColorPallet
 {
-    [SerializeField] Camera _rayCamera;
-    Tilemap _tilemap;
-    // TileBase _canSelectedTileBase;
-    // TileBase _SelectedTileBase;
-    SpriteRenderer _currentSpriteRenderer; 
-    SpriteRenderer _beforeSpriteRenderer; 
-    // Vector3Int _beforeTilePos = default;
+    SpriteRenderer _currentSpriteRenderer;
+    SpriteRenderer _beforeSpriteRenderer;
+    InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;
-    private int _maskID;
+    Camera _camera;
+    int _maskID;
+    RaycastHit2D _memoraizedHit;
     void Awake()
     {
         _openSelectableArea = GetComponent<OpenSelectableArea>();
-        _tilemap = _openSelectableArea._Tilemap;
+        _inGameManager = GetComponent<InGameManager>();
+        _camera = Camera.main;
         _maskID = LayerMask.GetMask("DeceptionTileField");
-        enabled = false;
     }
     /// <summary>
     /// _canSelectedTileBaseの上にカーソルがあるときのみ_selectedTileBaseが描画される
@@ -32,7 +30,7 @@ public class SelectTileController : ColorPallet
     {
         //毎フレームマウスのポジションを記録し、カーソルの下にあるタイルベースも更新する。
         Vector3 mousePos = Mouse.current.position.ReadValue();
-        int mousePosZ = 0;
+        int mousePosZ;
         if (mousePos.y >= 160)
         {
             mousePosZ = 9;
@@ -41,7 +39,7 @@ public class SelectTileController : ColorPallet
         {
             mousePosZ = 6;
         }
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, mousePosZ));//7 ~ 9
+        Vector3 mouseWorldPos = _camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, mousePosZ));//7 ~ 9
         RaycastHit2D hit2D = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 15, _maskID);
         if (!hit2D)
         {
@@ -53,7 +51,7 @@ public class SelectTileController : ColorPallet
         }
         else
         {
-            if (hit2D.transform.gameObject.name.Length == 3)
+            if (hit2D.transform.gameObject.name.Length == 3 && _memoraizedHit != hit2D)
             {
                 _currentSpriteRenderer = hit2D.transform.gameObject.GetComponent<SpriteRenderer>();
                 Color32 checkColor  = _currentSpriteRenderer.color;
@@ -67,7 +65,7 @@ public class SelectTileController : ColorPallet
                 //SelectedTileBaseの上でマウスをクリックすると一度だけ呼び出される
                 else if (checkColor.a == 255 && Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    _openSelectableArea.TurnDesideRelay();
+                    _openSelectableArea.TurnDesideRelay(_currentSpriteRenderer);//
                     enabled = false;
                 }
             }

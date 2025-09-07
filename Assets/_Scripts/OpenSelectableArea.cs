@@ -8,13 +8,12 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// _canSelectedTileBaseを描画するためのクラス
 /// </summary>
-public class OpenSelectableArea : ColorPallet
+public class OpenSelectableArea : CollisionEvent
 {
-    [SerializeField] Tilemap _tilemap;
     [SerializeField] Sprite _canSelectedSprite;//これはあって良い
-    [SerializeField] GameObject _collider2DPrefab;
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
+    TurnDeside _turnDeside;
     GameObject _selectedPieceObj;
     SpriteRenderer[][] _deceptionTileFieldArrays;
     Piece _selectedPiece;
@@ -24,13 +23,15 @@ public class OpenSelectableArea : ColorPallet
     List<Vector3Int> _renderingAreas = new List<Vector3Int>(); //Propatiesにしておけ
     int _pieceMoveCount = 0;
     int _prefabCount = 0;
+    GameObject _collider2DPrefab;
     int _PrefabCount {get {return _prefabCount;} set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();};}}
-    public Tilemap _Tilemap => _tilemap;
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
+        _turnDeside = GetComponent<TurnDeside>();
         _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
+        _collider2DPrefab = _inGameManager._Collider2DPrefab;
     }
     /// <summary>
     /// 駒を選択してから一回だけ呼ばれる
@@ -93,6 +94,7 @@ public class OpenSelectableArea : ColorPallet
         Array.Fill(_moveAreas, _selectedSquere._SquereTilePos);
         Array.Fill(_attackAreas, _selectedSquere._SquereTilePos);
         _renderingAreas = new List<Vector3Int>();
+        CollisionAction = JudgmentGroup;
     }
     /// <summary>
     /// Animationの再生一回につき一度だけ呼ばれる。複数回呼ばれる可能性あり。
@@ -148,7 +150,6 @@ public class OpenSelectableArea : ColorPallet
             }
             if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
             {
-                Debug.Log("kore");
                 Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
                 GameObject collider2DObj = Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
                 Destroy(collider2DObj, i);
@@ -164,7 +165,7 @@ public class OpenSelectableArea : ColorPallet
     /// 駒があることを検知して実体化されたColliderの衝突情報から呼ばれる
     /// </summary>
     /// <param name="collisionObj"></param>
-    public void JudgmentGroup(GameObject collisionObj)
+    protected void JudgmentGroup(GameObject collisionObj)
     {
         SpriteRenderer spriteRenderer = collisionObj.GetComponent<SpriteRenderer>();
         if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX != spriteRenderer.flipX)
@@ -200,16 +201,16 @@ public class OpenSelectableArea : ColorPallet
         _pieceMoveCount--;
         if (_pieceMoveCount == 0)
         {
+            _inGameManager.StartSelectTileRelay();
             return;
         }
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
     }
-    private void Update()
+    public void TurnDesideRelay(SpriteRenderer currentSpriteRenderer)
     {
-        // Debug.Log(_prefabCount);
-    }
-    public void TurnDesideRelay()
-    {
-        
+        string[] search = currentSpriteRenderer.gameObject.name.Split("_");
+        Squere targetSquere = _inGameManager._SquereArrays[int.Parse(search[0])][int.Parse(search[1])];
+        _turnDeside.enabled = true;
+        _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetSquere);
     }
 }

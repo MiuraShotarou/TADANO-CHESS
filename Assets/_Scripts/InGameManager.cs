@@ -13,13 +13,16 @@ public class InGameManager : MonoBehaviour
     SpriteRenderer[][] _deceptionTileFieldArrays;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
+    TurnDeside _turnDeside;
     Animator _animatorController;
+    GameObject _collider2DPrefab;
     public Dictionary<string, Piece> _PieceDict => _pieceDict;
     public Squere[][] _SquereArrays => _squereArrays;
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays;
     public OpenSelectableArea _OpenSelectableArea => _openSelectableArea; //いらない
     public SelectTileController SelectTileController => _selectTileController; //いらない
     public Animator _AnimatorController => _animatorController;
+    public GameObject _Collider2DPrefab => _collider2DPrefab;
     void Awake()
     {
         for (int i = 0; i < _setPieces.Length; i++)
@@ -44,6 +47,7 @@ public class InGameManager : MonoBehaviour
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _selectTileController = GetComponent<SelectTileController>();
         _animatorController = GetComponent<Animator>();
+        _collider2DPrefab = Resources.Load<GameObject>("BoxCollider2DPrefab");
     }
     public void PieceObjectPressed(GameObject pieceObj)
     {
@@ -52,10 +56,6 @@ public class InGameManager : MonoBehaviour
     public void StartSelectTileRelay()
     {
         _selectTileController.enabled = true;
-    }
-    public void TestDebug()
-    {
-        // Debug.Log("TestDebug");
     }
 }
 // 初期化処理はデリゲート登録をして個個別別に作っていくべきなのか？

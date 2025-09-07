@@ -6,7 +6,7 @@ public class Squere : ScriptableObject
     [SerializeField, FormerlySerializedAs("_squerePosition")] Vector2 _squerePiecePosition;
     [SerializeField] Vector3 _squereTileWorldPosition;
     [SerializeField] Vector3Int _squereTilePos;
-    public string _squereID;
+    string _squereID;
     bool _isOnPiece;
     //駒にとって都合の良い座標
     public Vector2 _SquerePiecePosition => _squerePiecePosition;

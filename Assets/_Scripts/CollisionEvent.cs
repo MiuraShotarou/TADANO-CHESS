@@ -1,9 +1,14 @@
+using System;
 using UnityEngine;
 
-public class CollisionEvent : OpenSelectableArea
+public class CollisionEvent : ColorPallet
 {
+    public Action<GameObject> CollisionAction;
     void OnCollisionEnter(Collision collision)
     {
-        JudgmentGroup(collision.gameObject);
+        if (LayerMask.LayerToName(collision.gameObject.layer) == "Piece")
+        {
+            CollisionAction(collision.gameObject);
+        }
     }
 }
