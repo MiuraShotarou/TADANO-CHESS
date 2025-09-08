@@ -20,17 +20,17 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 3.37, y: 0.1, z: 0}
+        value: {x: -3.92, y: -2.7, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: -1.3599999, y: 0, z: 0}
+        outSlope: {x: 3.0700002, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0, y: 0, z: 0.33333334}
         outWeight: {x: 0, y: 0, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: 2.01, y: 0.1, z: 0}
-        inSlope: {x: -1.3599999, y: 0, z: 0}
+        value: {x: -0.85, y: -2.7, z: 0}
+        inSlope: {x: 3.0700002, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
@@ -125,8 +125,15 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 1
+  - time: 0.75
     functionName: StartAttackAnimationRelay
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1
+    functionName: StartIdleAnimationRelay
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

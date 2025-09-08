@@ -947,6 +947,7 @@ GameObject:
   - component: {fileID: 47018810}
   - component: {fileID: 47018808}
   - component: {fileID: 47018814}
+  - component: {fileID: 47018815}
   m_Layer: 6
   m_Name: P_5_1
   m_TagString: P
@@ -1129,6 +1130,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &47018815
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47018807}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &61264315
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1246,7 @@ GameObject:
   - component: {fileID: 76338905}
   - component: {fileID: 76338904}
   - component: {fileID: 76338908}
+  - component: {fileID: 76338909}
   m_Layer: 6
   m_Name: R_0_7
   m_TagString: R
@@ -1462,6 +1491,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &76338909
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76338902}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &77829058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,6 +2766,7 @@ GameObject:
   - component: {fileID: 133879114}
   - component: {fileID: 133879112}
   - component: {fileID: 133879118}
+  - component: {fileID: 133879119}
   m_Layer: 6
   m_Name: P_2_1
   m_TagString: P
@@ -2892,6 +2949,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &133879119
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133879111}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &138621962
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,6 +3195,7 @@ GameObject:
   - component: {fileID: 159223848}
   - component: {fileID: 159223847}
   - component: {fileID: 159223851}
+  - component: {fileID: 159223852}
   m_Layer: 6
   m_Name: P_6_6
   m_TagString: P
@@ -3293,6 +3378,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &159223852
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159223845}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &170845431
 GameObject:
   m_ObjectHideFlags: 0
@@ -3476,6 +3588,7 @@ GameObject:
   - component: {fileID: 172668782}
   - component: {fileID: 172668781}
   - component: {fileID: 172668786}
+  - component: {fileID: 172668787}
   m_Layer: 6
   m_Name: K_3_0
   m_TagString: K
@@ -3658,6 +3771,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &172668787
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172668780}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &173954678
 GameObject:
   m_ObjectHideFlags: 0
@@ -6950,6 +7090,7 @@ GameObject:
   - component: {fileID: 412427733}
   - component: {fileID: 412427731}
   - component: {fileID: 412427737}
+  - component: {fileID: 412427738}
   m_Layer: 6
   m_Name: R_7_0
   m_TagString: R
@@ -7194,6 +7335,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &412427738
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412427730}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &412661967
 GameObject:
   m_ObjectHideFlags: 0
@@ -7755,6 +7923,7 @@ GameObject:
   - component: {fileID: 449951568}
   - component: {fileID: 449951567}
   - component: {fileID: 449951572}
+  - component: {fileID: 449951573}
   m_Layer: 6
   m_Name: B_5_0
   m_TagString: B
@@ -7937,6 +8106,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &449951573
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449951566}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &461777719
 GameObject:
   m_ObjectHideFlags: 0
@@ -8798,6 +8994,7 @@ GameObject:
   - component: {fileID: 529438576}
   - component: {fileID: 529438574}
   - component: {fileID: 529438580}
+  - component: {fileID: 529438581}
   m_Layer: 6
   m_Name: N_6_0
   m_TagString: N
@@ -8996,6 +9193,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &529438581
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529438573}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &553371363
 GameObject:
   m_ObjectHideFlags: 0
@@ -10392,6 +10616,7 @@ GameObject:
   - component: {fileID: 614912955}
   - component: {fileID: 614912954}
   - component: {fileID: 614912958}
+  - component: {fileID: 614912959}
   m_Layer: 6
   m_Name: P_5_6
   m_TagString: P
@@ -10574,6 +10799,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &614912959
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614912952}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &620754908
 GameObject:
   m_ObjectHideFlags: 0
@@ -11440,6 +11692,7 @@ GameObject:
   - component: {fileID: 669127264}
   - component: {fileID: 669127262}
   - component: {fileID: 669127268}
+  - component: {fileID: 669127269}
   m_Layer: 6
   m_Name: P_0_1
   m_TagString: P
@@ -11622,6 +11875,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &669127269
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669127261}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &671965040
 GameObject:
   m_ObjectHideFlags: 0
@@ -11636,6 +11916,7 @@ GameObject:
   - component: {fileID: 671965043}
   - component: {fileID: 671965042}
   - component: {fileID: 671965046}
+  - component: {fileID: 671965047}
   m_Layer: 6
   m_Name: P_3_6
   m_TagString: P
@@ -11818,6 +12099,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &671965047
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671965040}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &682364838
 GameObject:
   m_ObjectHideFlags: 0
@@ -12096,6 +12404,7 @@ GameObject:
   - component: {fileID: 733407936}
   - component: {fileID: 733407935}
   - component: {fileID: 733407939}
+  - component: {fileID: 733407940}
   m_Layer: 6
   m_Name: P_0_6
   m_TagString: P
@@ -12278,6 +12587,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &733407940
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733407933}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &763883557
 GameObject:
   m_ObjectHideFlags: 0
@@ -12706,6 +13042,7 @@ GameObject:
   - component: {fileID: 780438269}
   - component: {fileID: 780438268}
   - component: {fileID: 780438273}
+  - component: {fileID: 780438274}
   m_Layer: 6
   m_Name: B_2_0
   m_TagString: B
@@ -12888,6 +13225,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &780438274
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780438267}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &780661973
 GameObject:
   m_ObjectHideFlags: 0
@@ -12902,6 +13266,7 @@ GameObject:
   - component: {fileID: 780661976}
   - component: {fileID: 780661975}
   - component: {fileID: 780661979}
+  - component: {fileID: 780661980}
   m_Layer: 6
   m_Name: N_1_7
   m_TagString: N
@@ -13100,6 +13465,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &780661980
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780661973}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &795038422
 GameObject:
   m_ObjectHideFlags: 0
@@ -13735,6 +14127,7 @@ GameObject:
   - component: {fileID: 846725928}
   - component: {fileID: 846725927}
   - component: {fileID: 846725931}
+  - component: {fileID: 846725932}
   m_Layer: 6
   m_Name: N_6_7
   m_TagString: N
@@ -13933,6 +14326,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &846725932
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846725925}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &861220927
 GameObject:
   m_ObjectHideFlags: 0
@@ -14161,6 +14581,7 @@ GameObject:
   - component: {fileID: 865202209}
   - component: {fileID: 865202208}
   - component: {fileID: 865202212}
+  - component: {fileID: 865202213}
   m_Layer: 6
   m_Name: B_2_7
   m_TagString: B
@@ -14343,6 +14764,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &865202213
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865202206}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &887860658
 GameObject:
   m_ObjectHideFlags: 0
@@ -14432,6 +14880,7 @@ GameObject:
   - component: {fileID: 889909044}
   - component: {fileID: 889909042}
   - component: {fileID: 889909048}
+  - component: {fileID: 889909049}
   m_Layer: 6
   m_Name: P_4_1
   m_TagString: P
@@ -14614,6 +15063,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &889909049
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889909041}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &900961609
 GameObject:
   m_ObjectHideFlags: 0
@@ -17274,6 +17750,7 @@ GameObject:
   - component: {fileID: 1099086949}
   - component: {fileID: 1099086948}
   - component: {fileID: 1099086952}
+  - component: {fileID: 1099086953}
   m_Layer: 6
   m_Name: Q_4_7
   m_TagString: Q
@@ -17446,6 +17923,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1099086953
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099086946}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1105910105
 GameObject:
   m_ObjectHideFlags: 0
@@ -18104,6 +18608,7 @@ GameObject:
   - component: {fileID: 1143464742}
   - component: {fileID: 1143464740}
   - component: {fileID: 1143464746}
+  - component: {fileID: 1143464747}
   m_Layer: 6
   m_Name: N_1_0
   m_TagString: N
@@ -18302,6 +18807,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1143464747
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143464739}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1191561083
 GameObject:
   m_ObjectHideFlags: 0
@@ -19776,6 +20308,7 @@ GameObject:
   - component: {fileID: 1301552879}
   - component: {fileID: 1301552878}
   - component: {fileID: 1301552882}
+  - component: {fileID: 1301552883}
   m_Layer: 6
   m_Name: P_2_6
   m_TagString: P
@@ -19958,6 +20491,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1301552883
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301552876}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1304127600
 GameObject:
   m_ObjectHideFlags: 0
@@ -24331,6 +24891,7 @@ GameObject:
   - component: {fileID: 1345505758}
   - component: {fileID: 1345505757}
   - component: {fileID: 1345505761}
+  - component: {fileID: 1345505762}
   m_Layer: 6
   m_Name: K_3_7
   m_TagString: K
@@ -24513,6 +25074,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1345505762
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345505755}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1353945773
 GameObject:
   m_ObjectHideFlags: 0
@@ -24741,6 +25329,7 @@ GameObject:
   - component: {fileID: 1372169882}
   - component: {fileID: 1372169881}
   - component: {fileID: 1372169885}
+  - component: {fileID: 1372169886}
   m_Layer: 6
   m_Name: B_5_7
   m_TagString: B
@@ -24923,6 +25512,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1372169886
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372169879}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1373574074
 GameObject:
   m_ObjectHideFlags: 0
@@ -25372,6 +25988,7 @@ GameObject:
   - component: {fileID: 1405931207}
   - component: {fileID: 1405931205}
   - component: {fileID: 1405931211}
+  - component: {fileID: 1405931212}
   m_Layer: 6
   m_Name: P_7_1
   m_TagString: P
@@ -25554,6 +26171,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1405931212
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405931204}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1409169530
 GameObject:
   m_ObjectHideFlags: 0
@@ -26476,6 +27120,7 @@ GameObject:
   - component: {fileID: 1505631221}
   - component: {fileID: 1505631219}
   - component: {fileID: 1505631225}
+  - component: {fileID: 1505631226}
   m_Layer: 6
   m_Name: P_3_1
   m_TagString: P
@@ -26658,6 +27303,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1505631226
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505631218}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1507472397
 GameObject:
   m_ObjectHideFlags: 0
@@ -28153,6 +28825,7 @@ GameObject:
   - component: {fileID: 1606238200}
   - component: {fileID: 1606238199}
   - component: {fileID: 1606238203}
+  - component: {fileID: 1606238204}
   m_Layer: 6
   m_Name: P_1_6
   m_TagString: P
@@ -28335,6 +29008,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1606238204
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606238197}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1610893087
 GameObject:
   m_ObjectHideFlags: 0
@@ -28349,6 +29049,7 @@ GameObject:
   - component: {fileID: 1610893090}
   - component: {fileID: 1610893089}
   - component: {fileID: 1610893093}
+  - component: {fileID: 1610893094}
   m_Layer: 6
   m_Name: P_7_6
   m_TagString: P
@@ -28531,6 +29232,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1610893094
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610893087}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1637118412
 GameObject:
   m_ObjectHideFlags: 0
@@ -28545,6 +29273,7 @@ GameObject:
   - component: {fileID: 1637118414}
   - component: {fileID: 1637118413}
   - component: {fileID: 1637118418}
+  - component: {fileID: 1637118419}
   m_Layer: 6
   m_Name: Q_4_0
   m_TagString: Q
@@ -28717,6 +29446,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1637118419
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637118412}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1645841621
 GameObject:
   m_ObjectHideFlags: 0
@@ -29645,6 +30401,7 @@ GameObject:
   - component: {fileID: 1761793639}
   - component: {fileID: 1761793638}
   - component: {fileID: 1761793642}
+  - component: {fileID: 1761793643}
   m_Layer: 6
   m_Name: R_7_7
   m_TagString: R
@@ -29889,6 +30646,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1761793643
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761793636}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1785975198
 GameObject:
   m_ObjectHideFlags: 0
@@ -29903,6 +30687,7 @@ GameObject:
   - component: {fileID: 1785975201}
   - component: {fileID: 1785975200}
   - component: {fileID: 1785975204}
+  - component: {fileID: 1785975205}
   m_Layer: 6
   m_Name: P_4_6
   m_TagString: P
@@ -30085,6 +30870,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1785975205
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785975198}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1812308405
 GameObject:
   m_ObjectHideFlags: 0
@@ -31432,6 +32244,7 @@ GameObject:
   - component: {fileID: 1906882879}
   - component: {fileID: 1906882877}
   - component: {fileID: 1906882883}
+  - component: {fileID: 1906882884}
   m_Layer: 6
   m_Name: R_0_0
   m_TagString: R
@@ -31676,6 +32489,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &1906882884
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906882876}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1918484274
 GameObject:
   m_ObjectHideFlags: 0
@@ -32510,6 +33350,7 @@ GameObject:
   - component: {fileID: 2047094471}
   - component: {fileID: 2047094469}
   - component: {fileID: 2047094475}
+  - component: {fileID: 2047094476}
   m_Layer: 6
   m_Name: P_6_1
   m_TagString: P
@@ -32692,6 +33533,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &2047094476
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047094468}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2053065528
 GameObject:
   m_ObjectHideFlags: 0
@@ -35092,6 +35960,7 @@ GameObject:
   - component: {fileID: 2107785046}
   - component: {fileID: 2107785044}
   - component: {fileID: 2107785050}
+  - component: {fileID: 2107785051}
   m_Layer: 6
   m_Name: P_1_1
   m_TagString: P
@@ -35274,6 +36143,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnDeside: {fileID: 1218987144}
+--- !u!50 &2107785051
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107785043}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2114914413
 GameObject:
   m_ObjectHideFlags: 0

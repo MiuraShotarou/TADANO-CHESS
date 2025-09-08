@@ -10,10 +10,11 @@ using UnityEngine.Animations;
 /// <summary>
 /// 駒が目標地点まで移動していく処理を実装するクラス
 /// </summary>
-public class TurnDeside : CollisionEvent
+public class TurnDeside : ColorPallet
 {
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea; //いらないかも
+    CollisionEvent _collisionEvent; //いらない
     SpriteRenderer _selectedSpriteRenderer; //移動後の透明化用
     GameObject _selectedPieceObj;
     Piece _selectedPiece;
@@ -26,10 +27,12 @@ public class TurnDeside : CollisionEvent
     GameObject _collider2DPrefab;
     PlayableGraph _playableGraph;
     bool _temporaryIsEncount;
-    private void Awake()
+    private void Start()
     {
+        _inGameManager = GetComponent<InGameManager>();
         _openSelectableArea = GetComponent<OpenSelectableArea>();
-        _collider2DPrefab = Resources.Load<GameObject>("BoxCollider2DPrefab");
+        _collider2DPrefab = _inGameManager._Collider2DPrefab;
+        _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
     }
     /// <summary>
     /// _SelectedTileSprite上でマウスクリックされた時に一度だけ呼び出される
@@ -102,25 +105,27 @@ public class TurnDeside : CollisionEvent
     /// </summary>
     public void StartAttackAnimation()
     {
-        _playableGraph.Stop();
-        _playableGraph.Destroy();
         if (_temporaryIsEncount)
         {
+            _playableGraph.Stop();
+            _playableGraph.Destroy();
             string search = new string($"{_selectedPiece._PieceName}_Attack");
             _selectedPieceAnimatorController.Play(search);
         }
-        else
-        {
-            string search = new string($"{_selectedPiece._PieceName}_Idle");
-            _selectedPieceAnimatorController.Play(search);
-        }
+    }
+    public void StartIdleAnimation()
+    {
+        _playableGraph.Stop();
+        _playableGraph.Destroy();
+        string search = new string($"{_selectedPiece._PieceName}_Idle");
+        _selectedPieceAnimatorController.Play(search);
     }
     /// <summary>
     /// 敵の情報をColliderの衝突で取得するためだけのメソッド（削除予定）
     /// </summary>
     void DeathAnimationRelay()
     {
-        CollisionAction = StartDeathAnimation;
+        CollisionEvent.CollisionAction = StartDeathAnimation;
         GameObject collider2DObj = Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
         int limitTime = 2;
         Destroy(collider2DObj, limitTime);

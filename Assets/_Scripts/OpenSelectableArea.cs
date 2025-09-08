@@ -9,12 +9,13 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// _canSelectedTileBaseを描画するためのクラス
 /// </summary>
-public class OpenSelectableArea : CollisionEvent
+public class OpenSelectableArea : ColorPallet
 {
     [SerializeField] Sprite _canSelectedSprite;//これはあって良い
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
     TurnDeside _turnDeside;
+    CollisionEvent _collisionEvent; //いらない
     GameObject _selectedPieceObj;
     SpriteRenderer[][] _deceptionTileFieldArrays;
     Piece _selectedPiece;
@@ -33,6 +34,7 @@ public class OpenSelectableArea : CollisionEvent
         _turnDeside = GetComponent<TurnDeside>();
         _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
         _collider2DPrefab = _inGameManager._Collider2DPrefab;
+        _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
     }
     /// <summary>
     /// 駒を選択してから一回だけ呼ばれる
@@ -96,7 +98,7 @@ public class OpenSelectableArea : CollisionEvent
         Array.Fill(_moveAreas, _selectedSquere._SquereTilePos);
         Array.Fill(_attackAreas, _selectedSquere._SquereTilePos);
         _renderingAreas = new List<Vector3Int>();
-        CollisionAction = JudgmentGroup;
+        CollisionEvent.CollisionAction = JudgmentGroup;
     }
     /// <summary>
     /// Animationの再生一回につき一度だけ呼ばれる。複数回呼ばれる可能性あり。
@@ -139,7 +141,7 @@ public class OpenSelectableArea : CollisionEvent
         {
             if (_attackAreas[i].z == -1)
             {
-                _prefabCount--;
+                _PrefabCount--;
                 continue;
             }
             _attackAreas[i] += _selectedPiece._AttackAreas()[i];
@@ -152,13 +154,12 @@ public class OpenSelectableArea : CollisionEvent
                 continue;
             }
             //IsOnpieceが起動していない
-            Debug.Log(_attackAreas[i]); //4, 2, 0 / 4, 0, 0
+            // Debug.Log(_attackAreas[i]); //2, 1, 0 / 3, 2, 0
             if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
             {
-                Debug.Log("");//一度だけ呼ばれた（4, 2, 0）
                 Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
                 GameObject collider2DObj = Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
-                // Destroy(collider2DObj, i);
+                Destroy(collider2DObj, i);
                 //z = -1で次回の検索を回避する
                 _attackAreas[i] =  new Vector3Int(0, 0, -1);
             }
@@ -195,6 +196,7 @@ public class OpenSelectableArea : CollisionEvent
     /// </summary>
     void RenderingOneLine()
     {
+        // Debug.Log(_renderingAreas.Count);
         if (_renderingAreas.Count == 0)
         {
             _inGameManager.StartSelectTileRelay();
@@ -202,6 +204,7 @@ public class OpenSelectableArea : CollisionEvent
         }
         for (int i = 0; i < _renderingAreas.Count; i++)
         {
+            // Debug.Log(_renderingAreas[i]);
             _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].color = _CanSelectedTileColor;
             _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = true;
         }
@@ -210,6 +213,11 @@ public class OpenSelectableArea : CollisionEvent
         {
             _inGameManager.StartSelectTileRelay();
             return;
+        }
+        if (_selectedPiece._PieceName == "P")
+        {
+            //Poneが二回行動可能な時、AttackAreaだけ二度目の描画を制限する
+            Array.Fill(_attackAreas, new Vector3Int(0, 0, -1));
         }
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
     }
