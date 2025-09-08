@@ -39,6 +39,7 @@ public class InGameManager : MonoBehaviour
             _squereArrays[i] = new Squere[arraySize];
             for (int j = 0; j < arraySize; j++)
             {
+                //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
                 int index = i * 8 + j;
                 _deceptionTileFieldArrays[i][j] = _setDeceptionTileFields[index];
                 _SquereArrays[i][j] = _setSqueres[index];

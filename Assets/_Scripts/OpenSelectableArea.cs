@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -50,9 +51,10 @@ public class OpenSelectableArea : CollisionEvent
             ||
             search[0] != _selectedPiece.name)
         {
-            _selectedPiece = _inGameManager._PieceDict[search[0]];
+            //元のScriptableObjectに影響を与えたくないので新規生成で代入する
+            _selectedPiece = Instantiate(_inGameManager._PieceDict[search[0]]);
         }
-        if (_selectedPiece.name == "P")
+        if (_selectedPiece._PieceName == "P")
         {
             if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
             { 
@@ -113,8 +115,9 @@ public class OpenSelectableArea : CollisionEvent
                 continue;
             }
             _moveAreas[i] += _selectedPiece._MoveAreas()[i]; //<=0, >=7
-            int alphabet = _moveAreas[i].x;
-            int number = _moveAreas[i].y;
+            //アルファベット（縦列）座標がy、数値（横列）座標がx
+            int alphabet = _moveAreas[i].y;
+            int number = _moveAreas[i].x;
             if (-1 < alphabet && 8 > alphabet && -1 < number && 8 > number //盤内のマスであればtrue
                 &&
                 !_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
@@ -140,19 +143,23 @@ public class OpenSelectableArea : CollisionEvent
                 continue;
             }
             _attackAreas[i] += _selectedPiece._AttackAreas()[i];
-            int alphabet = _attackAreas[i].x;
-            int number = _attackAreas[i].y;
+            int alphabet = _attackAreas[i].y;
+            int number = _attackAreas[i].x;
             if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number))//盤外のマスであるならば
             {
                 _PrefabCount--;
                 _attackAreas[i] = new Vector3Int(0, 0, -1);
                 continue;
             }
+            //IsOnpieceが起動していない
+            Debug.Log(_attackAreas[i]); //4, 2, 0 / 4, 0, 0
             if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
             {
+                Debug.Log("");//一度だけ呼ばれた（4, 2, 0）
                 Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
                 GameObject collider2DObj = Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
-                Destroy(collider2DObj, i);
+                // Destroy(collider2DObj, i);
+                //z = -1で次回の検索を回避する
                 _attackAreas[i] =  new Vector3Int(0, 0, -1);
             }
             else

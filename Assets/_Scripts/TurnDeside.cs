@@ -77,12 +77,11 @@ public class TurnDeside : CollisionEvent
     {
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
-        Debug.Log(_targetSquere._SquereID);
         //"Run"という名前のついたanimationClipからコピーを新規作成
-        AnimationClip animationClip = Instantiate(_selectedPieceRuntimeAnimator.animationClips.FirstOrDefault(clip => clip.name.Contains("Run"))); 
+        AnimationClip animationClip = _selectedPieceRuntimeAnimator.animationClips.FirstOrDefault(clip => clip.name.Contains("Run")); 
         //新しく作成・編集したAnimationCurveをAnimationClipに代入する
-        animationClip.SetCurve("", typeof(Transform), "position.x", animationCurveX);
-        animationClip.SetCurve("", typeof(Transform), "position.y", animationCurveY);
+        animationClip.SetCurve("", typeof(Transform), "localPosition.x", animationCurveX);
+        animationClip.SetCurve("", typeof(Transform), "localPosition.y", animationCurveY);
         //PlayableGraphを作成
         _playableGraph = PlayableGraph.Create();
         //AnimationClipPlayableを作成

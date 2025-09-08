@@ -996,7 +996,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1217,8 +1217,9 @@ GameObject:
   - component: {fileID: 76338906}
   - component: {fileID: 76338905}
   - component: {fileID: 76338904}
+  - component: {fileID: 76338908}
   m_Layer: 6
-  m_Name: R_0_0 (1)
+  m_Name: R_0_7
   m_TagString: R
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1281,7 +1282,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1448,6 +1449,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &76338908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76338902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &77829058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,7 +2759,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3096,8 +3110,9 @@ GameObject:
   - component: {fileID: 159223849}
   - component: {fileID: 159223848}
   - component: {fileID: 159223847}
+  - component: {fileID: 159223851}
   m_Layer: 6
-  m_Name: P_6_1 (1)
+  m_Name: P_6_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3160,7 +3175,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3265,6 +3280,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &159223851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159223845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &170845431
 GameObject:
   m_ObjectHideFlags: 0
@@ -3542,7 +3570,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 40e529eb67402834aa84e754d0911de5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -6971,7 +6999,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -7821,7 +7849,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -8819,7 +8847,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: da72dd151dffeb642a36bbab4fae54f2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -10363,8 +10391,9 @@ GameObject:
   - component: {fileID: 614912956}
   - component: {fileID: 614912955}
   - component: {fileID: 614912954}
+  - component: {fileID: 614912958}
   m_Layer: 6
-  m_Name: P_5_1 (1)
+  m_Name: P_5_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10427,7 +10456,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -10532,6 +10561,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &614912958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614912952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &620754908
 GameObject:
   m_ObjectHideFlags: 0
@@ -11447,7 +11489,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -11593,8 +11635,9 @@ GameObject:
   - component: {fileID: 671965044}
   - component: {fileID: 671965043}
   - component: {fileID: 671965042}
+  - component: {fileID: 671965046}
   m_Layer: 6
-  m_Name: P_3_1 (1)
+  m_Name: P_3_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11657,7 +11700,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -11762,6 +11805,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &671965046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671965040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &682364838
 GameObject:
   m_ObjectHideFlags: 0
@@ -12039,8 +12095,9 @@ GameObject:
   - component: {fileID: 733407937}
   - component: {fileID: 733407936}
   - component: {fileID: 733407935}
+  - component: {fileID: 733407939}
   m_Layer: 6
-  m_Name: P_0_1 (1)
+  m_Name: P_0_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12103,7 +12160,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -12208,6 +12265,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &733407939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733407933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &763883557
 GameObject:
   m_ObjectHideFlags: 0
@@ -12730,7 +12800,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -12831,8 +12901,9 @@ GameObject:
   - component: {fileID: 780661977}
   - component: {fileID: 780661976}
   - component: {fileID: 780661975}
+  - component: {fileID: 780661979}
   m_Layer: 6
-  m_Name: N_1_0 (1)
+  m_Name: N_1_7
   m_TagString: N
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12895,7 +12966,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: da72dd151dffeb642a36bbab4fae54f2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -13016,6 +13087,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &780661979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780661973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &795038422
 GameObject:
   m_ObjectHideFlags: 0
@@ -13650,8 +13734,9 @@ GameObject:
   - component: {fileID: 846725929}
   - component: {fileID: 846725928}
   - component: {fileID: 846725927}
+  - component: {fileID: 846725931}
   m_Layer: 6
-  m_Name: N_6_0 (1)
+  m_Name: N_6_7
   m_TagString: N
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13714,7 +13799,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: da72dd151dffeb642a36bbab4fae54f2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -13835,6 +13920,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &846725931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846725925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &861220927
 GameObject:
   m_ObjectHideFlags: 0
@@ -14062,8 +14160,9 @@ GameObject:
   - component: {fileID: 865202210}
   - component: {fileID: 865202209}
   - component: {fileID: 865202208}
+  - component: {fileID: 865202212}
   m_Layer: 6
-  m_Name: B_2_0 (1)
+  m_Name: B_2_7
   m_TagString: B
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14171,7 +14270,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -14231,6 +14330,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &865202212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865202206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &887860658
 GameObject:
   m_ObjectHideFlags: 0
@@ -14369,7 +14481,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -17161,8 +17273,9 @@ GameObject:
   - component: {fileID: 1099086950}
   - component: {fileID: 1099086949}
   - component: {fileID: 1099086948}
+  - component: {fileID: 1099086952}
   m_Layer: 6
-  m_Name: Q_4_0 (1)
+  m_Name: Q_4_7
   m_TagString: Q
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17260,7 +17373,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: df2e56dbc633e524396a4c0e59ece0a6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -17320,6 +17433,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1099086952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099086946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1105910105
 GameObject:
   m_ObjectHideFlags: 0
@@ -18027,7 +18153,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: da72dd151dffeb642a36bbab4fae54f2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -19649,8 +19775,9 @@ GameObject:
   - component: {fileID: 1301552880}
   - component: {fileID: 1301552879}
   - component: {fileID: 1301552878}
+  - component: {fileID: 1301552882}
   m_Layer: 6
-  m_Name: P_2_1 (1)
+  m_Name: P_2_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19713,7 +19840,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -19818,6 +19945,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1301552882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301552876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1304127600
 GameObject:
   m_ObjectHideFlags: 0
@@ -24190,8 +24330,9 @@ GameObject:
   - component: {fileID: 1345505759}
   - component: {fileID: 1345505758}
   - component: {fileID: 1345505757}
+  - component: {fileID: 1345505761}
   m_Layer: 6
-  m_Name: K_3_0 (1)
+  m_Name: K_3_7
   m_TagString: K
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24299,7 +24440,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 40e529eb67402834aa84e754d0911de5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -24359,6 +24500,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1345505761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345505755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1353945773
 GameObject:
   m_ObjectHideFlags: 0
@@ -24586,8 +24740,9 @@ GameObject:
   - component: {fileID: 1372169883}
   - component: {fileID: 1372169882}
   - component: {fileID: 1372169881}
+  - component: {fileID: 1372169885}
   m_Layer: 6
-  m_Name: B_5_0 (1)
+  m_Name: B_5_7
   m_TagString: B
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24695,7 +24850,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c6b2f33ec86126d47ab87f0cb3fa11e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -24755,6 +24910,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1372169885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372169879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1373574074
 GameObject:
   m_ObjectHideFlags: 0
@@ -25253,7 +25421,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -26357,7 +26525,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -27984,8 +28152,9 @@ GameObject:
   - component: {fileID: 1606238201}
   - component: {fileID: 1606238200}
   - component: {fileID: 1606238199}
+  - component: {fileID: 1606238203}
   m_Layer: 6
-  m_Name: P_1_1 (1)
+  m_Name: P_1_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28048,7 +28217,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -28153,6 +28322,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1606238203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606238197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1610893087
 GameObject:
   m_ObjectHideFlags: 0
@@ -28166,8 +28348,9 @@ GameObject:
   - component: {fileID: 1610893091}
   - component: {fileID: 1610893090}
   - component: {fileID: 1610893089}
+  - component: {fileID: 1610893093}
   m_Layer: 6
-  m_Name: P_7_1 (1)
+  m_Name: P_7_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28230,7 +28413,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -28335,6 +28518,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1610893093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610893087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1637118412
 GameObject:
   m_ObjectHideFlags: 0
@@ -28433,7 +28629,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: df2e56dbc633e524396a4c0e59ece0a6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -29448,8 +29644,9 @@ GameObject:
   - component: {fileID: 1761793640}
   - component: {fileID: 1761793639}
   - component: {fileID: 1761793638}
+  - component: {fileID: 1761793642}
   m_Layer: 6
-  m_Name: R_7_0 (1)
+  m_Name: R_7_7
   m_TagString: R
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29512,7 +29709,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -29679,6 +29876,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1761793642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761793636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1785975198
 GameObject:
   m_ObjectHideFlags: 0
@@ -29692,8 +29902,9 @@ GameObject:
   - component: {fileID: 1785975202}
   - component: {fileID: 1785975201}
   - component: {fileID: 1785975200}
+  - component: {fileID: 1785975204}
   m_Layer: 6
-  m_Name: P_4_1 (1)
+  m_Name: P_4_6
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29756,7 +29967,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -29861,6 +30072,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1785975204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785975198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1812308405
 GameObject:
   m_ObjectHideFlags: 0
@@ -31257,7 +31481,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9363c6416c0bf194482359aac03aa7a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -32335,7 +32559,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -34917,7 +35141,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6d68cf7afa2174a915b1fc01ebafad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
