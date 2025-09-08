@@ -6,7 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
-
+//アンパッサンを実装する
 /// <summary>
 /// 駒が目標地点まで移動していく処理を実装するクラス
 /// </summary>
@@ -62,6 +62,30 @@ public class TurnDeside : ColorPallet
         if (_selectedPieceObj.transform.rotation.z == 0)
         {
             _selectedPieceObj.transform.rotation = Quaternion.Euler(0, 0, 360);
+            if (_selectedPiece._PieceName == "P"
+                &&
+                Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
+            {
+                //アンパッサンの処理
+                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
+                {
+                    //移動先のTilePosは原理的に3である
+                    char search = _selectedPieceObj.name[2];
+                    Squere enassantSquere = _inGameManager._SquereArrays[search][2];
+                    enassantSquere._IsOnPiece = true;
+                }
+                else
+                {
+                    //移動先のTilePosは原理的に4である
+                    char search = _selectedPieceObj.name[2];
+                    Squere enassantSquere = _inGameManager._SquereArrays[search][3];
+                    enassantSquere._IsOnPiece = true;
+                    //もちろん、これだけだと次の問題が発生する
+                    //①OneTurnだけ、というタイマー機能が実装されない
+                    //②Poneの攻撃エリアに入ったときのみ反応しなくてはならない
+                    //③Colliderの出現で、該当するターゲットを衝突させないといけない。また衝突情報からどうにかして本体のGameObjectを取得しなければならない
+                }
+            }
         }
         _selectedSquere._IsOnPiece = false;
         if (_targetSquere._IsOnPiece)
