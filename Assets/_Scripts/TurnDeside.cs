@@ -21,11 +21,13 @@ public class TurnDeside : ColorPallet
     Squere _selectedSquere;
     Squere _targetSquere;
     Animator _selectedPieceAnimatorController;
+    Animator _targetPieceAnimatorController; //念入り
     RuntimeAnimatorController _selectedPieceRuntimeAnimator;
-    RuntimeAnimatorController _targetPieceRuntimeAnimator; //念入り
     AnimationCurve _endPositionCurve;
     GameObject _collider2DPrefab;
+    GameObject _targetObj;
     PlayableGraph _playableGraph;
+    AnimationPlayableOutput _animationPlayableOutput;
     bool _temporaryIsEncount;
     private void Start()
     {
@@ -67,16 +69,38 @@ public class TurnDeside : ColorPallet
             //移動先に敵駒がある場合の処理
             //ここのタイミングで呼ぶのは違う
             _temporaryIsEncount = true;
-            DeathAnimationRelay();
+            CollisionEvent.CollisionAction = RegisterTarget;
+            Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
+            // DeathAnimationRelay(); //ここじゃなくて良いかも
         }
         else
         {
-            _temporaryIsEncount = false;
-            _targetSquere._IsOnPiece = true;
+            _temporaryIsEncount = false; //初期化を処理の後ろにするのはあり
         }
-        StartMoveAnimation();
+        _targetSquere._IsOnPiece = true;
+        if (_selectedPiece._IsAttackFirst)
+        {
+            StartAttackAnimation();
+        }
+        else
+        {
+            StartRunAnimation();
+        }
+        //攻撃 → 移動 → Idle
+        //移動 → 攻撃 → Idle の２パターンに分けなければならない
     }
-    void StartMoveAnimation()
+    /// <summary>
+    /// CollisionEvent.csからの衝突情報で移動先にあるGameObjectを取得する
+    /// </summary>
+    void RegisterTarget(GameObject collisionObj)
+    {
+        _targetObj = collisionObj;
+        _targetPieceAnimatorController = collisionObj.GetComponent<Animator>();
+    }
+    /// <summary>
+    /// "Run"アニメーションを作成し、PlayableGraphで再生する。動作が独立している。
+    /// </summary>
+    public void StartRunAnimation()
     {
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
@@ -90,20 +114,19 @@ public class TurnDeside : ColorPallet
         //AnimationClipPlayableを作成
         AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_playableGraph, animationClip);
         //AnimationPlayableOutputを作成してAnimatorと連結
-        AnimationPlayableOutput animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _selectedPieceAnimatorController);
-        //AnimationClipClipPlayableをAnimationPlayableOutputと連結する
-        animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
+        _animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _selectedPieceAnimatorController);
+        _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
         //AnimatorOverrideControllerを使用して差し替え
-        AnimatorOverrideController overrideController = new AnimatorOverrideController(_selectedPieceAnimatorController.runtimeAnimatorController);
-        overrideController["Run"] = animationClip; // 複製したclipに差し替え
-        _selectedPieceAnimatorController.runtimeAnimatorController = overrideController;
+        // AnimatorOverrideController overrideController = new AnimatorOverrideController(_selectedPieceAnimatorController.runtimeAnimatorController);
+        // overrideController["Run"] = animationClip; // 複製したclipに差し替え
+        // _selectedPieceAnimatorController.runtimeAnimatorController = overrideController;
         //再生
-        _playableGraph.Play();
+        _playableGraph.Play();  //途中再生と、一から再生の２パターンある
     }
     /// <summary>
-    /// MoveAnimationの再生後にAnimationEventで１回呼ばれる
+    /// MoveAnimationの再生後にAnimationEventで１回呼ばれる。動作が独立している。
     /// </summary>
-    public void StartAttackAnimation()
+    public void StartAttackAnimation() //移動 → 攻撃 の駒はその後も少し移動する必要がある
     {
         if (_temporaryIsEncount)
         {
@@ -111,8 +134,12 @@ public class TurnDeside : ColorPallet
             _playableGraph.Destroy();
             string search = new string($"{_selectedPiece._PieceName}_Attack");
             _selectedPieceAnimatorController.Play(search);
+            _temporaryIsEncount = false;
         }
     }
+    /// <summary>
+    /// SelectedPieceのIdleAnimationを再生する。動作が独立している。
+    /// </summary>
     public void StartIdleAnimation()
     {
         _playableGraph.Stop();
@@ -121,36 +148,40 @@ public class TurnDeside : ColorPallet
         _selectedPieceAnimatorController.Play(search);
     }
     /// <summary>
-    /// 敵の情報をColliderの衝突で取得するためだけのメソッド（削除予定）
+    /// 敵のTakeHitAnimationを再生する。動作が独立している。
     /// </summary>
-    void DeathAnimationRelay()
+    public void StartTakeHitAnimation()
     {
-        CollisionEvent.CollisionAction = StartDeathAnimation;
-        GameObject collider2DObj = Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
-        int limitTime = 2;
-        Destroy(collider2DObj, limitTime);
+        //TakeHitアニメーションを作成すること
+        string search = new string($"{_targetObj.name.First()}_TakeHit");
+        _targetPieceAnimatorController.Play(search);
     }
     /// <summary>
-    /// 駒があることを検知して実体化されたColliderの衝突情報から呼ばれる
+    /// 敵のDeathAnimationを再生する。動作が独立している。
     /// </summary>
-    void StartDeathAnimation(GameObject collisionObj)
+    public void StartDeathAnimation()
     {
-        _targetPieceRuntimeAnimator = collisionObj.GetComponent<Animator>().runtimeAnimatorController;
-        CustomDeathAnimation();
-        PlayDeathAnimation();
+        string search = new string($"{_targetObj.name.First()}_Death");
+        _targetPieceAnimatorController.Play(search);
     }
-    /// <summary>
-    /// DeathAnimationの編集・設定
-    /// </summary>
-    void CustomDeathAnimation()
-    {
-    }
-    /// <summary>
-    /// DeathAnimationの再生
-    /// </summary>
-    void PlayDeathAnimation()
-    {
-        //DethAnimationの再生
 
+    public void StartStageOutAddForce()
+    {
+        _targetObj.GetComponent<BoxCollider2D>().enabled = false;
+        Rigidbody2D rigidbody2D = _targetObj.GetComponent<Rigidbody2D>();
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        Vector2 duration = new Vector2(0, 0);
+        if (_targetObj.GetComponent<SpriteRenderer>().flipX)
+        {
+            duration = new Vector2(100, 100);
+        }
+        else
+        {
+            duration = new Vector2(-100, 100);
+        }
+        _targetPieceAnimatorController.enabled = false;
+        rigidbody2D.velocity = duration;
+        int destroyTimer = 3;
+        Destroy(_targetObj, destroyTimer);
     }
 }

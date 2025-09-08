@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "SquerePosition", menuName = "ScriptableObject/SquerePosition")]
@@ -18,7 +19,7 @@ public class Squere : ScriptableObject
     void OnEnable()
     {
         _squereID = name;
-        if ("a,b,g,h".Contains(_SquereID))
+        if ("1,2,7,8".Contains(_SquereID.Last()))
         {
             _isOnPiece = true;
         }

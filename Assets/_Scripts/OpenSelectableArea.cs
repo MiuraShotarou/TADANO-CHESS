@@ -6,6 +6,9 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+//特殊ルール群
+//
+
 /// <summary>
 /// _canSelectedTileBaseを描画するためのクラス
 /// </summary>
@@ -131,8 +134,6 @@ public class OpenSelectableArea : ColorPallet
                 _moveAreas[i] = new Vector3Int(0, 0, -1);
             }
         }
-        //_selectedPieceがいる場所を中心に、移動可能領域の座標(_squereID)を求める
-        //そこと一致するsquereを配列の中から全検索し、_isOnPieceがfalseだったら移動可能領域に含める
     }
     void JudgmentAttackArea()
     {
@@ -153,15 +154,12 @@ public class OpenSelectableArea : ColorPallet
                 _attackAreas[i] = new Vector3Int(0, 0, -1);
                 continue;
             }
-            //IsOnpieceが起動していない
-            // Debug.Log(_attackAreas[i]); //2, 1, 0 / 3, 2, 0
             if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
             {
-                Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
-                GameObject collider2DObj = Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
-                Destroy(collider2DObj, i);
+                Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition; 
+                Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
                 //z = -1で次回の検索を回避する
-                _attackAreas[i] =  new Vector3Int(0, 0, -1);
+                _attackAreas[i] = new Vector3Int(0, 0, -1);
             }
             else
             {
@@ -196,7 +194,6 @@ public class OpenSelectableArea : ColorPallet
     /// </summary>
     void RenderingOneLine()
     {
-        // Debug.Log(_renderingAreas.Count);
         if (_renderingAreas.Count == 0)
         {
             _inGameManager.StartSelectTileRelay();
@@ -204,7 +201,6 @@ public class OpenSelectableArea : ColorPallet
         }
         for (int i = 0; i < _renderingAreas.Count; i++)
         {
-            // Debug.Log(_renderingAreas[i]);
             _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].color = _CanSelectedTileColor;
             _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = true;
         }
@@ -225,6 +221,7 @@ public class OpenSelectableArea : ColorPallet
     {
         string[] search = currentSpriteRenderer.gameObject.name.Split("_");
         Squere targetSquere = _inGameManager._SquereArrays[int.Parse(search[0])][int.Parse(search[1])];
+        //地味に大事
         _turnDeside.enabled = true;
         _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetSquere);
     }

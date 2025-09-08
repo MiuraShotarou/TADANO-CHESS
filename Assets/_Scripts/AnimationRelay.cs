@@ -11,16 +11,28 @@ public class AnimationRelay : MonoBehaviour
         _turnDeside.StartAttackAnimation();
     }
 
+    void StartRunAnimationRelay()
+    {
+        _turnDeside.StartRunAnimation();
+    }
+
     void StartIdleAnimationRelay()
     {
         _turnDeside.StartIdleAnimation();
     }
 
-    void OnCollisionEnter2D(Collision2D collision) //SelectedPieceObjが動きはじめたタイミングでDynamicに変更する
+    void StartTakeHitAnimationRelay()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Piece"))
-        {
-            Debug.Log("hoge");
-        }
+        _turnDeside.StartTakeHitAnimation();
+    }
+
+    void StartDeathAnimationRelay()
+    {
+        _turnDeside.StartDeathAnimation();
+    }
+
+    void StartStageOutAddForceRelay()
+    {
+        _turnDeside.StartStageOutAddForce();
     }
 }

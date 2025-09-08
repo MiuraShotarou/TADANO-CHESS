@@ -20,17 +20,17 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -3.92, y: -2.7, z: 0}
+        value: {x: 0.298158, y: -0.2157014, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 3.0700002, y: 0, z: 0}
+        outSlope: {x: 0.36184204, y: 0.3157014, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0, y: 0, z: 0.33333334}
         outWeight: {x: 0, y: 0, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: -0.85, y: -2.7, z: 0}
-        inSlope: {x: 3.0700002, y: 0, z: 0}
+        value: {x: 0.66, y: 0.1, z: 0}
+        inSlope: {x: 0.36184204, y: 0.3157014, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
