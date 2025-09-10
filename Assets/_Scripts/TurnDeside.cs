@@ -259,13 +259,40 @@ public class TurnDeside : ColorPallet
 
     public void StartRotateRockInstantiate()
     {
-        Vector3 InstantiatePos = _selectedPieceObj.transform.position;
-        if (_isDirectionRight)
+        //生成場所 → -3.5 + -3.26 → 4.35 + 5.53, X == 0.24 Y == 1.2
+        Vector3 instantiatePos = _selectedPieceObj.transform.position;
+        Vector3 adjustPos = new  Vector3(0.24f, 1.2f, 0);
+        if (!_isDirectionRight)
         {
-            
+            adjustPos = new Vector3(-0.24f, 1.2f, 0);
         }
-        float x  = InstantiatePos.x ;
         Instantiate(_rotateRockPrefab, _selectedPieceObj.transform.position, _selectedPieceObj.transform.rotation);
+    }
+    /// <summary>
+    /// ルークの攻撃モーション「投石」の石が始点から終点に向かって回転していくだけのAnimationを再生する。動作が独立している。
+    /// </summary>
+    public void StartRotateRockAnimation()
+    {
+        AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
+        AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
+        //"Run"という名前のついたanimationClipからコピーを新規作成
+        AnimationClip animationClip = _selectedPieceRuntimeAnimator.animationClips.FirstOrDefault(clip => clip.name.Contains("Run")); 
+        //新しく作成・編集したAnimationCurveをAnimationClipに代入する
+        animationClip.SetCurve("", typeof(Transform), "localPosition.x", animationCurveX);
+        animationClip.SetCurve("", typeof(Transform), "localPosition.y", animationCurveY);
+        //PlayableGraphを作成
+        _playableGraph = PlayableGraph.Create();
+        //AnimationClipPlayableを作成
+        AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_playableGraph, animationClip);
+        //AnimationPlayableOutputを作成してAnimatorと連結
+        _animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _selectedPieceAnimatorController);
+        _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
+        //AnimatorOverrideControllerを使用して差し替え
+        // AnimatorOverrideController overrideController = new AnimatorOverrideController(_selectedPieceAnimatorController.runtimeAnimatorController);
+        // overrideController["Run"] = animationClip; // 複製したclipに差し替え
+        // _selectedPieceAnimatorController.runtimeAnimatorController = overrideController;
+        //再生
+        _playableGraph.Play();  //途中再生と、一から再生の２パターンある
     }
     void EndTurn()
     {
