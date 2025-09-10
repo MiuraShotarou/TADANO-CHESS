@@ -126,7 +126,10 @@ public class OpenSelectableArea : ColorPallet
             int number = _moveAreas[i].x;
             if (-1 < alphabet && 8 > alphabet && -1 < number && 8 > number //盤内のマスであればtrue
                 &&
-                !_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
+                !_inGameManager._SquereArrays[alphabet][number]._IsOnPiece
+                &&
+                //enpassantでないなら通す
+                !(_selectedPiece._PieceName == "P" && _inGameManager._SquereArrays[alphabet][number]._IsActiveEnpassant))
             {
                 _renderingAreas.Add(_moveAreas[i]);
             }
@@ -155,7 +158,10 @@ public class OpenSelectableArea : ColorPallet
                 _attackAreas[i] = new Vector3Int(0, 0, -1);
                 continue;
             }
-            if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece)
+            if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece
+                ||
+                //enpassant可能であれば通過する
+                (_selectedPiece._PieceName == "P" && _inGameManager._SquereArrays[alphabet][number]._IsActiveEnpassant))
             {
                 Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition; 
                 Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
@@ -172,13 +178,21 @@ public class OpenSelectableArea : ColorPallet
     /// 駒があることを検知して実体化されたColliderの衝突情報から呼ばれる
     /// </summary>
     /// <param name="collisionObj"></param>
-    protected void JudgmentGroup(GameObject collisionObj)
+    void JudgmentGroup(GameObject collisionObj)
     {
         SpriteRenderer spriteRenderer = collisionObj.GetComponent<SpriteRenderer>();
-        if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX != spriteRenderer.flipX)
+        //enpassantを取得したら → Pone以外の駒の場合はColliderを出現させないようにしているのでOK
+        if (!spriteRenderer)
         {
             string[] search = collisionObj.name.Split("_");
-            Vector3Int enemyTilePos  = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])]._SquereTilePos;
+            Vector3Int enemyTilePos = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])]._SquereTilePos;
+            _renderingAreas.Add(enemyTilePos);
+            //DrawOutlineを回避しないといけない
+        }
+        else if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX != spriteRenderer.flipX)
+        {
+            string[] search = collisionObj.name.Split("_");
+            Vector3Int enemyTilePos = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])]._SquereTilePos;
             _renderingAreas.Add(enemyTilePos);
             DrawOutline(collisionObj);
         }
@@ -187,7 +201,10 @@ public class OpenSelectableArea : ColorPallet
     void DrawOutline(GameObject obj)
     {
         SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
-        spriteRenderer.color = Color.white;
+        if (spriteRenderer)
+        {
+            spriteRenderer.color = Color.white;
+        }
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
     }
     /// <summary>
@@ -221,6 +238,8 @@ public class OpenSelectableArea : ColorPallet
     public void TurnDesideRelay(SpriteRenderer currentSpriteRenderer)
     {
         string[] search = currentSpriteRenderer.gameObject.name.Split("_");
+        //ここでもGameObjectの名前で検索している
+        //描画する時は偽のポジション、攻撃対象のオブジェクトは真を取得しなければならない → 名前は偽のポジション名・敵のオブジェクトはParent設定で取得する
         Squere targetSquere = _inGameManager._SquereArrays[int.Parse(search[0])][int.Parse(search[1])];
         //地味に大事
         _turnDeside.enabled = true;

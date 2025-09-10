@@ -8,24 +8,25 @@ public class Squere : ScriptableObject
     [SerializeField] Vector3 _squereTileWorldPosition;
     [SerializeField] Vector3Int _squereTilePos;
     string _squereID;
-    bool _isOnPiece;
     //駒にとって都合の良い座標
     public Vector2 _SquerePiecePosition => _squerePiecePosition;
     public Vector3 _SquereTileWorldPosition => _squereTileWorldPosition;
     //Tilemapにとって都合の良い座標
     public Vector3Int _SquereTilePos => _squereTilePos;
     public string _SquereID => _squereID;
-    public bool _IsOnPiece {get => _isOnPiece; set => _isOnPiece = value;}
+    public bool _IsOnPiece {get; set;}
+    public bool _IsActiveEnpassant { get; set; }
     void OnEnable()
     {
         _squereID = name;
         if ("1,2,7,8".Contains(_SquereID.Last()))
         {
-            _isOnPiece = true;
+            _IsOnPiece = true;
         }
         else
         {
-            _isOnPiece = false;
+            _IsOnPiece = false;
         }
+        _IsActiveEnpassant = false;
     }
 }

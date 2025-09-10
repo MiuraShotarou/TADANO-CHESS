@@ -35,4 +35,14 @@ public class AnimationRelay : MonoBehaviour
     {
         _turnDeside.StartStageOutAddForce();
     }
+
+    void StartAdjustFlipXRelay()
+    {
+        _turnDeside.StartAdjustFlipX();
+    }
+
+    void StartRotateRockInstantiateRelay()
+    {
+        _turnDeside.StartRotateRockInstantiate();
+    }
 }

@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
 //アンパッサンを実装する
+//アクティブアンパッサンの後処理
+//Colliderのデストロイタイミング
 /// <summary>
 /// 駒が目標地点まで移動していく処理を実装するクラス
 /// </summary>
@@ -15,20 +18,25 @@ public class TurnDeside : ColorPallet
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea; //いらないかも
     CollisionEvent _collisionEvent; //いらない
-    SpriteRenderer _selectedSpriteRenderer; //移動後の透明化用
+    SpriteRenderer _selectedTileSpriteRenderer; //移動後の透明化用
     GameObject _selectedPieceObj;
     Piece _selectedPiece;
     Squere _selectedSquere;
     Squere _targetSquere;
     Animator _selectedPieceAnimatorController;
-    Animator _targetPieceAnimatorController; //念入り
+    Animator _targetPieceAnimatorController;
     RuntimeAnimatorController _selectedPieceRuntimeAnimator;
     AnimationCurve _endPositionCurve;
     GameObject _collider2DPrefab;
+    GameObject _rotateRockPrefab;
     GameObject _targetObj;
+    GameObject _enpassantObj;
     PlayableGraph _playableGraph;
     AnimationPlayableOutput _animationPlayableOutput;
-    bool _temporaryIsEncount;
+    bool _isDirectionRight;
+    float _direction;
+    float _Direction { get {return _direction ;} set { _direction = value; if (_direction < 0){ _isDirectionRight = false; } else {_isDirectionRight = true;}}}
+    
     private void Start()
     {
         _inGameManager = GetComponent<InGameManager>();
@@ -46,8 +54,9 @@ public class TurnDeside : ColorPallet
     /// <param name="targetSquere"></param>
     public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
     {
+        Debug.Log("StartTurnDeside");
         //引数をキャッシュ化
-        _selectedSpriteRenderer = currentSpriteRenderer;
+        _selectedTileSpriteRenderer = currentSpriteRenderer;
         _selectedPieceObj = selectedPieceObj;
         _selectedPiece = selectedPiece;
         _selectedSquere = selectedSquere;
@@ -59,67 +68,56 @@ public class TurnDeside : ColorPallet
         updateName[2] = (char)('0' + _targetSquere._SquereTilePos.y);
         updateName[4] = (char)('0' + _targetSquere._SquereTilePos.x);
         _selectedPieceObj.name = new string(updateName);
+        _selectedSquere._IsOnPiece = false;
+        _Direction = _targetSquere._SquereTilePos.x - _selectedSquere._SquereTilePos.x;
+        // Destroy(_enpassantObj); → どこで削除するべきか
+        // _enpassantObj = null;//念入り
+        //初めて移動した駒であればrotation.zは 0 という勝手な仕様
         if (_selectedPieceObj.transform.rotation.z == 0)
         {
+            //OpenSelectableAreaで利用する
             _selectedPieceObj.transform.rotation = Quaternion.Euler(0, 0, 360);
-            if (_selectedPiece._PieceName == "P"
-                &&
-                Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
-            {
-                //アンパッサンの処理
-                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
-                {
-                    //移動先のTilePosは原理的に3である
-                    char search = _selectedPieceObj.name[2];
-                    Squere enassantSquere = _inGameManager._SquereArrays[search][2];
-                    enassantSquere._IsOnPiece = true;
-                }
-                else
-                {
-                    //移動先のTilePosは原理的に4である
-                    char search = _selectedPieceObj.name[2];
-                    Squere enassantSquere = _inGameManager._SquereArrays[search][3];
-                    enassantSquere._IsOnPiece = true;
-                    //もちろん、これだけだと次の問題が発生する
-                    //①OneTurnだけ、というタイマー機能が実装されない
-                    //②Poneの攻撃エリアに入ったときのみ反応しなくてはならない
-                    //③Colliderの出現で、該当するターゲットを衝突させないといけない。また衝突情報からどうにかして本体のGameObjectを取得しなければならない
-                }
-            }
         }
-        _selectedSquere._IsOnPiece = false;
-        if (_targetSquere._IsOnPiece)
+        //Collider生成のif文
+        if (_targetSquere._IsOnPiece) //enpassantの判断後にこれも判断すれば良い
         {
             //移動先に敵駒がある場合の処理
-            //ここのタイミングで呼ぶのは違う
-            _temporaryIsEncount = true;
             CollisionEvent.CollisionAction = RegisterTarget;
             Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
-            // DeathAnimationRelay(); //ここじゃなくて良いかも
         }
-        else
+        else if (_targetSquere._IsActiveEnpassant)
         {
-            _temporaryIsEncount = false; //初期化を処理の後ろにするのはあり
+            CollisionEvent.CollisionAction = RegisterEnpassantTarget; //親オブジェクトを取得するためのメソッドを登録する;
+            Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
         }
-        _targetSquere._IsOnPiece = true;
-        if (_selectedPiece._IsAttackFirst)
-        {
-            StartAttackAnimation();
-        }
-        else
-        {
-            StartRunAnimation();
-        }
+        //Animation再生のif文
+        StartRunAnimation();
         //攻撃 → 移動 → Idle
         //移動 → 攻撃 → Idle の２パターンに分けなければならない
     }
     /// <summary>
-    /// CollisionEvent.csからの衝突情報で移動先にあるGameObjectを取得する
+    /// CollisionEvent.csからの衝突情報で移動先にあるtargetObjを取得する
     /// </summary>
     void RegisterTarget(GameObject collisionObj)
     {
         _targetObj = collisionObj;
-        _targetPieceAnimatorController = collisionObj.GetComponent<Animator>();
+        _targetPieceAnimatorController = _targetObj.GetComponent<Animator>();
+    }
+    /// <summary>
+    /// CollisionEvent.csからの衝突情報で移動先にあるオブジェクトから親に指定されているtargetObjを取得する
+    /// </summary>
+    /// <param name="collisionObj"></param>
+    void RegisterEnpassantTarget(GameObject collisionObj)
+    {
+        if (collisionObj.name.First() == 'U')
+        {
+            _targetObj = collisionObj.transform.parent.gameObject;
+            _targetPieceAnimatorController = _targetObj.GetComponent<Animator>();
+            string[] search = _targetObj.name.Split("_");
+            Squere onEnemySquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
+            //unpassantにより倒される敵の下にあるSuereの_IsOnPieceを更新する
+            onEnemySquere._IsOnPiece = false;
+        }
     }
     /// <summary>
     /// "Run"アニメーションを作成し、PlayableGraphで再生する。動作が独立している。
@@ -152,17 +150,27 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartAttackAnimation() //移動 → 攻撃 の駒はその後も少し移動する必要がある
     {
-        if (_temporaryIsEncount)
+        //enpassantであれば
+        if (_selectedPiece._PieceName == "P"
+            &&
+            _targetSquere._IsActiveEnpassant)
         {
             _playableGraph.Stop();
             _playableGraph.Destroy();
-            string search = new string($"{_selectedPiece._PieceName}_Attack");
+            _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_selectedPieceObj.GetComponent<SpriteRenderer>().flipX; //攻撃するPieceの向いている方向を反転する
+            _selectedPieceAnimatorController.Play("P_Attack");
+            _targetSquere._IsActiveEnpassant = false;
+        }
+        else if (_targetSquere._IsOnPiece)
+        {
+            _playableGraph.Stop();
+            _playableGraph.Destroy();
+            string search = $"{_selectedPiece._PieceName}_Attack";
             _selectedPieceAnimatorController.Play(search);
-            _temporaryIsEncount = false;
         }
     }
     /// <summary>
-    /// SelectedPieceのIdleAnimationを再生する。動作が独立している。
+    /// SelectedPieceのIdleAnimationを再生する。動作が独立している。TurnDesid.csが処理をしなくなる直前に必ず１回呼び出される。
     /// </summary>
     public void StartIdleAnimation()
     {
@@ -170,6 +178,31 @@ public class TurnDeside : ColorPallet
         _playableGraph.Destroy();
         string search = new string($"{_selectedPiece._PieceName}_Idle");
         _selectedPieceAnimatorController.Play(search);
+        //ターンを終えた後の処理
+        EndTurn();
+        //Poneが移動した後にアンパッサン・プロモーションの発生を判断する
+        if (_selectedPiece._PieceName == "P")
+        {
+            //被アンパッサン（状況作成側）の処理
+            if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
+            {
+                bool isWhite;
+                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
+                {
+                    isWhite = true;
+                }
+                else
+                {
+                    isWhite = false;
+                }
+                CreateEnpassant(isWhite);
+                //_enpassantObj == true
+            }
+            // else if (//プロモーションであるならば)
+            // {
+            //     
+            // }
+        }
     }
     /// <summary>
     /// 敵のTakeHitAnimationを再生する。動作が独立している。
@@ -185,7 +218,7 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartDeathAnimation()
     {
-        string search = new string($"{_targetObj.name.First()}_Death");
+        string search = new string($"{_targetObj.name.First()}_Death"); //_targetobjがnull
         _targetPieceAnimatorController.Play(search);
     }
 
@@ -195,17 +228,83 @@ public class TurnDeside : ColorPallet
         Rigidbody2D rigidbody2D = _targetObj.GetComponent<Rigidbody2D>();
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
         Vector2 duration = new Vector2(0, 0);
-        if (_targetObj.GetComponent<SpriteRenderer>().flipX)
+        if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
         {
-            duration = new Vector2(100, 100);
+            duration = new Vector2(-100, 100);
         }
         else
         {
-            duration = new Vector2(-100, 100);
+            duration = new Vector2(100, 100);
         }
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
         int destroyTimer = 3;
         Destroy(_targetObj, destroyTimer);
+    }
+    /// <summary>
+    /// 適宜、flipXを反転させるAnimation。ほとんどのAnimationClipで再生時にEventとして呼ばれる
+    /// /// </summary>
+    public void StartAdjustFlipX()
+    {
+        //向かっていく方向によって決まる → Directionを取得すれば良い → ここの set をして、AnimationEventに割り当てる
+        if (_isDirectionRight)
+        {
+            _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else
+        {
+            _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = true;
+        }
+    }
+
+    public void StartRotateRockInstantiate()
+    {
+        Vector3 InstantiatePos = _selectedPieceObj.transform.position;
+        if (_isDirectionRight)
+        {
+            
+        }
+        float x  = InstantiatePos.x ;
+        Instantiate(_rotateRockPrefab, _selectedPieceObj.transform.position, _selectedPieceObj.transform.rotation);
+    }
+    void EndTurn()
+    {
+        Squere movedSquere = _targetSquere;
+        movedSquere._IsOnPiece = true; //ここまでにはtargetSquereを移動先の状態にしたい
+    }
+    /// <summary>
+    /// 特殊ルール"アンパッサン"のシチュエーションを作成する処理
+    /// </summary>
+    /// <param name="isWhite"></param>
+    public void CreateEnpassant(bool isWhite)
+    {
+        string[] selectedPieceObjName = _selectedPieceObj.name.Split("_"); //P_alphabet_number
+        int alphabet = int.Parse(selectedPieceObjName[1]);
+        int enpassantNumber;
+        if (isWhite)
+        {
+            //WhitePieceのenpassant座標Xは必然的に[2]である
+            enpassantNumber = 2;
+            Squere enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
+            enpassantSquere._IsActiveEnpassant = true;
+            //enpassantObjの生成・複製・無効化
+            _enpassantObj = Instantiate(_collider2DPrefab, enpassantSquere._SquerePiecePosition, Quaternion.identity);
+            _enpassantObj.layer = LayerMask.NameToLayer("Piece");
+            _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
+            //ennpassantObjの名前をポジションと同一にする
+            _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");
+        }
+        else
+        {
+            //WhitePieceのenpassant座標Xは必然的に[5]である
+            enpassantNumber = 5;
+            Squere enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
+            enpassantSquere._IsActiveEnpassant = true;
+            _enpassantObj = Instantiate(_collider2DPrefab, enpassantSquere._SquerePiecePosition, Quaternion.identity);
+            Debug.Log($"{enpassantSquere._SquerePiecePosition}, {_enpassantObj.transform.position}");
+            _enpassantObj.layer = LayerMask.NameToLayer("Piece");
+            _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
+            _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");
+        }
     }
 }
