@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 /// <summary>
 /// OpenSelectableAreaで新規生成したPieceクラスに特有の機能を追加する
 /// </summary>
-public class AddPieceFunction : MonoBehaviour
+public class AddPieceFunction : UIManager
 {
     public Piece UpdatePoneGroup(Piece piece)
     {
@@ -15,5 +17,12 @@ public class AddPieceFunction : MonoBehaviour
         piece._MoveCount = () => 2;
         return piece;
     }
+    // public GameObject Promotion()
+    // {
+    //     string promotionPieceName = ActivePromotionPanel();
+    //     //文字列を頼りにResources.Loadで変更後のGameObjectをreturnしていく仕様に
+    //     //正直、後回しでも良いような気がしてきた
+    //     
+    // }
 }
 

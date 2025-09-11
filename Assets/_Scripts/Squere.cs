@@ -5,12 +5,12 @@ using UnityEngine.Serialization;
 public class Squere : ScriptableObject
 {
     [SerializeField, FormerlySerializedAs("_squerePosition")] Vector2 _squerePiecePosition;
-    [SerializeField] Vector3 _squereTileWorldPosition;
     [SerializeField] Vector3Int _squereTilePos;
+    [SerializeField] Vector2 _miniBordPos ;
     string _squereID;
     //駒にとって都合の良い座標
     public Vector2 _SquerePiecePosition => _squerePiecePosition;
-    public Vector3 _SquereTileWorldPosition => _squereTileWorldPosition;
+    public Vector3 _MiniBordPos => _miniBordPos;
     //Tilemapにとって都合の良い座標
     public Vector3Int _SquereTilePos => _squereTilePos;
     public string _SquereID => _squereID;

@@ -3,22 +3,22 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
-//アンパッサンを実装する
-//アクティブアンパッサンの後処理
 //Colliderのデストロイタイミング
 /// <summary>
-/// 駒が目標地点まで移動していく処理を実装するクラス
+/// 駒が目標地点まで移動していくまでの処理を実装するクラス
 /// </summary>
 public class TurnDeside : ColorPallet
 {
     InGameManager _inGameManager;
-    OpenSelectableArea _openSelectableArea; //いらないかも
+    OpenSelectableArea _openSelectableArea;
+    AddPieceFunction _addPieceFunction;
     CollisionEvent _collisionEvent; //いらない
     SpriteRenderer _selectedTileSpriteRenderer; //移動後の透明化用
     GameObject _selectedPieceObj;
     Piece _selectedPiece;
     Squere _selectedSquere;
     Squere _targetSquere;
+    Squere _enpassantSquere;
     Animator _selectedPieceAnimatorController;
     Animator _targetPieceAnimatorController;
     RuntimeAnimatorController _selectedPieceRuntimeAnimator;
@@ -30,6 +30,7 @@ public class TurnDeside : ColorPallet
     GameObject _targetObj;
     GameObject _enpassantObj;
     // GameObject _hitStopObj;
+    private GameObject _promotionObj; //試験的
     PlayableGraph _playableGraph;
     AnimationPlayableOutput _animationPlayableOutput;
     bool _isDirectionRight;
@@ -71,8 +72,6 @@ public class TurnDeside : ColorPallet
         _selectedPieceObj.name = new string(updateName);
         _selectedSquere._IsOnPiece = false;
         _Direction = _targetSquere._SquereTilePos.x - _selectedSquere._SquereTilePos.x;
-        // Destroy(_enpassantObj); → どこで削除するべきか
-        // _enpassantObj = null;//念入り
         //初めて移動した駒であればrotation.zは 0 という勝手な仕様
         if (_selectedPieceObj.transform.rotation.z == 0)
         {
@@ -139,10 +138,6 @@ public class TurnDeside : ColorPallet
         //AnimationPlayableOutputを作成してAnimatorと連結
         _animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _selectedPieceAnimatorController);
         _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
-        //AnimatorOverrideControllerを使用して差し替え
-        // AnimatorOverrideController overrideController = new AnimatorOverrideController(_selectedPieceAnimatorController.runtimeAnimatorController);
-        // overrideController["Run"] = animationClip; // 複製したclipに差し替え
-        // _selectedPieceAnimatorController.runtimeAnimatorController = overrideController;
         //再生
         _playableGraph.Play();
     }
@@ -182,29 +177,6 @@ public class TurnDeside : ColorPallet
         _selectedPieceAnimatorController.Play(search);
         //ターンを終えた後の処理
         EndTurn();
-        //Poneが移動した後にアンパッサン・プロモーションの発生を判断する
-        if (_selectedPiece._PieceName == "P")
-        {
-            //被アンパッサン（状況作成側）の処理
-            if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
-            {
-                bool isWhite;
-                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
-                {
-                    isWhite = true;
-                }
-                else
-                {
-                    isWhite = false;
-                }
-                CreateEnpassant(isWhite);
-                //_enpassantObj == true
-            }
-            // else if (//プロモーションであるならば)
-            // {
-            //     
-            // }
-        }
     }
     /// <summary>
     /// 敵のTakeHitAnimationを再生する。動作が独立している。
@@ -221,7 +193,6 @@ public class TurnDeside : ColorPallet
     public void StartDeathAnimation()
     {
         // _hitStopObj.SetActive(true);
-        Debug.Log(_targetObj==null);
         string search = new string($"{_targetObj.name.First()}_Death"); //_targetobjがnull
         _targetPieceAnimatorController.Play(search);
     }
@@ -297,6 +268,42 @@ public class TurnDeside : ColorPallet
     {
         Squere movedSquere = _targetSquere;
         movedSquere._IsOnPiece = true; //ここまでにはtargetSquereを移動先の状態にしたい
+        if (_enpassantSquere) {_enpassantSquere._IsActiveEnpassant = false;}
+        Destroy(_enpassantObj);
+        _openSelectableArea.BeforeRendereringClear();
+        //Poneが移動した後にアンパッサン・プロモーションの発生を判断する
+        if (_selectedPiece._PieceName == "P")
+        {
+            //被アンパッサン（状況作成側）の処理
+            if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
+            {
+                bool isWhite;
+                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
+                {
+                    isWhite = true;
+                }
+                else
+                {
+                    isWhite = false;
+                }
+                CreateEnpassant(isWhite);
+                //_enpassantObj == true
+            }
+            else if (_targetSquere._SquereID.Contains("1, 8"))
+            {
+                // //プロモーションを行う処理
+                // _promotionObj　= _addPieceFunction.Promotion(); //上手くいけばUI選択で入力があるのまで動かないようにできるかも
+                // //①ユーザーの待機処理
+                // //②ゲームオブジェクトそのものを別の物にすり替える → Animator, ColliderとかもあるからGameObjectごと変更するのが最適かも
+                // //③gameObjectの名前を書き換え
+                // //④
+                // string[] search = _promotionObj.name.Split('_');
+                // Destroy(_selectedPieceObj);
+                // _selectedPieceObj = Instantiate(_promotionObj, )
+            }
+        }
+        //
+        //次のターンへ
     }
     /// <summary>
     /// 特殊ルール"アンパッサン"のシチュエーションを作成する処理
@@ -311,10 +318,10 @@ public class TurnDeside : ColorPallet
         {
             //WhitePieceのenpassant座標Xは必然的に[2]である
             enpassantNumber = 2;
-            Squere enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
-            enpassantSquere._IsActiveEnpassant = true;
+            _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
+            _enpassantSquere._IsActiveEnpassant = true;
             //enpassantObjの生成・複製・無効化
-            _enpassantObj = Instantiate(_collider2DPrefab, enpassantSquere._SquerePiecePosition, Quaternion.identity);
+            _enpassantObj = Instantiate(_collider2DPrefab, _enpassantSquere._SquerePiecePosition, Quaternion.identity);
             _enpassantObj.layer = LayerMask.NameToLayer("Piece");
             _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
             //ennpassantObjの名前をポジションと同一にする
@@ -324,9 +331,9 @@ public class TurnDeside : ColorPallet
         {
             //WhitePieceのenpassant座標Xは必然的に[5]である
             enpassantNumber = 5;
-            Squere enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
-            enpassantSquere._IsActiveEnpassant = true;
-            _enpassantObj = Instantiate(_collider2DPrefab, enpassantSquere._SquerePiecePosition, Quaternion.identity);
+            _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
+            _enpassantSquere._IsActiveEnpassant = true;
+            _enpassantObj = Instantiate(_collider2DPrefab, _enpassantSquere._SquerePiecePosition, Quaternion.identity);
             _enpassantObj.layer = LayerMask.NameToLayer("Piece");
             _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
             _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");

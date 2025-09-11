@@ -31,6 +31,8 @@ public class OpenSelectableArea : ColorPallet
     int _prefabCount = 0;
     GameObject _collider2DPrefab;
     int _PrefabCount {get {return _prefabCount;} set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();};}}
+    private bool _isShortCasting;
+    private bool _isLongCasting; //試験的
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
@@ -71,6 +73,10 @@ public class OpenSelectableArea : ColorPallet
                 _selectedPiece = _addPieceFunction.AddMoveCount(_selectedPiece);
             }
         }
+        else if (_selectedPiece._PieceName == "K") //チェックされていない、Kの通過するマスが攻撃範囲に入っていない
+        {
+            
+        }
         _selectedSquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
         _pieceMoveCount = _selectedPiece._MoveCount();
         Initialize();
@@ -81,7 +87,7 @@ public class OpenSelectableArea : ColorPallet
         //移動可能領域に_selectedTileを描画する
         //Animatoinの再生（描画が出来れば良い）
     }
-    void BeforeRendereringClear()
+    public void BeforeRendereringClear()
     {
         SpriteRenderer spriteRenderer = _selectedPieceObj.GetComponent<SpriteRenderer>();
         spriteRenderer.color = _UnSelectedPieceColor;
@@ -141,7 +147,7 @@ public class OpenSelectableArea : ColorPallet
     }
     void JudgmentAttackArea()
     {
-        _PrefabCount = _attackAreas.Length;
+        _PrefabCount = _attackAreas.Length; //K が一度も動いていない場合、+ 1した時に必ずルークがいるであろう２つのマスを追加する
         for (int i = 0; i < _attackAreas.Length; i++)
         {
             if (_attackAreas[i].z == -1)
@@ -163,7 +169,8 @@ public class OpenSelectableArea : ColorPallet
                 //enpassant可能であれば通過する
                 (_selectedPiece._PieceName == "P" && _inGameManager._SquereArrays[alphabet][number]._IsActiveEnpassant))
             {
-                Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition; 
+                Debug.Log(_inGameManager._SquereArrays[alphabet][number]._SquereID + _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition);
+                Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
                 Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
                 //z = -1で次回の検索を回避する
                 _attackAreas[i] = new Vector3Int(0, 0, -1);
@@ -172,6 +179,7 @@ public class OpenSelectableArea : ColorPallet
             {
                 _PrefabCount--;
             }
+            if (_PrefabCount > 0){Debug.Log("");}
         }
     }
     /// <summary>

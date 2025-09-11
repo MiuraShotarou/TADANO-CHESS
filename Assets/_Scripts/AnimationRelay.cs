@@ -35,7 +35,6 @@ public class AnimationRelay : MonoBehaviour
 
     void StartDeathAnimationRelay()
     {
-        Debug.Log(_turnDeside == null);
         _turnDeside.StartDeathAnimation();
     }
 
