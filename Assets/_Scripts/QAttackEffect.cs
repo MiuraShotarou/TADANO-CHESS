@@ -10,10 +10,10 @@ public class QAttackEffect : AnimationRelay
     }
     void OnEnable()
     {
-        StartBAttackEffectAnimation();
+        StartQAttackEffectAnimation();
     }
 
-    void StartBAttackEffectAnimation()
+    void StartQAttackEffectAnimation()
     {
         _QAttackEffectAnimatorController.Play("Q_AttackEffect");
     }

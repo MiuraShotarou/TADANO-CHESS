@@ -35,6 +35,7 @@ public class AnimationRelay : MonoBehaviour
 
     void StartDeathAnimationRelay()
     {
+        Debug.Log(_turnDeside == null);
         _turnDeside.StartDeathAnimation();
     }
 
@@ -47,10 +48,26 @@ public class AnimationRelay : MonoBehaviour
     {
         _turnDeside.StartAdjustFlipX();
     }
-
-    void StartRockRotatePichingRelay()
+    /// <summary>
+    /// ルークの投石オブジェクトをアクティブにするメソッド。R_AttackEffect内のAnimationEventからしか呼ばれない
+    /// </summary>
+    void StartRAttackEffectRelay()
     {
         _turnDeside.StartRAttackEffect();
+    }
+    /// <summary>
+    /// ビショップの魔弾オブジェクトをアクティブにするメソッド。B_AttackEffect内のAnimationEventからしか呼ばれない
+    /// </summary>
+    void StartBAttackEffectRelay()
+    {
+        _turnDeside.StartBAttackEffect();
+    }
+    /// <summary>
+    /// クイーンの火炎放射オブジェクトをアクティブにするメソッド。Q_AttackEffect内のAnimationEventからしか呼ばれない
+    /// </summary>
+    void StartQAttackEffectRelay()
+    {
+        _turnDeside.StartQAttackEffect();
     }
     // void PauseAnimator()
     // {

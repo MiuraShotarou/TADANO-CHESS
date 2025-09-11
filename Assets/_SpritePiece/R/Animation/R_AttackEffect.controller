@@ -54,7 +54,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Rotate_Rock_000
+  m_Name: R_AttackEffect
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:

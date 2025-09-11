@@ -2126,7 +2126,7 @@ GameObject:
   - component: {fileID: 95864443}
   - component: {fileID: 95864446}
   - component: {fileID: 95864445}
-  - component: {fileID: 95864444}
+  - component: {fileID: 95864447}
   m_Layer: 0
   m_Name: (G)B_AttackEffect
   m_TagString: Untagged
@@ -2149,20 +2149,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1218987140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &95864444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95864442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8729379ab7e48064581070888aef4244, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 0}
-  _targetPos: {x: 0, y: 0, z: 0}
 --- !u!95 &95864445
 Animator:
   serializedVersion: 5
@@ -2236,6 +2222,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &95864447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95864442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 005a979a1c5c3714f9dc8f922c035495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &112218665
 GameObject:
   m_ObjectHideFlags: 0
@@ -7207,8 +7206,8 @@ GameObject:
   m_Component:
   - component: {fileID: 412427735}
   - component: {fileID: 412427734}
-  - component: {fileID: 412427736}
   - component: {fileID: 412427733}
+  - component: {fileID: 412427736}
   - component: {fileID: 412427731}
   - component: {fileID: 412427737}
   - component: {fileID: 412427738}
@@ -31102,7 +31101,7 @@ GameObject:
   - component: {fileID: 1796301211}
   - component: {fileID: 1796301213}
   m_Layer: 0
-  m_Name: (G)Q_AttackEffect (1)
+  m_Name: (G)Q_AttackEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31208,7 +31207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c424eaaca1bf1247b8faf5585312e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 0}
+  _turnDeside: {fileID: 1218987144}
 --- !u!1 &1812308405
 GameObject:
   m_ObjectHideFlags: 0
