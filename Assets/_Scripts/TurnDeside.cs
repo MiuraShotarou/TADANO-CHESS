@@ -28,9 +28,11 @@ public class TurnDeside : ColorPallet
     RuntimeAnimatorController _selectedPieceRuntimeAnimator;
     AnimationCurve _endPositionCurve;
     GameObject _collider2DPrefab;
-    GameObject _rotateRockPrefab;
+    GameObject _rotateRockObj;
+    GameObject _BAttackEffectObj;
     GameObject _targetObj;
     GameObject _enpassantObj;
+    // GameObject _hitStopObj;
     PlayableGraph _playableGraph;
     AnimationPlayableOutput _animationPlayableOutput;
     bool _isDirectionRight;
@@ -43,6 +45,9 @@ public class TurnDeside : ColorPallet
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _collider2DPrefab = _inGameManager._Collider2DPrefab;
         _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
+        _rotateRockObj = transform.GetChild(0).gameObject;
+        _BAttackEffectObj = transform.GetChild(1).gameObject;
+        // _hitStopObj = transform.GetChild(2?).gameObject;
     }
     /// <summary>
     /// _SelectedTileSprite上でマウスクリックされた時に一度だけ呼び出される
@@ -54,7 +59,6 @@ public class TurnDeside : ColorPallet
     /// <param name="targetSquere"></param>
     public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
     {
-        Debug.Log("StartTurnDeside");
         //引数をキャッシュ化
         _selectedTileSpriteRenderer = currentSpriteRenderer;
         _selectedPieceObj = selectedPieceObj;
@@ -124,6 +128,7 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartRunAnimation()
     {
+        //knightの時は攻撃の移動に合わせて始点と終点を指定したい
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
         //"Run"という名前のついたanimationClipからコピーを新規作成
@@ -143,7 +148,7 @@ public class TurnDeside : ColorPallet
         // overrideController["Run"] = animationClip; // 複製したclipに差し替え
         // _selectedPieceAnimatorController.runtimeAnimatorController = overrideController;
         //再生
-        _playableGraph.Play();  //途中再生と、一から再生の２パターンある
+        _playableGraph.Play();
     }
     /// <summary>
     /// MoveAnimationの再生後にAnimationEventで１回呼ばれる。動作が独立している。
@@ -167,6 +172,7 @@ public class TurnDeside : ColorPallet
             _playableGraph.Destroy();
             string search = $"{_selectedPiece._PieceName}_Attack";
             _selectedPieceAnimatorController.Play(search);
+            _targetSquere._IsOnPiece = false;
         }
     }
     /// <summary>
@@ -218,6 +224,7 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartDeathAnimation()
     {
+        // _hitStopObj.SetActive(true);
         string search = new string($"{_targetObj.name.First()}_Death"); //_targetobjがnull
         _targetPieceAnimatorController.Play(search);
     }
@@ -256,43 +263,30 @@ public class TurnDeside : ColorPallet
             _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = true;
         }
     }
-
-    public void StartRotateRockInstantiate()
+    /// <summary>
+    /// RotateRockを指定したポジションにセットし、SetActiveをtrueにする
+    /// </summary>
+    public void StartRAttackEffect()
     {
         //生成場所 → -3.5 + -3.26 → 4.35 + 5.53, X == 0.24 Y == 1.2
-        Vector3 instantiatePos = _selectedPieceObj.transform.position;
-        Vector3 adjustPos = new  Vector3(0.24f, 1.2f, 0);
+        Vector3 basePos = _selectedPieceObj.transform.position;
+        Vector3 adjustPos = new Vector3(0.24f, 1.8f, 0);
         if (!_isDirectionRight)
         {
-            adjustPos = new Vector3(-0.24f, 1.2f, 0);
+            adjustPos = new Vector3(-0.24f, 1.8f, 0);
         }
-        Instantiate(_rotateRockPrefab, _selectedPieceObj.transform.position, _selectedPieceObj.transform.rotation);
+        adjustPos += basePos;
+        _rotateRockObj.transform.position = adjustPos;
+        _rotateRockObj.GetComponent<RotateRock>()._targetPos = _targetObj.transform.position;
+        _rotateRockObj.SetActive(true);
+        //SetActiveがtrueになると岩が回転するAnimationが再生される
     }
-    /// <summary>
-    /// ルークの攻撃モーション「投石」の石が始点から終点に向かって回転していくだけのAnimationを再生する。動作が独立している。
-    /// </summary>
-    public void StartRotateRockAnimation()
+
+    public void StartBAttackEffect()
     {
-        AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
-        AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
-        //"Run"という名前のついたanimationClipからコピーを新規作成
-        AnimationClip animationClip = _selectedPieceRuntimeAnimator.animationClips.FirstOrDefault(clip => clip.name.Contains("Run")); 
-        //新しく作成・編集したAnimationCurveをAnimationClipに代入する
-        animationClip.SetCurve("", typeof(Transform), "localPosition.x", animationCurveX);
-        animationClip.SetCurve("", typeof(Transform), "localPosition.y", animationCurveY);
-        //PlayableGraphを作成
-        _playableGraph = PlayableGraph.Create();
-        //AnimationClipPlayableを作成
-        AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_playableGraph, animationClip);
-        //AnimationPlayableOutputを作成してAnimatorと連結
-        _animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _selectedPieceAnimatorController);
-        _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
-        //AnimatorOverrideControllerを使用して差し替え
-        // AnimatorOverrideController overrideController = new AnimatorOverrideController(_selectedPieceAnimatorController.runtimeAnimatorController);
-        // overrideController["Run"] = animationClip; // 複製したclipに差し替え
-        // _selectedPieceAnimatorController.runtimeAnimatorController = overrideController;
-        //再生
-        _playableGraph.Play();  //途中再生と、一から再生の２パターンある
+        Vector3 basePos = _targetObj.transform.position;
+        _BAttackEffectObj.transform.position = basePos;
+        _BAttackEffectObj.SetActive(true);
     }
     void EndTurn()
     {
@@ -328,7 +322,6 @@ public class TurnDeside : ColorPallet
             Squere enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
             enpassantSquere._IsActiveEnpassant = true;
             _enpassantObj = Instantiate(_collider2DPrefab, enpassantSquere._SquerePiecePosition, Quaternion.identity);
-            Debug.Log($"{enpassantSquere._SquerePiecePosition}, {_enpassantObj.transform.position}");
             _enpassantObj.layer = LayerMask.NameToLayer("Piece");
             _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
             _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");

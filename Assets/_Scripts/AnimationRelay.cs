@@ -6,6 +6,13 @@ using UnityEngine;
 public class AnimationRelay : MonoBehaviour
 {
     [SerializeField] TurnDeside _turnDeside;
+    // Animator _thisAnimator;
+    // void Start()
+    // {
+    //     _thisAnimator = GetComponent<Animator>();
+    //     HitStopSwich.PauseHitStop += PauseAnimator;
+    //     HitStopSwich.ResumeHitStop += ResumeAnimator;
+    // }
     void StartAttackAnimationRelay()
     {
         _turnDeside.StartAttackAnimation();
@@ -41,8 +48,22 @@ public class AnimationRelay : MonoBehaviour
         _turnDeside.StartAdjustFlipX();
     }
 
-    void StartRotateRockInstantiateRelay()
+    void StartRockRotatePichingRelay()
     {
-        _turnDeside.StartRotateRockInstantiate();
+        _turnDeside.StartRAttackEffect();
     }
+    // void PauseAnimator()
+    // {
+    //     _thisAnimator.speed = 0;
+    // }
+    // void ResumeAnimator()
+    // {
+    //     _thisAnimator.speed = 1;
+    // }
+    //
+    // void OnDestroy()
+    // {
+    //     HitStopSwich.PauseHitStop -= PauseAnimator;
+    //     HitStopSwich.ResumeHitStop -= ResumeAnimator;
+    // }
 }

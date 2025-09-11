@@ -8,12 +8,10 @@ public class Piece : ScriptableObject
     [SerializeField] int _moveCount;
     [SerializeField] Vector3Int[] _moveAreas;
     [SerializeField] Vector3Int[] _attackAreas;
-    [SerializeField] bool _isAttackFirst;
     public string _PieceName => _pieceName;
     public Func<int> _MoveCount;
     public Func<Vector3Int[]> _MoveAreas;
     public Func<Vector3Int[]> _AttackAreas;
-    public bool _IsAttackFirst => _isAttackFirst;
     void OnEnable()
     {
         _pieceName = name.First().ToString();

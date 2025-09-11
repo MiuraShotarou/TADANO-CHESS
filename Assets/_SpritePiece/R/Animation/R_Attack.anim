@@ -30,11 +30,11 @@ AnimationClip:
       value: {fileID: 21300000, guid: 4ead3817c268c9249813211466b29c20, type: 3}
     - time: 1.1333333
       value: {fileID: 21300000, guid: 8ed0868f19c70b6409bcc8bd47a1db7d, type: 3}
-    - time: 1.4166666
+    - time: 2.3333333
       value: {fileID: 21300000, guid: f2c07da99d15cb34cb832f58d15b953f, type: 3}
-    - time: 1.7166667
+    - time: 2.6333334
       value: {fileID: 21300000, guid: 36e5c1a8c48ba2346830bc67b0063a06, type: 3}
-    - time: 2
+    - time: 2.9166667
       value: {fileID: 21300000, guid: 31700a62ba7ea1c4fae6346bc2d4999f, type: 3}
     attribute: m_Sprite
     path: 
@@ -92,7 +92,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.1333333
-    functionName: 
+    functionName: StartRockRotatePichingRelay
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

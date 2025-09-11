@@ -181,15 +181,12 @@ public class OpenSelectableArea : ColorPallet
     void JudgmentGroup(GameObject collisionObj)
     {
         SpriteRenderer spriteRenderer = collisionObj.GetComponent<SpriteRenderer>();
-        //enpassantを取得したら → Pone以外の駒の場合はColliderを出現させないようにしているのでOK
         if (!spriteRenderer)
         {
-            string[] search = collisionObj.name.Split("_");
-            Vector3Int enemyTilePos = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])]._SquereTilePos;
-            _renderingAreas.Add(enemyTilePos);
-            //DrawOutlineを回避しないといけない
+            spriteRenderer = collisionObj.transform.parent.gameObject.GetComponent<SpriteRenderer>();
         }
-        else if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX != spriteRenderer.flipX)
+        //enpassantを取得したら → Pone以外の駒の場合はColliderを出現させないようにしているのでOK
+        if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX != spriteRenderer.flipX)
         {
             string[] search = collisionObj.name.Split("_");
             Vector3Int enemyTilePos = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])]._SquereTilePos;
