@@ -1,24 +1,12 @@
 fileFormatVersion: 2
-guid: 808bf222de2eea344af8c1e96494330f
+guid: c858cfc32aa6dd047be3ba1abf332c03
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 4457663794195168306
-    second: Hit_0
-  - first:
-      213: -5364657433725072944
-    second: Hit_1
-  - first:
-      213: -4947864620551752270
-    second: Hit_2
-  - first:
-      213: 8733631668352107246
-    second: Hit_3
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -51,7 +39,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -75,16 +63,16 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,20 +94,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Lumin
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -133,19 +108,6 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -174,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hit_0
+      name: K_TakeHit_0
       rect:
         serializedVersion: 2
         x: 0
@@ -188,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3aadf018cf45cd740a0309f06fc3ef61
-      internalID: 4457663794195168306
+      spriteID: 3ab30eb63b771ff4890472a631f89a46
+      internalID: -744584097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit_1
+      name: K_TakeHit_1
       rect:
         serializedVersion: 2
         x: 155
@@ -209,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5300ba507200ee4a9a542ca25b0676b
-      internalID: -5364657433725072944
+      spriteID: 295006e6f02180f4cb4a4273ba3c21a4
+      internalID: -2147318190
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit_2
+      name: K_TakeHit_2
       rect:
         serializedVersion: 2
         x: 310
@@ -230,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3e2d68d5d029bf43bd81a93f73951e9
-      internalID: -4947864620551752270
+      spriteID: fd9ed47721547024a87b8842f6a0bc65
+      internalID: 1625356276
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit_3
+      name: K_TakeHit_3
       rect:
         serializedVersion: 2
         x: 465
@@ -251,8 +213,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99c9392ef02827640b0b54108fe6bc71
-      internalID: 8733631668352107246
+      spriteID: 6fbe2dd7d0798874188086283f7a3f6c
+      internalID: 207443757
       vertices: []
       indices: 
       edges: []
@@ -268,10 +230,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hit_0: 4457663794195168306
-      Hit_1: -5364657433725072944
-      Hit_2: -4947864620551752270
-      Hit_3: 8733631668352107246
+      K_TakeHit_0: -744584097
+      K_TakeHit_1: -2147318190
+      K_TakeHit_2: 1625356276
+      K_TakeHit_3: 207443757
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

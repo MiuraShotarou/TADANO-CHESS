@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
 //アンパッサンを実装する
@@ -30,6 +26,7 @@ public class TurnDeside : ColorPallet
     GameObject _collider2DPrefab;
     GameObject _rotateRockObj;
     GameObject _BAttackEffectObj;
+    GameObject _QAttckEffectObj;
     GameObject _targetObj;
     GameObject _enpassantObj;
     // GameObject _hitStopObj;
@@ -94,10 +91,9 @@ public class TurnDeside : ColorPallet
             CollisionEvent.CollisionAction = RegisterEnpassantTarget; //親オブジェクトを取得するためのメソッドを登録する;
             Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
         }
-        //Animation再生のif文
         StartRunAnimation();
         //攻撃 → 移動 → Idle
-        //移動 → 攻撃 → Idle の２パターンに分けなければならない
+        //移動 → 攻撃 → Idle の２パターンにこの後枝分かれをする
     }
     /// <summary>
     /// CollisionEvent.csからの衝突情報で移動先にあるtargetObjを取得する
@@ -225,6 +221,7 @@ public class TurnDeside : ColorPallet
     public void StartDeathAnimation()
     {
         // _hitStopObj.SetActive(true);
+        Debug.Log(_targetObj==null);
         string search = new string($"{_targetObj.name.First()}_Death"); //_targetobjがnull
         _targetPieceAnimatorController.Play(search);
     }
@@ -287,6 +284,14 @@ public class TurnDeside : ColorPallet
         Vector3 basePos = _targetObj.transform.position;
         _BAttackEffectObj.transform.position = basePos;
         _BAttackEffectObj.SetActive(true);
+    }
+
+    public void StartQAttackEffect()
+    {
+        //70f
+        Vector3 basePos = _selectedPieceObj.transform.position;
+        _QAttckEffectObj.transform.position = basePos;
+        _QAttckEffectObj.SetActive(true);
     }
     void EndTurn()
     {
