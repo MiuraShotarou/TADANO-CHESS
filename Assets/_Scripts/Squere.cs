@@ -16,6 +16,7 @@ public class Squere : ScriptableObject
     public string _SquereID => _squereID;
     public bool _IsOnPiece {get; set;}
     public bool _IsActiveEnpassant { get; set; }
+    public GameObject _IsOnPieceObj { get; set; }
     void OnEnable()
     {
         _squereID = name;
