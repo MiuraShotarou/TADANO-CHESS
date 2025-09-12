@@ -37,7 +37,7 @@ public class InGameManager : MonoBehaviour
         int arraySize = 8;
         _deceptionTileFieldArrays = new SpriteRenderer[arraySize][];
         _squereArrays = new Squere[arraySize][];
-        Queue<GameObject> pieceobjects = new Queue<GameObject>(_setPieceObjects);
+        int count = 0;
         for (int i = 0; i < arraySize; i++)
         {
             _deceptionTileFieldArrays[i] = new SpriteRenderer[arraySize];
@@ -48,9 +48,10 @@ public class InGameManager : MonoBehaviour
                 int index = i * 8 + j;
                 _deceptionTileFieldArrays[i][j] = _setDeceptionTileFields[index];
                 _SquereArrays[i][j] = _setSqueres[index];
-                if (j.ToString().Contains("0,1,6,7"))
+                if ("0,1,6,7".Contains(j.ToString()))
                 {
-                    _SquereArrays[i][j]._IsOnPieceObj = pieceobjects.Dequeue();
+                    _SquereArrays[i][j]._IsOnPieceObj = _setPieceObjects[count];
+                    count++;
                 }
             }
         }

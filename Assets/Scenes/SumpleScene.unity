@@ -20209,37 +20209,37 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 25c44cea5b905804a98c199486cd512f, type: 2}
   _setPieceObjects:
   - {fileID: 1906882876}
-  - {fileID: 1143464739}
-  - {fileID: 780438267}
-  - {fileID: 172668780}
-  - {fileID: 1637118412}
-  - {fileID: 449951566}
-  - {fileID: 529438573}
-  - {fileID: 412427730}
   - {fileID: 669127261}
-  - {fileID: 2107785043}
-  - {fileID: 133879111}
-  - {fileID: 1505631218}
-  - {fileID: 889909041}
-  - {fileID: 47018807}
-  - {fileID: 2047094468}
-  - {fileID: 1405931204}
-  - {fileID: 76338902}
-  - {fileID: 780661973}
-  - {fileID: 865202206}
-  - {fileID: 1345505755}
-  - {fileID: 1099086946}
-  - {fileID: 1372169879}
-  - {fileID: 846725925}
-  - {fileID: 1761793636}
   - {fileID: 733407933}
+  - {fileID: 76338902}
+  - {fileID: 1143464739}
+  - {fileID: 2107785043}
   - {fileID: 1606238197}
+  - {fileID: 780661973}
+  - {fileID: 780438267}
+  - {fileID: 133879111}
   - {fileID: 1301552876}
+  - {fileID: 865202206}
+  - {fileID: 172668780}
+  - {fileID: 1505631218}
   - {fileID: 671965040}
+  - {fileID: 1345505755}
+  - {fileID: 1637118412}
+  - {fileID: 889909041}
   - {fileID: 1785975198}
+  - {fileID: 1099086946}
+  - {fileID: 449951566}
+  - {fileID: 47018807}
   - {fileID: 614912952}
+  - {fileID: 1372169879}
+  - {fileID: 529438573}
+  - {fileID: 2047094468}
   - {fileID: 159223845}
+  - {fileID: 846725925}
+  - {fileID: 412427730}
+  - {fileID: 1405931204}
   - {fileID: 1610893087}
+  - {fileID: 1761793636}
   _setDeceptionTileFields:
   - {fileID: 1253496699}
   - {fileID: 900961612}
