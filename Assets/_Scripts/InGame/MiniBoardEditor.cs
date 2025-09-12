@@ -19,8 +19,8 @@ public class MiniBoardEditor : Editor
                 if (i % 8 == 0) binaryStr += " "; // 読みやすさのため8ビットごとに区切る
             }
             Debug.Log(binaryStr);
-            Debug.Log(MiniBoard.count);
-            Debug.Log(Convert.ToString((int)SquereID.a4, 2));
+            // Debug.Log(MiniBoard.count);
+            // Debug.Log(Convert.ToString((int)SquereID.a4, 2));
         }
         
     }

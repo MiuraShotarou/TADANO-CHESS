@@ -6,7 +6,7 @@ using UnityEngine;
 public class MiniBoard : MonoBehaviour //InGamemanagerを継承しても良いかもしれない
 {
     InGameManager _inGameManager;
-
+    
     private Squere[][] _squereArrays; //s or InstanceClass
     //同じ方式で考える
     //miniBordの強いところは敵AIで利用可能な新しいアーキテクチャを持てること
@@ -54,6 +54,13 @@ public class MiniBoard : MonoBehaviour //InGamemanagerを継承しても良い�
         _squereArrays = _inGameManager._SquereArrays; //miniBord上でのPos 攻撃範囲が入っている（？）
     }
 
+    public static void StartUpdateMiniBorad(Squere square) //
+    {
+        if (square._IsOnPieceObj)
+        {
+            _MiniBoard = Bin(square._SquereID, _MiniBoard);
+        }
+    }
     public static int count = 0;
     /// <summary>
     /// W / B 両方のMiniBpradを更新する必要がある → 自陣の駒に変化があった場合のみ更新すれば良い

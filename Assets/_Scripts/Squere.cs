@@ -27,7 +27,7 @@ public class Squere : ScriptableObject
         int index = (alphabet * 8) + number;
         _squereID = (SquereID)index;
         //miniBoradに通知する
-        UpdateMiniBorad = MiniBoard.UpdateMiniBorad;
+        UpdateMiniBorad = MiniBoard.StartUpdateMiniBorad;
         _IsActiveEnpassant = false;
     }
 }
