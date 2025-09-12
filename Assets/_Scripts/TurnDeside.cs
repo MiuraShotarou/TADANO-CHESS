@@ -35,7 +35,7 @@ public class TurnDeside : ColorPallet
     AnimationPlayableOutput _animationPlayableOutput;
     bool _isDirectionRight;
     float _direction;
-    float _Direction { get {return _direction ;} set { _direction = value; if (_direction < 0){ _isDirectionRight = false; } else {_isDirectionRight = true;}}}
+    float _Direction { get {return _direction ;} set { _direction = value; if (_direction < 0){ _isDirectionRight = false; } else {_isDirectionRight = true;}}}//リファクタ
     
     private void Start()
     {
@@ -177,6 +177,12 @@ public class TurnDeside : ColorPallet
         _selectedPieceAnimatorController.Play(search);
         //ターンを終えた後の処理
         EndTurn();
+        _miniBoard.UpdateMiniBorad();
+        //TurnDeside側から通知できること
+        //_selectedPieceがどこに動いたのか
+        //_誰が倒されたのか（重要）
+        //Promotionが起きたかどうか（重要）
+        //
     }
     /// <summary>
     /// 敵のTakeHitAnimationを再生する。動作が独立している。
@@ -277,8 +283,8 @@ public class TurnDeside : ColorPallet
             //被アンパッサン（状況作成側）の処理
             if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
             {
-                bool isWhite;
-                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
+                bool isWhite; //ゲーム全体で使用する
+                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX) //この条件式自体いらないのでは？ 
                 {
                     isWhite = true;
                 }
@@ -286,7 +292,7 @@ public class TurnDeside : ColorPallet
                 {
                     isWhite = false;
                 }
-                CreateEnpassant(isWhite);
+                CreateEnpassant();
                 //_enpassantObj == true
             }
             else if (_targetSquere._SquereID.Contains("1, 8"))
@@ -303,18 +309,19 @@ public class TurnDeside : ColorPallet
             }
         }
         //
+        InGameManager._IsWhite = !InGameManager._IsWhite; //攻守交代
         //次のターンへ
     }
     /// <summary>
     /// 特殊ルール"アンパッサン"のシチュエーションを作成する処理
     /// </summary>
-    /// <param name="isWhite"></param>
-    public void CreateEnpassant(bool isWhite)
+    /// <param name="_IsWhite"></param>
+    public void CreateEnpassant()
     {
         string[] selectedPieceObjName = _selectedPieceObj.name.Split("_"); //P_alphabet_number
         int alphabet = int.Parse(selectedPieceObjName[1]);
         int enpassantNumber;
-        if (isWhite)
+        if (InGameManager._IsWhite)
         {
             //WhitePieceのenpassant座標Xは必然的に[2]である
             enpassantNumber = 2;
