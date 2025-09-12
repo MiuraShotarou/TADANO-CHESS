@@ -14,7 +14,8 @@ public class Piece : ScriptableObject
     public Func<Vector3Int[]> _AttackAreas;
     void OnEnable()
     {
-        _pieceName = name;
+        //(Clone)の字が追加されるためこう書く必要がある
+        _pieceName = name.First().ToString();
         _MoveCount = () => _moveCount;
         _MoveAreas = () => _moveAreas;
         _AttackAreas = () => _attackAreas;

@@ -29,7 +29,7 @@ public class MiniBoard : MonoBehaviour //InGamemanagerを継承しても良い�
     static ulong _miniBoardBB = 0UL; //Black陣営 Bがあるかどうか / 攻撃できるマスの判断
     static ulong _miniBoardBQ = 0UL; //Black陣営 Qがあるかどうか / 攻撃できるマスの判断
     static ulong _miniBoardBK = 0UL; //Black陣営 Kがあるかどうか / 攻撃できるマスの判断
-    static ulong _MiniBoard { get => _miniBoard; set {_miniBoard = value; UpdateMiniBorad(value);}}
+    public static ulong _MiniBoard { get => _miniBoard; set {_miniBoard = value; UpdateMiniBorad(value);}}
     static ulong _MiniBoardWA { get => _miniBoardWA; set => _miniBoardWA = value; }
     static ulong _MiniBoardWP { get => _miniBoardWP; set => _miniBoardWP = value; }
     static ulong _MiniBoardWR { get => _miniBoardWR; set => _miniBoardWR = value; }
@@ -53,6 +53,8 @@ public class MiniBoard : MonoBehaviour //InGamemanagerを継承しても良い�
         _inGameManager = GetComponent<InGameManager>();
         _squereArrays = _inGameManager._SquereArrays; //miniBord上でのPos 攻撃範囲が入っている（？）
     }
+
+    public static int count = 0;
     /// <summary>
     /// W / B 両方のMiniBpradを更新する必要がある → 自陣の駒に変化があった場合のみ更新すれば良い
     /// TurnDesideの最後 OR _squereArrays.IsOnPieceに変化があったとき → 状態管理が難しいので前者を採用する
@@ -70,35 +72,37 @@ public class MiniBoard : MonoBehaviour //InGamemanagerを継承しても良い�
         if (!isOnPieceobj)
         {
             //削除の時は呼ばなくて良い？
-            Ben(square._SquereID, _MiniBoard);
+            // _MiniBoard = Ben(square._SquereID, _MiniBoard);
         }
         else
         {
-            string[] search = isOnPieceobj.name.Split('_');
+            count++;
+            _MiniBoard = Bin(square._SquereID, _MiniBoard);
         }
     }
 
     static void UpdateMiniBorad(ulong value) //ulong 123ULなど
     {
-        Debug.Log(value);
+        // Debug.Log(value);
     }
     
     /// <summary>
     /// 指定したminiBorad内でsquereと該当しているbit座標の値を1に変換する
     /// </summary>
-    /// <param name="squre"></param>
+    /// <param name="squreID"></param>
     /// <param name="miniBorad"></param>
-    static void Bin(SquereID squre, ulong miniBorad)
+    static ulong Bin(SquereID squreID, ulong miniBorad)
     {
-        miniBorad |= 1UL << (int)squre;
+        Debug.Log((int)squreID);
+        return miniBorad |= 1UL << (int)squreID; //
     }
     /// <summary>
     /// 指定したminiBorad内でsquereと該当しているbit座標の値を0変換する
     /// </summary>
     /// <param name="squre"></param>
     /// <param name="miniBorad"></param>
-    static void Ben(SquereID squereID, ulong miniBorad)
+    static ulong Ben(SquereID squereID, ulong miniBorad)
     {
-        miniBorad &= 1Ul << (int)squereID;
+        return miniBorad &= 1Ul << (int)squereID;
     }
 }
