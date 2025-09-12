@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class InGameManager : MonoBehaviour
 {
-    static bool _isWhite;
+    static bool _isWhite = true;
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
     [SerializeField] GameObject[] _setPieceObjects;
@@ -32,10 +32,12 @@ public class InGameManager : MonoBehaviour
         {
             //Add・Removeできるならプロパティの意味ない
             _PieceDict.Add(_setPieces[i]._PieceName, _setPieces[i]);
+            
         }
         int arraySize = 8;
         _deceptionTileFieldArrays = new SpriteRenderer[arraySize][];
         _squereArrays = new Squere[arraySize][];
+        Queue<GameObject> pieceobjects = new Queue<GameObject>(_setPieceObjects);
         for (int i = 0; i < arraySize; i++)
         {
             _deceptionTileFieldArrays[i] = new SpriteRenderer[arraySize];
@@ -46,20 +48,21 @@ public class InGameManager : MonoBehaviour
                 int index = i * 8 + j;
                 _deceptionTileFieldArrays[i][j] = _setDeceptionTileFields[index];
                 _SquereArrays[i][j] = _setSqueres[index];
-                Debug.Log($"{_SquereArrays[i][j] == null} { index}");
-                // if ("0,1,6,7".Contains(j.ToString()))
-                // {
-                //     // Debug.Log("");
-                //     _SquereArrays[i][j]._IsOnPieceObj = _setPieceObjects[index];
-                // }
+                if (j.ToString().Contains("0,1,6,7"))
+                {
+                    _SquereArrays[i][j]._IsOnPieceObj = pieceobjects.Dequeue();
+                }
             }
         }
         for (int i = 0; i < arraySize; i++)
         {
             for (int j = 0; j < arraySize; j++)
             {
-                Debug.Log(_SquereArrays[i][j]._IsOnPieceObj == null);
-                Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
+                //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
+                if (_SquereArrays[i][j]._IsOnPieceObj)
+                {
+                    Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
+                }
             }
         }
         _openSelectableArea = GetComponent<OpenSelectableArea>();
@@ -76,11 +79,10 @@ public class InGameManager : MonoBehaviour
         _selectTileController.enabled = true;
     }
 }
-public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1にする 
+public enum SquereID //8 * 8 の配列OnPieceだったら該当のbitを1にする 
 {
     //ulong |= 1UL << (int)BordSquere.hoge :追加
     //board &= ~(1UL << (int)BoardSquare.e4); 削除 → ここから勉強
-    a0,
     a1,
     a2,
     a3,
@@ -88,7 +90,7 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     a5,
     a6,
     a7,
-    b0,
+    a8,
     b1,
     b2,
     b3,
@@ -96,7 +98,7 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     b5,
     b6,
     b7,
-    c0,
+    b8,
     c1,
     c2,
     c3,
@@ -104,7 +106,7 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     c5,
     c6,
     c7,
-    d0,
+    c8,
     d1,
     d2,
     d3,
@@ -112,7 +114,7 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     d5,
     d6,
     d7,
-    e0,
+    d8,
     e1,
     e2,
     e3,
@@ -120,7 +122,7 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     e5,
     e6,
     e7,
-    f0,
+    e8,
     f1,
     f2,
     f3,
@@ -128,7 +130,7 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     f5,
     f6,
     f7,
-    g0,
+    f8,
     g1,
     g2,
     g3,
@@ -136,7 +138,7 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     g5,
     g6,
     g7,
-    h0,
+    g8,
     h1,
     h2,
     h3,
@@ -144,4 +146,5 @@ public enum MiniSquere //8 * 8 の配列OnPieceだったら該当のbitを1に�
     h5,
     h6,
     h7,
+    h8
 }

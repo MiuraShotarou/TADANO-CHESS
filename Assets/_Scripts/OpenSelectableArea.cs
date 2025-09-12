@@ -132,7 +132,7 @@ public class OpenSelectableArea : ColorPallet
             int number = _moveAreas[i].x;
             if (-1 < alphabet && 8 > alphabet && -1 < number && 8 > number //盤内のマスであればtrue
                 &&
-                !_inGameManager._SquereArrays[alphabet][number]._IsOnPiece
+                !_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj
                 &&
                 //enpassantでないなら通す
                 !(_selectedPiece._PieceName == "P" && _inGameManager._SquereArrays[alphabet][number]._IsActiveEnpassant))
@@ -164,12 +164,11 @@ public class OpenSelectableArea : ColorPallet
                 _attackAreas[i] = new Vector3Int(0, 0, -1);
                 continue;
             }
-            if (_inGameManager._SquereArrays[alphabet][number]._IsOnPiece
+            if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj
                 ||
                 //enpassant可能であれば通過する
                 (_selectedPiece._PieceName == "P" && _inGameManager._SquereArrays[alphabet][number]._IsActiveEnpassant))
             {
-                Debug.Log(_inGameManager._SquereArrays[alphabet][number]._SquereID + _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition);
                 Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
                 Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
                 //z = -1で次回の検索を回避する
@@ -179,7 +178,7 @@ public class OpenSelectableArea : ColorPallet
             {
                 _PrefabCount--;
             }
-            if (_PrefabCount > 0){Debug.Log("");}
+            // if (_PrefabCount > 0){Debug.Log(_PrefabCount);}
         }
     }
     /// <summary>

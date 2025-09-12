@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 47018814}
   - component: {fileID: 47018815}
   m_Layer: 6
-  m_Name: P_5_1
+  m_Name: P_5_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1248,7 +1248,7 @@ GameObject:
   - component: {fileID: 76338908}
   - component: {fileID: 76338909}
   m_Layer: 6
-  m_Name: R_0_7
+  m_Name: R_0_7_B
   m_TagString: R
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2888,7 +2888,7 @@ GameObject:
   - component: {fileID: 133879118}
   - component: {fileID: 133879119}
   m_Layer: 6
-  m_Name: P_2_1
+  m_Name: P_2_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3317,7 +3317,7 @@ GameObject:
   - component: {fileID: 159223851}
   - component: {fileID: 159223852}
   m_Layer: 6
-  m_Name: P_6_6
+  m_Name: P_6_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3710,7 +3710,7 @@ GameObject:
   - component: {fileID: 172668786}
   - component: {fileID: 172668787}
   m_Layer: 6
-  m_Name: K_3_0
+  m_Name: K_3_0_W
   m_TagString: K
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7665,7 +7665,7 @@ GameObject:
   - component: {fileID: 412427737}
   - component: {fileID: 412427738}
   m_Layer: 6
-  m_Name: R_7_0
+  m_Name: R_7_0_W
   m_TagString: R
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8498,7 +8498,7 @@ GameObject:
   - component: {fileID: 449951572}
   - component: {fileID: 449951573}
   m_Layer: 6
-  m_Name: B_5_0
+  m_Name: B_5_0_W
   m_TagString: B
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9738,7 +9738,7 @@ GameObject:
   - component: {fileID: 529438581}
   - component: {fileID: 529438582}
   m_Layer: 6
-  m_Name: N_6_0
+  m_Name: N_6_0_W
   m_TagString: N
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11423,7 +11423,7 @@ GameObject:
   - component: {fileID: 614912958}
   - component: {fileID: 614912959}
   m_Layer: 6
-  m_Name: P_5_6
+  m_Name: P_5_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12331,7 +12331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &665391868
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12500,7 +12500,7 @@ GameObject:
   - component: {fileID: 669127268}
   - component: {fileID: 669127269}
   m_Layer: 6
-  m_Name: P_0_1
+  m_Name: P_0_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12724,7 +12724,7 @@ GameObject:
   - component: {fileID: 671965046}
   - component: {fileID: 671965047}
   m_Layer: 6
-  m_Name: P_3_6
+  m_Name: P_3_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13212,7 +13212,7 @@ GameObject:
   - component: {fileID: 733407939}
   - component: {fileID: 733407940}
   m_Layer: 6
-  m_Name: P_0_6
+  m_Name: P_0_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13850,7 +13850,7 @@ GameObject:
   - component: {fileID: 780438273}
   - component: {fileID: 780438274}
   m_Layer: 6
-  m_Name: B_2_0
+  m_Name: B_2_0_W
   m_TagString: B
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14074,7 +14074,7 @@ GameObject:
   - component: {fileID: 780661980}
   - component: {fileID: 780661981}
   m_Layer: 6
-  m_Name: N_1_7
+  m_Name: N_1_7_B
   m_TagString: N
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14994,7 +14994,7 @@ GameObject:
   - component: {fileID: 846725932}
   - component: {fileID: 846725933}
   m_Layer: 6
-  m_Name: N_6_7
+  m_Name: N_6_7_B
   m_TagString: N
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15432,7 +15432,7 @@ GameObject:
   - component: {fileID: 865202212}
   - component: {fileID: 865202213}
   m_Layer: 6
-  m_Name: B_2_7
+  m_Name: B_2_7_B
   m_TagString: B
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15731,7 +15731,7 @@ GameObject:
   - component: {fileID: 889909048}
   - component: {fileID: 889909049}
   m_Layer: 6
-  m_Name: P_4_1
+  m_Name: P_4_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18770,7 +18770,7 @@ GameObject:
   - component: {fileID: 1099086952}
   - component: {fileID: 1099086953}
   m_Layer: 6
-  m_Name: Q_4_7
+  m_Name: Q_4_7_B
   m_TagString: Q
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19628,7 +19628,7 @@ GameObject:
   - component: {fileID: 1143464747}
   - component: {fileID: 1143464748}
   m_Layer: 6
-  m_Name: N_1_0
+  m_Name: N_1_0_W
   m_TagString: N
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20143,70 +20143,103 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b2ffbd9d86dc754893d870568029e70, type: 2}
   - {fileID: 11400000, guid: 41e6ca17383568c4186144adec3ffeec, type: 2}
   _setSqueres:
-  - {fileID: 11400000, guid: dea6fc777d884434881d73974d547ab2, type: 2}
-  - {fileID: 11400000, guid: 238ef40b55082c5449a6be4071e9a1f5, type: 2}
+  - {fileID: 11400000, guid: b3f028d6616acdb44b9f2ac7470187d3, type: 2}
   - {fileID: 11400000, guid: e77aa9a1d78ad4946bc7b90f71c43c11, type: 2}
-  - {fileID: 11400000, guid: 582caa9f7efda6f4e93aea23bce9b847, type: 2}
+  - {fileID: 11400000, guid: 741f539a9a0980f40ab98d350faa9c09, type: 2}
   - {fileID: 11400000, guid: 34947b78ea9bc8043aefd1b9340775a8, type: 2}
   - {fileID: 11400000, guid: ee3558194fe0e904c9fa9adb18579988, type: 2}
-  - {fileID: 11400000, guid: a14d723baa314d9408208f4ec104ac6f, type: 2}
+  - {fileID: 11400000, guid: 2342ed5d695e3a94a829d527d69a75ff, type: 2}
   - {fileID: 11400000, guid: 3ec8837b10c324b42aca481d5426e4d7, type: 2}
-  - {fileID: 11400000, guid: 503d674965d8e2142b8bacc2f9ad17f9, type: 2}
+  - {fileID: 11400000, guid: da565d994cc045446bb4b726330158c8, type: 2}
   - {fileID: 11400000, guid: a5922d3a91bf9874ba920a63d8c001c7, type: 2}
   - {fileID: 11400000, guid: 06f3f41ce971feb49a5f42206b5564b8, type: 2}
-  - {fileID: 11400000, guid: cc6b6dea41f7cc84483fd572a1f34f6f, type: 2}
+  - {fileID: 11400000, guid: 8368b4a26ec2f4446a483f4c4484b6e0, type: 2}
   - {fileID: 11400000, guid: 292717adc36348f40877639695d4f596, type: 2}
   - {fileID: 11400000, guid: 231670a70b88cfc41abc08a00289b4d5, type: 2}
   - {fileID: 11400000, guid: 82256b571d4c3b94d8ed7bfdd97fe47c, type: 2}
   - {fileID: 11400000, guid: 32131ed1dc7628f4eb635524c884e235, type: 2}
-  - {fileID: 11400000, guid: f695d06d0ff40e14daaf7564ea4c79dc, type: 2}
+  - {fileID: 11400000, guid: 08fe9ca2252d5c84f91fed3b4036c6ad, type: 2}
   - {fileID: 11400000, guid: feb46afca59a245468847d3f11cf36d2, type: 2}
   - {fileID: 11400000, guid: 3cd7790356918ca44b4ee0159166c6aa, type: 2}
   - {fileID: 11400000, guid: 285e9fa3e9c311742aff3e5af4321e2e, type: 2}
   - {fileID: 11400000, guid: 60a5bb4d424eb374a868f924871e2ee9, type: 2}
-  - {fileID: 11400000, guid: 9bf853fb679049543bb143135973e173, type: 2}
+  - {fileID: 11400000, guid: 43f8c522413d7b24e8ab051052b03642, type: 2}
   - {fileID: 11400000, guid: 35edaf187231a1c45b4ee7139633960a, type: 2}
   - {fileID: 11400000, guid: b4adb87c26d5a6b4dbb2b38e8179538f, type: 2}
-  - {fileID: 11400000, guid: 682a5befa7bda2d4780ee95c7564a8fa, type: 2}
-  - {fileID: 11400000, guid: fed8fb0d5fdb2c64b9794de41751b522, type: 2}
+  - {fileID: 11400000, guid: a3924b2f62dce294fb2ba8dae2d10ca3, type: 2}
+  - {fileID: 11400000, guid: 3833926da463d4645bdceb54af2cb9be, type: 2}
   - {fileID: 11400000, guid: 0ce25201159fe76409f5aff0f4b846bc, type: 2}
   - {fileID: 11400000, guid: 0f577a7f7ad70f246942ae2b745a60b3, type: 2}
   - {fileID: 11400000, guid: 4ba3db0240e8a0b44b824400f6390756, type: 2}
   - {fileID: 11400000, guid: 429a95abc894b2e46aa490474275a262, type: 2}
-  - {fileID: 11400000, guid: c10aabceeea9b294eb1d6889b022a3ec, type: 2}
+  - {fileID: 11400000, guid: 6d6f42f1c04779e41be459901fc47999, type: 2}
   - {fileID: 11400000, guid: 7c42f2135d0400e4e81ecf76bbae4e97, type: 2}
-  - {fileID: 11400000, guid: 07b030e82b4097e428a39690f89a3801, type: 2}
+  - {fileID: 11400000, guid: a6eb4cf17d06f7345a683236f31082ef, type: 2}
   - {fileID: 11400000, guid: 6464c0efcec642546bcb7bd59b2470c0, type: 2}
   - {fileID: 11400000, guid: 600cb6b67e536e44f9184a762a6ff06f, type: 2}
-  - {fileID: 11400000, guid: 663aa00b71d31d0448ece1248062f330, type: 2}
+  - {fileID: 11400000, guid: fd4ddc844ffe8254bbf6a82da57fcbca, type: 2}
   - {fileID: 11400000, guid: c440d92ea9fe130438b7f0e7a2451c10, type: 2}
   - {fileID: 11400000, guid: e4eba39235239414d85b196d3dd5d2b8, type: 2}
   - {fileID: 11400000, guid: d06faf9f3220a3349860660a6f29a40f, type: 2}
   - {fileID: 11400000, guid: 714e849f42f2da64fa837abdad1ca8a7, type: 2}
-  - {fileID: 11400000, guid: 88e0a311087b22a4abad9e8bb47e8358, type: 2}
-  - {fileID: 11400000, guid: 9921b5153d1855e4dbf0ddb7f392b535, type: 2}
+  - {fileID: 11400000, guid: 8b5f0e2c346c5db409fe341f3d1fe9af, type: 2}
+  - {fileID: 11400000, guid: 24b3138c929a33547ae368bd866f8f8b, type: 2}
   - {fileID: 11400000, guid: ae4b9c74c519e864796ed9fe5fbc2b9d, type: 2}
   - {fileID: 11400000, guid: 0e3be69797136324b9da8459167a397e, type: 2}
   - {fileID: 11400000, guid: a1fb243a602f7a547ac5e197692f9c84, type: 2}
   - {fileID: 11400000, guid: 31de2a9deea92564a92e43f08b6f1706, type: 2}
   - {fileID: 11400000, guid: e46bf5c2f3c39d24f90cb50e5e1359da, type: 2}
+  - {fileID: 11400000, guid: 5c9889ff2fa648c4dabec902b94e76da, type: 2}
   - {fileID: 11400000, guid: f4c209fcfa86eed4bba4e8b8e2b646d2, type: 2}
-  - {fileID: 11400000, guid: 629667a6f6b92b04aad8bcb8153e16be, type: 2}
   - {fileID: 11400000, guid: 9ff43148a24397e47b9a7772d9fbdaf5, type: 2}
   - {fileID: 11400000, guid: c25c7e3b4553a5a48bff96412c70c0a9, type: 2}
   - {fileID: 11400000, guid: 5260c5e335f49bc449408957a3317783, type: 2}
   - {fileID: 11400000, guid: a96275a9ea0cfdd4a80f024b4cbe8912, type: 2}
-  - {fileID: 11400000, guid: 7227e5259ba7e06498fcfdd86b724f09, type: 2}
+  - {fileID: 11400000, guid: 6268e4936c4b5de46ab899142bf5e735, type: 2}
   - {fileID: 11400000, guid: 38f9075c92aec6b4aadb7f66a0252a3f, type: 2}
   - {fileID: 11400000, guid: 87a8e45a50ddf044799b7b60c894f27b, type: 2}
-  - {fileID: 11400000, guid: 55c903bdb295f8e4c86eff854d4abcc1, type: 2}
+  - {fileID: 11400000, guid: 254c4a381c42e824f865dd11bc4fd769, type: 2}
   - {fileID: 11400000, guid: 1374694b02654704ab8d6ef295f579f2, type: 2}
   - {fileID: 11400000, guid: 8a83554d8b48a2d45aa247a9f3d5adfb, type: 2}
-  - {fileID: 11400000, guid: 1b49c99f3fc628744b4064a94a321713, type: 2}
+  - {fileID: 11400000, guid: de8b5b9bc283dcb4b99fc64bcaed4865, type: 2}
   - {fileID: 11400000, guid: 909c166f7cd8f1e43a379a951622ef55, type: 2}
   - {fileID: 11400000, guid: 9935b3c3652c67d429ef9132b2178814, type: 2}
   - {fileID: 11400000, guid: 433ae106252b6024a9058b3a6fe96d51, type: 2}
   - {fileID: 11400000, guid: 34b6a6e9765937c4c8fb8d11f5613ea1, type: 2}
+  - {fileID: 11400000, guid: 25c44cea5b905804a98c199486cd512f, type: 2}
+  _setPieceObjects:
+  - {fileID: 1906882876}
+  - {fileID: 1143464739}
+  - {fileID: 780438267}
+  - {fileID: 172668780}
+  - {fileID: 1637118412}
+  - {fileID: 449951566}
+  - {fileID: 529438573}
+  - {fileID: 412427730}
+  - {fileID: 669127261}
+  - {fileID: 2107785043}
+  - {fileID: 133879111}
+  - {fileID: 1505631218}
+  - {fileID: 889909041}
+  - {fileID: 47018807}
+  - {fileID: 2047094468}
+  - {fileID: 1405931204}
+  - {fileID: 76338902}
+  - {fileID: 780661973}
+  - {fileID: 865202206}
+  - {fileID: 1345505755}
+  - {fileID: 1099086946}
+  - {fileID: 1372169879}
+  - {fileID: 846725925}
+  - {fileID: 1761793636}
+  - {fileID: 733407933}
+  - {fileID: 1606238197}
+  - {fileID: 1301552876}
+  - {fileID: 671965040}
+  - {fileID: 1785975198}
+  - {fileID: 614912952}
+  - {fileID: 159223845}
+  - {fileID: 1610893087}
   _setDeceptionTileFields:
   - {fileID: 1253496699}
   - {fileID: 900961612}
@@ -21517,7 +21550,7 @@ GameObject:
   - component: {fileID: 1301552882}
   - component: {fileID: 1301552883}
   m_Layer: 6
-  m_Name: P_2_6
+  m_Name: P_2_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26100,7 +26133,7 @@ GameObject:
   - component: {fileID: 1345505761}
   - component: {fileID: 1345505762}
   m_Layer: 6
-  m_Name: K_3_7
+  m_Name: K_3_7_B
   m_TagString: K
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26538,7 +26571,7 @@ GameObject:
   - component: {fileID: 1372169885}
   - component: {fileID: 1372169886}
   m_Layer: 6
-  m_Name: B_5_7
+  m_Name: B_5_7_B
   m_TagString: B
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27197,7 +27230,7 @@ GameObject:
   - component: {fileID: 1405931211}
   - component: {fileID: 1405931212}
   m_Layer: 6
-  m_Name: P_7_1
+  m_Name: P_7_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28426,7 +28459,7 @@ GameObject:
   - component: {fileID: 1505631225}
   - component: {fileID: 1505631226}
   m_Layer: 6
-  m_Name: P_3_1
+  m_Name: P_3_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30265,7 +30298,7 @@ GameObject:
   - component: {fileID: 1606238203}
   - component: {fileID: 1606238204}
   m_Layer: 6
-  m_Name: P_1_6
+  m_Name: P_1_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30489,7 +30522,7 @@ GameObject:
   - component: {fileID: 1610893093}
   - component: {fileID: 1610893094}
   m_Layer: 6
-  m_Name: P_7_6
+  m_Name: P_7_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30713,7 +30746,7 @@ GameObject:
   - component: {fileID: 1637118420}
   - component: {fileID: 1637118419}
   m_Layer: 6
-  m_Name: Q_4_0
+  m_Name: Q_4_0_W
   m_TagString: Q
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32035,7 +32068,7 @@ GameObject:
   - component: {fileID: 1761793642}
   - component: {fileID: 1761793643}
   m_Layer: 6
-  m_Name: R_7_7
+  m_Name: R_7_7_B
   m_TagString: R
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32321,7 +32354,7 @@ GameObject:
   - component: {fileID: 1785975204}
   - component: {fileID: 1785975205}
   m_Layer: 6
-  m_Name: P_4_6
+  m_Name: P_4_6_B
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34167,7 +34200,7 @@ GameObject:
   - component: {fileID: 1906882883}
   - component: {fileID: 1906882884}
   m_Layer: 6
-  m_Name: R_0_0
+  m_Name: R_0_0_W
   m_TagString: R
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35407,7 +35440,7 @@ GameObject:
   - component: {fileID: 2047094475}
   - component: {fileID: 2047094476}
   m_Layer: 6
-  m_Name: P_6_1
+  m_Name: P_6_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38189,7 +38222,7 @@ GameObject:
   - component: {fileID: 2107785050}
   - component: {fileID: 2107785051}
   m_Layer: 6
-  m_Name: P_1_1
+  m_Name: P_1_1_W
   m_TagString: P
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

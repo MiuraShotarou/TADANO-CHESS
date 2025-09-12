@@ -14,7 +14,7 @@ public class Piece : ScriptableObject
     public Func<Vector3Int[]> _AttackAreas;
     void OnEnable()
     {
-        _pieceName = name.First().ToString();
+        _pieceName = name;
         _MoveCount = () => _moveCount;
         _MoveAreas = () => _moveAreas;
         _AttackAreas = () => _attackAreas;

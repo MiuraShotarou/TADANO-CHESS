@@ -70,7 +70,7 @@ public class TurnDeside : ColorPallet
         updateName[2] = (char)('0' + _targetSquere._SquereTilePos.y);
         updateName[4] = (char)('0' + _targetSquere._SquereTilePos.x);
         _selectedPieceObj.name = new string(updateName);
-        _selectedSquere._IsOnPiece = false;
+        _selectedSquere._IsOnPieceObj = null;
         _Direction = _targetSquere._SquereTilePos.x - _selectedSquere._SquereTilePos.x;
         //初めて移動した駒であればrotation.zは 0 という勝手な仕様
         if (_selectedPieceObj.transform.rotation.z == 0)
@@ -79,7 +79,7 @@ public class TurnDeside : ColorPallet
             _selectedPieceObj.transform.rotation = Quaternion.Euler(0, 0, 360);
         }
         //Collider生成のif文
-        if (_targetSquere._IsOnPiece) //enpassantの判断後にこれも判断すれば良い
+        if (_targetSquere._IsOnPieceObj) //enpassantの判断後にこれも判断すれば良い
         {
             //移動先に敵駒がある場合の処理
             CollisionEvent.CollisionAction = RegisterTarget;
@@ -115,7 +115,7 @@ public class TurnDeside : ColorPallet
             string[] search = _targetObj.name.Split("_");
             Squere onEnemySquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
             //unpassantにより倒される敵の下にあるSuereの_IsOnPieceを更新する
-            onEnemySquere._IsOnPiece = false;
+            onEnemySquere._IsOnPieceObj = null;
         }
     }
     /// <summary>
@@ -157,13 +157,13 @@ public class TurnDeside : ColorPallet
             _selectedPieceAnimatorController.Play("P_Attack");
             _targetSquere._IsActiveEnpassant = false;
         }
-        else if (_targetSquere._IsOnPiece)
+        else if (_targetSquere._IsOnPieceObj)
         {
             _playableGraph.Stop();
             _playableGraph.Destroy();
             string search = $"{_selectedPiece._PieceName}_Attack";
             _selectedPieceAnimatorController.Play(search);
-            _targetSquere._IsOnPiece = false;
+            _targetSquere._IsOnPieceObj = null;
         }
     }
     /// <summary>
@@ -273,7 +273,7 @@ public class TurnDeside : ColorPallet
     void EndTurn()
     {
         Squere movedSquere = _targetSquere;
-        movedSquere._IsOnPiece = true; //ここまでにはtargetSquereを移動先の状態にしたい
+        movedSquere._IsOnPieceObj = _selectedPieceObj; //ここまでにはtargetSquereを移動先の状態にしたい
         if (_enpassantSquere) {_enpassantSquere._IsActiveEnpassant = false;}
         Destroy(_enpassantObj);
         _openSelectableArea.BeforeRendereringClear();
@@ -283,19 +283,10 @@ public class TurnDeside : ColorPallet
             //被アンパッサン（状況作成側）の処理
             if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
             {
-                bool isWhite; //ゲーム全体で使用する
-                if (!_selectedPieceObj.GetComponent<SpriteRenderer>().flipX) //この条件式自体いらないのでは？ 
-                {
-                    isWhite = true;
-                }
-                else
-                {
-                    isWhite = false;
-                }
                 CreateEnpassant();
                 //_enpassantObj == true
             }
-            else if (_targetSquere._SquereID.Contains("1, 8"))
+            else if (_targetSquere._SquereID.ToString().Contains("1, 8"))
             {
                 // //プロモーションを行う処理
                 // _promotionObj　= _addPieceFunction.Promotion(); //上手くいけばUI選択で入力があるのまで動かないようにできるかも
