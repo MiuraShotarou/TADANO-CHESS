@@ -8,8 +8,8 @@ public class Squere : ScriptableObject
     [SerializeField, FormerlySerializedAs("_squerePosition")] Vector2 _squerePiecePosition;
     [SerializeField] Vector3Int _squereTilePos;
     [SerializeField] Vector2 _miniBordPos ;
-    SquereID _squereID;
     GameObject _isOnPieceObj;
+    SquereID _squereID;
     //駒にとって都合の良い座標
     public Vector2 _SquerePiecePosition => _squerePiecePosition;
     public Vector3 _MiniBordPos => _miniBordPos;
