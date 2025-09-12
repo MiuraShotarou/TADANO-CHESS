@@ -19,7 +19,7 @@ public class Squere : ScriptableObject
     public bool _IsActiveEnpassant { get; set; }
     public GameObject _IsOnPieceObj { get => _isOnPieceObj; set { _isOnPieceObj = value; UpdateMiniBorad(this);}}
     //_IsOnPieceが書き換わるたびに強制で呼ばれるデリゲート
-    Action<Squere> UpdateMiniBorad; //この関数の中で駒の種類を判別する
+    public Action<Squere> UpdateMiniBorad; //この関数の中で駒の種類を判別する
     void OnEnable()
     {
         int alphabet = "abcdefgh".IndexOf(name.First());

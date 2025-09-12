@@ -32,7 +32,6 @@ public class InGameManager : MonoBehaviour
         {
             //Add・Removeできるならプロパティの意味ない
             _PieceDict.Add(_setPieces[i]._PieceName, _setPieces[i]);
-            
         }
         int arraySize = 8;
         _deceptionTileFieldArrays = new SpriteRenderer[arraySize][];
@@ -57,6 +56,7 @@ public class InGameManager : MonoBehaviour
                 {
                     _SquereArrays[i][j]._IsOnPieceObj = null;
                 }
+                _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
             }
         }
         for (int i = 0; i < arraySize; i++)
