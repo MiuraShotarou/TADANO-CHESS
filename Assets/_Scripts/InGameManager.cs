@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -38,11 +38,12 @@ public class InGameManager : MonoBehaviour
     public GameObject _Collider2DPrefab => _collider2DPrefab; //s ro fs
     void Awake()
     {
-        for (int i = 0; i < _setPieces.Length; i++)
-        {
-            //Add・Removeできるならプロパティの意味ない
-            _PieceDict.Add(_setPieces[i]._PieceName, _setPieces[i]);
-        }
+        // for (int i = 0; i < _setPieces.Length; i++)
+        // {
+        //     //Add・Removeできるならプロパティの意味ない
+        //     _PieceDict.Add(_setPieces[i]._PieceName, _setPieces[i]);
+        // }
+        _pieceDict = _setPieces.ToDictionary(piece => piece._PieceName, piece => piece);
         int arraySize = 8;
         _deceptionTileFieldArrays = new SpriteRenderer[arraySize][];
         _squereArrays = new Squere[arraySize][];

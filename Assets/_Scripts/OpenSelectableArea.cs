@@ -209,7 +209,8 @@ public class OpenSelectableArea : ColorPallet
             _renderingAreas.Add(enemyTilePos);
             DrawOutline(collisionObj);
         }
-        else (_selectedPieceObj.name.First().ToString().Contains("K"))
+        //K だった場合はキャスリングで生成されたcolliderであることが確定する
+        else if(_selectedPieceObj.name.First().ToString().Contains("K"))
         {
             
         }
