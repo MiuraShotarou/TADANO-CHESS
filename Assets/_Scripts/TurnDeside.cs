@@ -300,7 +300,7 @@ public class TurnDeside : ColorPallet
             }
         }
         //
-        InGameManager._IsWhite = !InGameManager._IsWhite; //攻守交代
+        _inGameManager._IsWhite = !_inGameManager._IsWhite; //攻守交代
         //次のターンへ
     }
     /// <summary>
@@ -312,7 +312,7 @@ public class TurnDeside : ColorPallet
         string[] selectedPieceObjName = _selectedPieceObj.name.Split("_"); //P_alphabet_number
         int alphabet = int.Parse(selectedPieceObjName[1]);
         int enpassantNumber;
-        if (InGameManager._IsWhite)
+        if (_inGameManager._IsWhite)
         {
             //WhitePieceのenpassant座標Xは必然的に[2]である
             enpassantNumber = 2;

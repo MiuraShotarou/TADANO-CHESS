@@ -95,7 +95,7 @@ public class MiniBoard : MonoBehaviour //InGamemanagerを継承しても良い�
 
     static void UpdateMiniBoard(ulong value) //ulong 123ULなど
     {
-        if (InGameManager._IsWhite)
+        // if (_inGameManager._IsWhite)
         {
             //isOnPieceobj == true
             if (value != 0)
@@ -112,7 +112,7 @@ public class MiniBoard : MonoBehaviour //InGamemanagerを継承しても良い�
                 _miniBoardBA = Bon(_squereID, _MiniBoardBA);
             }
         }
-        else
+        // else
         {
             if (value != 0)
             {                

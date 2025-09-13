@@ -13,12 +13,14 @@ public class InGameManager : MonoBehaviour
     Dictionary<string, Piece> _pieceDict = new Dictionary<string, Piece>();
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
+    TurnBegin _turnBegin;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
     TurnDeside _turnDeside;
     Animator _animatorController;
     GameObject _collider2DPrefab;
-    public static bool _IsWhite {get => _isWhite; set { if (_isWhite != value) { _isWhite = value; }}}// valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
+    public bool _IsWhite {get => _isWhite; set { if (_isWhite != value) { _isWhite = value; StartTurnRelay();
+    }}}// valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Squere[][] _SquereArrays => _squereArrays; //s
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays; //fs
@@ -56,7 +58,7 @@ public class InGameManager : MonoBehaviour
                 {
                     _SquereArrays[i][j]._IsOnPieceObj = null;
                 }
-                _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
+                // _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
             }
         }
         for (int i = 0; i < arraySize; i++)
@@ -83,6 +85,11 @@ public class InGameManager : MonoBehaviour
     public void StartSelectTileRelay()
     {
         _selectTileController.enabled = true;
+    }
+
+    void StartTurnRelay()
+    {
+        _turnBegin.StartTurn();
     }
 }
 public enum SquereID //8 * 8 の配列OnPieceだったら該当のbitを1にする 
