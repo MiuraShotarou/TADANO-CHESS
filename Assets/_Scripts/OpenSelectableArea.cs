@@ -75,16 +75,16 @@ public class OpenSelectableArea : ColorPallet
         }
         else if (_selectedPiece._PieceName == "K") //チェックされていない、Kの通過するマスが攻撃範囲に入っていない
         {
-            //ショートキャスリングできるかどうかは既に判定済みである → あとはルークのいるポジションにコライダーをぶつけるだけ
-            if (_selectedPiece.IsShortCastling())
+            if (_inGameManager.IsCastling[0]())
             {
                 _selectedPiece = _addPieceFunction.AddShortCastlingArea(_selectedPiece);
             }
             //ロングキャスリングできるかどうかは既に判定済みである
-            if (_selectedPiece.IsLongCastling())
+            if (_inGameManager.IsCastling[1]())
             {
                 _selectedPiece = _addPieceFunction.AddLongCastlingArea(_selectedPiece);
             }
+            //ショートキャスリングできるかどうかは既に判定済みである → あとはルークのいるポジションにコライダーをぶつけるだけ
         }
         _selectedSquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
         _pieceMoveCount = _selectedPiece._MoveCount();

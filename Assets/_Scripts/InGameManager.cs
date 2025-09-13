@@ -1,23 +1,28 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-
+//変換処理・コレクション処理を探せ
 public class InGameManager : MonoBehaviour
 {
     bool _isWhite = true;
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
-    public static bool _IsWhiteShortCastlingChance { get; set; }
-    public static bool _IsWhiteLongCastlingChance { get; set; }
-    //絶対にロングキャスリングができない状況になった時、ここのここの値をfalseにする
-    public static bool _IsBlackShortCastlingChance { get; set; }
-    public static bool _IsBlackLongCastlingChance { get; set; }
+    public bool _isWhiteShortCastling;
+    public bool _isWhiteLongCastling;
+    public bool _isBlackShortCastling;
+    public bool _isBlackLongCastling;
+    public Func<bool> IsWhiteShortCastling;
+    public Func<bool> IsWhiteLongCastling;
+    public Func<bool> IsBlackShortCastling;
+    public Func<bool> IsBlackLongCastling;
+    public Func<bool>[] IsCastling;
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
     [SerializeField] GameObject[] _setPieceObjects;
     [SerializeField] SpriteRenderer[] _setDeceptionTileFields; //プロパティにしておけ
-    [SerializeField] Piece _whitePiece;
-    [SerializeField] Piece _blackPiece;
+    [SerializeField] Piece _whitePieceK;
+    [SerializeField] Piece _blackPieceK;
     Dictionary<string, Piece> _pieceDict = new Dictionary<string, Piece>();
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
@@ -27,22 +32,19 @@ public class InGameManager : MonoBehaviour
     TurnDeside _turnDeside;
     Animator _animatorController;
     GameObject _collider2DPrefab;
-    // public bool _IsWhite {get => _isWhite; set {{ _isWhite = value; if (_IsWhite) { _turnBegin.JudgmentCastling = ;}else{;}  StartTurnRelay();}}}}
+    public bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Squere[][] _SquereArrays => _squereArrays; //s
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays; //fs
+    public Piece _WhitePieceK {get => _whitePieceK; set => _whitePieceK = value;}
+    public Piece _BlackPieceK {get => _blackPieceK; set => _blackPieceK = value;}
     public OpenSelectableArea _OpenSelectableArea => _openSelectableArea; //いらない
     public SelectTileController SelectTileController => _selectTileController; //いらない
     public Animator _AnimatorController => _animatorController;
     public GameObject _Collider2DPrefab => _collider2DPrefab; //s ro fs
     void Awake()
     {
-        // for (int i = 0; i < _setPieces.Length; i++)
-        // {
-        //     //Add・Removeできるならプロパティの意味ない
-        //     _PieceDict.Add(_setPieces[i]._PieceName, _setPieces[i]);
-        // }
         _pieceDict = _setPieces.ToDictionary(piece => piece._PieceName, piece => piece);
         int arraySize = 8;
         _deceptionTileFieldArrays = new SpriteRenderer[arraySize][];
@@ -86,14 +88,14 @@ public class InGameManager : MonoBehaviour
         _selectTileController = GetComponent<SelectTileController>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
-        _IsWhiteShortCastlingChance = false;
-        _IsWhiteLongCastlingChance = false;
-        _IsBlackShortCastlingChance = false;
-        _IsBlackLongCastlingChance = false;//下手したら初期化いらない
-        _whitePiece.IsShortCastling = () => _IsWhiteShortCastlingChance;
-        _whitePiece.IsLongCastling = () => _IsWhiteLongCastlingChance;
-        _blackPiece.IsShortCastling = () => _IsBlackShortCastlingChance;
-        _blackPiece.IsLongCastling = () => _IsBlackLongCastlingChance;
+        _isWhiteShortCastling = false;
+        _isWhiteLongCastling = false;
+        _isBlackShortCastling = false;
+        _isBlackLongCastling = false;
+        IsWhiteShortCastling = () => _isWhiteShortCastling;
+        IsWhiteLongCastling = () => _isWhiteShortCastling;
+        IsBlackShortCastling = () => _isBlackShortCastling;
+        IsBlackLongCastling = () => _isBlackShortCastling;
     }
     public void PieceObjectPressed(GameObject pieceObj)
     {

@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
 //Colliderのデストロイタイミング
@@ -43,6 +45,7 @@ public class TurnDeside : ColorPallet
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _collider2DPrefab = _inGameManager._Collider2DPrefab;
         _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
+        _addPieceFunction = GetComponent<AddPieceFunction>();
         _RAttackEffectObj = transform.GetChild(0).gameObject;
         _BAttackEffectObj = transform.GetChild(1).gameObject;
         // _hitStopObj = transform.GetChild(2?).gameObject;
@@ -65,7 +68,7 @@ public class TurnDeside : ColorPallet
         _targetSquere = targetSquere;
         _selectedPieceAnimatorController = _selectedPieceObj.GetComponent<Animator>();
         _selectedPieceRuntimeAnimator = _selectedPieceAnimatorController.runtimeAnimatorController;
-        //移動に伴って_SelectedPieceObjやSquererなどをアップデート
+        //移動に伴って_SelectedPieceObjやSquererなどをアップデート → ラムダ候補
         char[] updateName = _selectedPieceObj.name.ToCharArray();
         updateName[2] = (char)('0' + _targetSquere._SquereTilePos.y);
         updateName[4] = (char)('0' + _targetSquere._SquereTilePos.x);
@@ -77,6 +80,34 @@ public class TurnDeside : ColorPallet
         {
             //OpenSelectableAreaで利用する
             _selectedPieceObj.transform.rotation = Quaternion.Euler(0, 0, 360);
+            //ルーク・キングが動いた瞬間に、一部のキャスリングが二度と使用できなくなる
+            if (updateName[0] == 'R' || updateName[0] == 'K') //stringにしたい
+            {
+                SquereID id = _selectedSquere._SquereID;
+                switch (id)
+                {
+                    case SquereID.a1:
+                        _inGameManager.IsWhiteShortCastling = () => false;
+                        break;
+                    case SquereID.h1:
+                        _inGameManager.IsWhiteLongCastling = () => false;
+                        break;
+                    case SquereID.a8:
+                        _inGameManager.IsBlackShortCastling = () => false;
+                        break;
+                    case SquereID.h8:
+                        _inGameManager.IsBlackLongCastling = () => false;
+                        break;
+                    case SquereID.d1:
+                        _inGameManager.IsWhiteShortCastling = () => false;
+                        _inGameManager.IsWhiteLongCastling = () => false;
+                        break;
+                    case  SquereID.d8:
+                        _inGameManager.IsBlackShortCastling = () => false;
+                        _inGameManager.IsBlackLongCastling = () => false;
+                        break;
+                    }
+            }
         }
         //Collider生成のif文
         if (_targetSquere._IsOnPieceObj) //enpassantの判断後にこれも判断すれば良い

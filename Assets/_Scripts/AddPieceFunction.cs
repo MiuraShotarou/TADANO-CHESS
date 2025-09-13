@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,12 +21,12 @@ public class AddPieceFunction : UIManager
 
     public Piece AddShortCastlingArea(Piece piece)
     {
-        //
+        piece._AttackAreas = () => piece._AttackAreas().Concat(new Vector3Int[] { new Vector3Int(0, -3, 0)}).ToArray();
         return piece;
     }
     public Piece AddLongCastlingArea(Piece piece)
     {
-        //
+        piece._AttackAreas = () => piece._AttackAreas().Concat(new Vector3Int[] { new Vector3Int(0, 4, 0)}).ToArray();
         return piece;
     }
     // public GameObject Promotion()
