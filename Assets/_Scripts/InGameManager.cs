@@ -7,19 +7,11 @@ public class InGameManager : MonoBehaviour
 {
     bool _isWhite = true;
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
-    
-    //絶対にショートキャスリングができない状況になった時、ここのここの値をfalseにする
-    static bool _isWhiteShortCastlingJudg = false;
-    static bool _isWhiteLongCastling = false;
+    public static bool _IsWhiteShortCastlingChance { get; set; }
+    public static bool _IsWhiteLongCastlingChance { get; set; }
     //絶対にロングキャスリングができない状況になった時、ここのここの値をfalseにする
-    static bool _isBlackShortCastling = false;
-    static bool _isBlackLongCastling = false;
-    public static bool IsWhiteShortCastlingJudg{ get  { return _isWhiteShortCastlingJudg; }set { _isWhiteShortCastlingJudg = value; }}
-    public static bool IsWhiteLongCastlingJudg;
-    //絶対にロングキャスリングができない状況になった時、ここのここの値をfalseにする
-    public static bool IsBlackShortCastlingJudg;
-    public static bool IsBlackLongCastlingJudg;
-    
+    public static bool _IsBlackShortCastlingChance { get; set; }
+    public static bool _IsBlackLongCastlingChance { get; set; }
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
     [SerializeField] GameObject[] _setPieceObjects;
@@ -93,10 +85,14 @@ public class InGameManager : MonoBehaviour
         _selectTileController = GetComponent<SelectTileController>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
-        _whitePiece.IsShortCastling = IsWhiteShortCastlingJudg;
-        _whitePiece.IsLongCastling = IsWhiteLongCastlingJudg;
-        _blackPiece.IsShortCastling = IsBlackShortCastlingJudg;
-        _blackPiece.IsLongCastling = IsBlackLongCastlingJudg;
+        _IsWhiteShortCastlingChance = false;
+        _IsWhiteLongCastlingChance = false;
+        _IsBlackShortCastlingChance = false;
+        _IsBlackLongCastlingChance = false;//下手したら初期化いらない
+        _whitePiece.IsShortCastling = () => _IsWhiteShortCastlingChance;
+        _whitePiece.IsLongCastling = () => _IsWhiteLongCastlingChance;
+        _blackPiece.IsShortCastling = () => _IsBlackShortCastlingChance;
+        _blackPiece.IsLongCastling = () => _IsBlackLongCastlingChance;
     }
     public void PieceObjectPressed(GameObject pieceObj)
     {

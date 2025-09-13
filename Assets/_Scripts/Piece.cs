@@ -12,7 +12,9 @@ public class Piece : ScriptableObject
     public Func<int> _MoveCount;
     public Func<Vector3Int[]> _MoveAreas;
     public Func<Vector3Int[]> _AttackAreas;
+    //絶対にショートキャスリングができない状況になった時、ここのデリゲートで取得できる値をfalseに上書きする
     public Func<bool> IsShortCastling;
+    //絶対にロングキャスリングができない状況になった時、ここのデリゲートで取得できる値をfalseに上書きする
     public Func<bool> IsLongCastling;
     void OnEnable()
     {
