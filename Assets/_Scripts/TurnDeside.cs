@@ -24,7 +24,7 @@ public class TurnDeside : ColorPallet
     RuntimeAnimatorController _selectedPieceRuntimeAnimator;
     AnimationCurve _endPositionCurve;
     GameObject _collider2DPrefab;
-    GameObject _rotateRockObj;
+    GameObject _RAttackEffectObj;
     GameObject _BAttackEffectObj;
     GameObject _QAttckEffectObj;
     GameObject _targetObj;
@@ -43,7 +43,7 @@ public class TurnDeside : ColorPallet
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _collider2DPrefab = _inGameManager._Collider2DPrefab;
         _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
-        _rotateRockObj = transform.GetChild(0).gameObject;
+        _RAttackEffectObj = transform.GetChild(0).gameObject;
         _BAttackEffectObj = transform.GetChild(1).gameObject;
         // _hitStopObj = transform.GetChild(2?).gameObject;
     }
@@ -250,9 +250,9 @@ public class TurnDeside : ColorPallet
             adjustPos = new Vector3(-0.24f, 1.8f, 0);
         }
         adjustPos += basePos;
-        _rotateRockObj.transform.position = adjustPos;
-        _rotateRockObj.GetComponent<RotateRock>()._targetPos = _targetObj.transform.position;
-        _rotateRockObj.SetActive(true);
+        _RAttackEffectObj.transform.position = adjustPos;
+        _RAttackEffectObj.GetComponent<RotateRock>()._targetPos = _targetObj.transform.position;
+        _RAttackEffectObj.SetActive(true);
         //SetActiveがtrueになると岩が回転するAnimationが再生される
     }
 

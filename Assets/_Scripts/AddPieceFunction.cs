@@ -17,6 +17,17 @@ public class AddPieceFunction : UIManager
         piece._MoveCount = () => 2;
         return piece;
     }
+
+    public Piece AddShortCastlingArea(Piece piece)
+    {
+        //
+        return piece;
+    }
+    public Piece AddLongCastlingArea(Piece piece)
+    {
+        //
+        return piece;
+    }
     // public GameObject Promotion()
     // {
     //     string promotionPieceName = ActivePromotionPanel();

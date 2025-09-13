@@ -75,7 +75,16 @@ public class OpenSelectableArea : ColorPallet
         }
         else if (_selectedPiece._PieceName == "K") //チェックされていない、Kの通過するマスが攻撃範囲に入っていない
         {
-            
+            //ショートキャスリングできるかどうかは既に判定済みである → あとはルークのいるポジションにコライダーをぶつけるだけ
+            if (_selectedPiece.IsShortCastling())
+            {
+                _selectedPiece = _addPieceFunction.AddShortCastlingArea(_selectedPiece);
+            }
+            //ロングキャスリングできるかどうかは既に判定済みである
+            if (_selectedPiece.IsLongCastling())
+            {
+                _selectedPiece = _addPieceFunction.AddLongCastlingArea(_selectedPiece);
+            }
         }
         _selectedSquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
         _pieceMoveCount = _selectedPiece._MoveCount();
@@ -199,6 +208,10 @@ public class OpenSelectableArea : ColorPallet
             Vector3Int enemyTilePos = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])]._SquereTilePos;
             _renderingAreas.Add(enemyTilePos);
             DrawOutline(collisionObj);
+        }
+        else (_selectedPieceObj.name.First().ToString().Contains("K"))
+        {
+            
         }
         _PrefabCount--;
     }

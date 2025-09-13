@@ -5,11 +5,27 @@ using UnityEngine.Rendering;
 
 public class InGameManager : MonoBehaviour
 {
-    static bool _isWhite = true;
+    bool _isWhite = true;
+    //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
+    
+    //絶対にショートキャスリングができない状況になった時、ここのここの値をfalseにする
+    static bool _isWhiteShortCastlingJudg = false;
+    static bool _isWhiteLongCastling = false;
+    //絶対にロングキャスリングができない状況になった時、ここのここの値をfalseにする
+    static bool _isBlackShortCastling = false;
+    static bool _isBlackLongCastling = false;
+    public static bool IsWhiteShortCastlingJudg{ get  { return _isWhiteShortCastlingJudg; }set { _isWhiteShortCastlingJudg = value; }}
+    public static bool IsWhiteLongCastlingJudg;
+    //絶対にロングキャスリングができない状況になった時、ここのここの値をfalseにする
+    public static bool IsBlackShortCastlingJudg;
+    public static bool IsBlackLongCastlingJudg;
+    
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
     [SerializeField] GameObject[] _setPieceObjects;
     [SerializeField] SpriteRenderer[] _setDeceptionTileFields; //プロパティにしておけ
+    [SerializeField] Piece _whitePiece;
+    [SerializeField] Piece _blackPiece;
     Dictionary<string, Piece> _pieceDict = new Dictionary<string, Piece>();
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
@@ -19,8 +35,8 @@ public class InGameManager : MonoBehaviour
     TurnDeside _turnDeside;
     Animator _animatorController;
     GameObject _collider2DPrefab;
-    public bool _IsWhite {get => _isWhite; set { if (_isWhite != value) { _isWhite = value; StartTurnRelay();
-    }}}// valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
+    // public bool _IsWhite {get => _isWhite; set {{ _isWhite = value; if (_IsWhite) { _turnBegin.JudgmentCastling = ;}else{;}  StartTurnRelay();}}}}
+    // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Squere[][] _SquereArrays => _squereArrays; //s
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays; //fs
@@ -61,22 +77,26 @@ public class InGameManager : MonoBehaviour
                 // _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
             }
         }
-        for (int i = 0; i < arraySize; i++)
-        {
-            for (int j = 0; j < arraySize; j++)
-            {
-                //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
-                if (_SquereArrays[i][j]._IsOnPieceObj)
-                {
-                    // Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
-                    // Debug.Log(_SquereArrays[i][j]._SquereID);
-                }
-            }
-        }
+        // for (int i = 0; i < arraySize; i++)
+        // {
+        //     for (int j = 0; j < arraySize; j++)
+        //     {
+        //         //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
+        //         if (_SquereArrays[i][j]._IsOnPieceObj)
+        //         {
+        //             // Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
+        //             // Debug.Log(_SquereArrays[i][j]._SquereID);
+        //         }
+        //     }
+        // }
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _selectTileController = GetComponent<SelectTileController>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
+        _whitePiece.IsShortCastling = IsWhiteShortCastlingJudg;
+        _whitePiece.IsLongCastling = IsWhiteLongCastlingJudg;
+        _blackPiece.IsShortCastling = IsBlackShortCastlingJudg;
+        _blackPiece.IsLongCastling = IsBlackLongCastlingJudg;
     }
     public void PieceObjectPressed(GameObject pieceObj)
     {
