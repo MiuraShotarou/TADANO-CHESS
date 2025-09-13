@@ -8,10 +8,10 @@ public class InGameManager : MonoBehaviour
 {
     bool _isWhite = true;
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
-    public bool _isWhiteShortCastling;
-    public bool _isWhiteLongCastling;
-    public bool _isBlackShortCastling;
-    public bool _isBlackLongCastling;
+    public bool _IsWhiteShortCastlingSwitch;
+    public bool _isWhiteLongCastlingSwitch;
+    public bool _isBlackShortCastlingSwitch;
+    public bool _isBlackLongCastlingSwitch;
     public Func<bool> IsWhiteShortCastling;
     public Func<bool> IsWhiteLongCastling;
     public Func<bool> IsBlackShortCastling;
@@ -88,14 +88,14 @@ public class InGameManager : MonoBehaviour
         _selectTileController = GetComponent<SelectTileController>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
-        _isWhiteShortCastling = false;
-        _isWhiteLongCastling = false;
-        _isBlackShortCastling = false;
-        _isBlackLongCastling = false;
-        IsWhiteShortCastling = () => _isWhiteShortCastling;
-        IsWhiteLongCastling = () => _isWhiteShortCastling;
-        IsBlackShortCastling = () => _isBlackShortCastling;
-        IsBlackLongCastling = () => _isBlackShortCastling;
+        _IsWhiteShortCastlingSwitch = false;
+        _isWhiteLongCastlingSwitch = false;
+        _isBlackShortCastlingSwitch = false;
+        _isBlackLongCastlingSwitch = false;
+        IsWhiteShortCastling = () => _IsWhiteShortCastlingSwitch;
+        IsWhiteLongCastling = () => _IsWhiteShortCastlingSwitch;
+        IsBlackShortCastling = () => _isBlackShortCastlingSwitch;
+        IsBlackLongCastling = () => _isBlackShortCastlingSwitch;
     }
     public void PieceObjectPressed(GameObject pieceObj)
     {

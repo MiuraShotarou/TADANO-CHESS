@@ -9,7 +9,6 @@ public class TurnBegin : MonoBehaviour
 {
     InGameManager _inGameManager;
     Squere[][] _squereArrays;
-    bool[] _isCastling;
     SquereID[] _shortSquereIds;
     SquereID[] _longSquereIds;
     private void Start()
@@ -31,11 +30,6 @@ public class TurnBegin : MonoBehaviour
 
     void Initialize()
     {
-        _inGameManager.
-        IsCastling = _inGameManager._IsWhite? new []{_inGameManager.IsWhiteShortCastling, _inGameManager.IsWhiteLongCastling}:
-                                                new []{_inGameManager.IsBlackShortCastling, _inGameManager.IsBlackLongCastling};
-        _isCastling = _inGameManager._IsWhite? new []{_inGameManager._isWhiteShortCastling, _inGameManager._isWhiteLongCastling }:
-                                                new []{_inGameManager._isBlackShortCastling, _inGameManager._isBlackLongCastling };
         _shortSquereIds = _inGameManager._IsWhite? new[] { SquereID.b1, SquereID.c1 }: //w_s_c
                                                     new[] { SquereID.b8, SquereID.c8 };//b_s_c
         _longSquereIds = _inGameManager._IsWhite? new [] { SquereID.f1 , SquereID.g1, SquereID.h1}://w_l_c 
@@ -45,32 +39,29 @@ public class TurnBegin : MonoBehaviour
     {
         //_inGameManager.IsWhiteCastling == メソッド名 ですぐにreturnが可能
         //攻撃範囲まで見る必要があるのかどうかを判断する → 自陣のキャスリングだけ判断できれば良い
-        //条件の駒が動いていた場合
-        // bool isShortPossible = _inGameManager.IsCastling[0]() == _isCastling[0];
-        // bool isLongPossible = _inGameManager.IsCastling[1]() == _isCastling[1];
-        //間に駒がある場合 → b1, c1, / f1, g1, h1 / b8, c8, / f8, g8, h8 のどこかに駒がある場合、そこのキャスリングは不可
+        
+        //条件① R / K が動いていた場合（省略：内実はTurnDeside.csで判断している）
+        //条件② 移動経路になにかしらの駒がある場合 → b1, c1, / f1, g1, h1 / b8, c8, / f8, g8, h8 のどこかに駒がある場合は該当のキャスリングができない
         bool isShortPossible = _shortSquereIds.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
-        bool isLongPossible = _inGameManager.IsCastling[1]() == _isCastling[1];
-        // Array.ForEach(Enumerable.Range(0, 2).ToArray(), i =>
-        // {
-        //     if (_inGameManager._IsWhite)
-        //     {
-        //         Func<bool>[] checks = new[]
-        //             { _inGameManager.IsWhiteShortCastling, _inGameManager.IsWhiteLongCastling };
-        //         if (_inGameManager.IsCastling[i] != checks[i])
-        //         {
-        //
-        //         }
-        //     }
-        //     else
-        //     {
-        //         Func<bool>[] checks = new[]
-        //             { _inGameManager.IsBlackShortCastling, _inGameManager.IsBlackLongCastling };
-        //         if (_inGameManager.IsCastling[i] != checks[i])
-        //         {
-        //             _inGameManager.IsCastling[i] = () => false;
-        //         }
-        //     }
-        // });
+        bool isLongPossible = _longSquereIds.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
+        //条件③ 移動経路 ・ R / K がチェックされていないならキャスリングが可能な状態である
+        if (isShortPossible)
+        {
+            FilterShortCastling();
+        }
+        if (isLongPossible)
+        {
+            FilterLongCastling();
+        }
+    }
+
+    void FilterShortCastling()
+    {
+        
+    }
+
+    void FilterLongCastling()
+    {
+        
     }
 }
