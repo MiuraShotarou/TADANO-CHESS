@@ -8,7 +8,7 @@ public class InGameManager : MonoBehaviour
 {
     bool _isWhite = true;
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
-    public bool _IsWhiteShortCastlingSwitch;
+    public bool _isWhiteShortCastlingSwitch;
     public bool _isWhiteLongCastlingSwitch;
     public bool _isBlackShortCastlingSwitch;
     public bool _isBlackLongCastlingSwitch;
@@ -88,12 +88,12 @@ public class InGameManager : MonoBehaviour
         _selectTileController = GetComponent<SelectTileController>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
-        _IsWhiteShortCastlingSwitch = false;
+        _isWhiteShortCastlingSwitch = false;
         _isWhiteLongCastlingSwitch = false;
         _isBlackShortCastlingSwitch = false;
         _isBlackLongCastlingSwitch = false;
-        IsWhiteShortCastling = () => _IsWhiteShortCastlingSwitch;
-        IsWhiteLongCastling = () => _IsWhiteShortCastlingSwitch;
+        IsWhiteShortCastling = () => _isWhiteShortCastlingSwitch;
+        IsWhiteLongCastling = () => _isWhiteShortCastlingSwitch;
         IsBlackShortCastling = () => _isBlackShortCastlingSwitch;
         IsBlackLongCastling = () => _isBlackShortCastlingSwitch;
     }

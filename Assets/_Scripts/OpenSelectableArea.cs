@@ -64,7 +64,7 @@ public class OpenSelectableArea : ColorPallet
         }
         if (_selectedPiece._PieceName == "P")
         {
-            if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
+            if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX) //!isWhiteでも良い
             { 
                 _selectedPiece = _addPieceFunction.UpdatePoneGroup(_selectedPiece);
             }
@@ -112,10 +112,8 @@ public class OpenSelectableArea : ColorPallet
     /// </summary>
     void Initialize()
     {
-        _moveAreas = new Vector3Int[_selectedPiece._MoveAreas().Length];
-        _attackAreas = new Vector3Int[_selectedPiece._AttackAreas().Length];
-        Array.Fill(_moveAreas, _selectedSquere._SquereTilePos);
-        Array.Fill(_attackAreas, _selectedSquere._SquereTilePos);
+        _moveAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._MoveAreas().Length).ToArray();
+        _attackAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._AttackAreas().Length).ToArray();
         _renderingAreas = new List<Vector3Int>();
         CollisionEvent.CollisionAction = JudgmentGroup;
     }
