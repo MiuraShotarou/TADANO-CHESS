@@ -7,11 +7,14 @@ using UnityEngine.Rendering;
 public class InGameManager : MonoBehaviour
 {
     bool _isWhite = true;
+    public bool _IsCheckedWhiteKing { get; set; }
+    public bool _IsCheckedBlackKing { get; set; }
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
-    public bool _isWhiteShortCastlingSwitch;
-    public bool _isWhiteLongCastlingSwitch;
-    public bool _isBlackShortCastlingSwitch;
-    public bool _isBlackLongCastlingSwitch;
+    public bool IsWhiteShortCastlingSwitch;
+    public bool IsWhiteLongCastlingSwitch;
+    public bool IsBlackShortCastlingSwitch;
+    public bool IsBlackLongCastlingSwitch;
+    public bool[] IsCastlingSwitch;
     public Func<bool> IsWhiteShortCastling;
     public Func<bool> IsWhiteLongCastling;
     public Func<bool> IsBlackShortCastling;
@@ -88,14 +91,38 @@ public class InGameManager : MonoBehaviour
         _selectTileController = GetComponent<SelectTileController>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
-        _isWhiteShortCastlingSwitch = false;
-        _isWhiteLongCastlingSwitch = false;
-        _isBlackShortCastlingSwitch = false;
-        _isBlackLongCastlingSwitch = false;
-        IsWhiteShortCastling = () => _isWhiteShortCastlingSwitch;
-        IsWhiteLongCastling = () => _isWhiteShortCastlingSwitch;
-        IsBlackShortCastling = () => _isBlackShortCastlingSwitch;
-        IsBlackLongCastling = () => _isBlackShortCastlingSwitch;
+        IsWhiteShortCastlingSwitch = false;
+        IsWhiteLongCastlingSwitch = false;
+        IsBlackShortCastlingSwitch = false;
+        IsBlackLongCastlingSwitch = false;
+        IsWhiteShortCastling = () => IsWhiteShortCastlingSwitch;
+        IsWhiteLongCastling = () => IsWhiteShortCastlingSwitch;
+        IsBlackShortCastling = () => IsBlackShortCastlingSwitch;
+        IsBlackLongCastling = () => IsBlackShortCastlingSwitch;
+    }
+    /// <summary>
+    /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる
+    /// </summary>
+    /// <param name="allySquere"></param>
+    /// <param name="enemySquere"></param>
+    public void Check(bool isCheck, Squere allySquere, List<Squere> enemySquere)
+    {
+        Debug.Log("Check");
+        if (_IsWhite)
+        {
+            _IsCheckedWhiteKing = isCheck;
+        }
+        else
+        {
+            _IsCheckedBlackKing = isCheck;
+        }
+    }
+    /// <summary>
+    /// TurnBegin.cs にて moveRange全検索からのenemyRange全検索で判定できるかもしれないが、あまりにも難しすぎるので今回は断念する
+    /// </summary>
+    void CheckMate()
+    {
+        
     }
     public void PieceObjectPressed(GameObject pieceObj)
     {
@@ -108,7 +135,16 @@ public class InGameManager : MonoBehaviour
 
     void StartTurnRelay()
     {
+        Initialize();
         _turnBegin.StartTurn();
+    }
+
+    void Initialize()
+    {
+        IsCastling = _IsWhite? new[] { IsWhiteShortCastling, IsWhiteLongCastling }:
+                                new []{ IsBlackShortCastling, IsBlackLongCastling};
+        IsCastlingSwitch = _IsWhite? new []{IsWhiteShortCastlingSwitch, IsWhiteLongCastlingSwitch}:
+                                        new []{IsBlackShortCastlingSwitch, IsBlackLongCastlingSwitch};
     }
 }
 public enum SquereID //8 * 8 の配列OnPieceだったら該当のbitを1にする 

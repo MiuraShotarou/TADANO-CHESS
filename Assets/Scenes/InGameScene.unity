@@ -20093,6 +20093,7 @@ GameObject:
   - component: {fileID: 1218987146}
   - component: {fileID: 1218987147}
   - component: {fileID: 1218987139}
+  - component: {fileID: 1218987148}
   - component: {fileID: 1218987141}
   - component: {fileID: 1218987142}
   - component: {fileID: 1218987143}
@@ -20139,6 +20140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517c4a51118093245a9a5f165176b273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsWhiteShortCastlingSwitch: 0
+  IsWhiteLongCastlingSwitch: 0
+  IsBlackShortCastlingSwitch: 0
+  IsBlackLongCastlingSwitch: 0
+  IsCastlingSwitch: 
   _setPieces:
   - {fileID: 11400000, guid: 7dec711a5d5c4494b8ccf72041a3243a, type: 2}
   - {fileID: 11400000, guid: 04b699422c7676e4682b7243f8fcdcbb, type: 2}
@@ -20309,6 +20315,8 @@ MonoBehaviour:
   - {fileID: 1018026011}
   - {fileID: 1749145615}
   - {fileID: 33424436}
+  _whitePieceK: {fileID: 0}
+  _blackPieceK: {fileID: 0}
 --- !u!4 &1218987140
 Transform:
   m_ObjectHideFlags: 0
@@ -20581,6 +20589,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1218987148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218987132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3317e18660c806044a3a1ef7e53c1bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1219547210
 GameObject:
   m_ObjectHideFlags: 0
