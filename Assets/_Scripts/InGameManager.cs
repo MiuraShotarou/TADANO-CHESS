@@ -24,11 +24,13 @@ public class InGameManager : MonoBehaviour
     [SerializeField] Squere[] _setSqueres;
     [SerializeField] GameObject[] _setPieceObjects;
     [SerializeField] SpriteRenderer[] _setDeceptionTileFields; //プロパティにしておけ
+    [SerializeField] RuntimeAnimatorController[] _setPeiceruntimeAnimatorControllers; //そのままdictionaryに登録しちゃえば良い
     [SerializeField] Piece _whitePieceK;
     [SerializeField] Piece _blackPieceK;
     Dictionary<string, Piece> _pieceDict = new Dictionary<string, Piece>();
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
+    Dictionary<string, RuntimeAnimatorController> _pieceRuntimeAnimatorControllers = new Dictionary<string, RuntimeAnimatorController>();
     TurnBegin _turnBegin;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
@@ -40,6 +42,8 @@ public class InGameManager : MonoBehaviour
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Squere[][] _SquereArrays => _squereArrays; //s
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays; //fs
+
+    public Dictionary<string, RuntimeAnimatorController> _PieceRuntimeAnimatorControllers => _pieceRuntimeAnimatorControllers;
     public Piece _WhitePieceK {get => _whitePieceK; set => _whitePieceK = value;}
     public Piece _BlackPieceK {get => _blackPieceK; set => _blackPieceK = value;}
     public OpenSelectableArea _OpenSelectableArea => _openSelectableArea; //いらない

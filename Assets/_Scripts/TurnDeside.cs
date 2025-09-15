@@ -32,7 +32,7 @@ public class TurnDeside : ColorPallet
     GameObject _targetObj;
     GameObject _enpassantObj;
     // GameObject _hitStopObj;
-    private GameObject _promotionObj; //試験的
+    public GameObject _promotionObj; //試験的
     PlayableGraph _playableGraph;
     AnimationPlayableOutput _animationPlayableOutput;
     bool _isDirectionRight;
@@ -330,19 +330,12 @@ public class TurnDeside : ColorPallet
             }
             else if (_targetSquere._SquereID.ToString().Contains("1, 8"))
             {
+                _promotionObj = _selectedPieceObj;
                 _inGameManager.StartActivePromotionRelay();
-                // //プロモーションを行う処理
-                // _promotionObj　= _addPieceFunction.Promotion(); //上手くいけばUI選択で入力があるのまで動かないようにできるかも
-                // //①ユーザーの待機処理
-                // //②ゲームオブジェクトそのものを別の物にすり替える → Animator, ColliderとかもあるからGameObjectごと変更するのが最適かも
-                // //③gameObjectの名前を書き換え
-                // //④
-                // string[] search = _promotionObj.name.Split('_');
-                // Destroy(_selectedPieceObj);
-                // _selectedPieceObj = Instantiate(_promotionObj, )
+                return;
+                //プロモーション先の駒をUIで選択したら_inGameManager._IsWhiteを切り替える
             }
         }
-        //
         _inGameManager._IsWhite = !_inGameManager._IsWhite; //攻守交代
         //次のターンへ
     }

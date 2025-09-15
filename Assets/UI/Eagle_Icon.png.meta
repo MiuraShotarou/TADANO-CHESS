@@ -1,0 +1,703 @@
+fileFormatVersion: 2
+guid: c2d6c3f35cace3c4f8f53890c4ee0f52
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Eagle_Icon_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2659.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc4f9cdc30c7cd24c953bf4fa88b31b1
+      internalID: 476773257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_1
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 2659.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53d0b1fee871f6840a08e91a6adb14e2
+      internalID: -990180783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_2
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 2659.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fba9f6be702772342a53ff67de96d74d
+      internalID: -1053926493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_3
+      rect:
+        serializedVersion: 2
+        x: 2706
+        y: 2659.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2644952a2a23e5c429519b086920cc51
+      internalID: -2035154828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_4
+      rect:
+        serializedVersion: 2
+        x: 3608
+        y: 2659.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aca96efbd571e834a87c96b9e70e4383
+      internalID: 650964027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1995.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5159567d9e4676243a34ff59cd013b62
+      internalID: 1453087011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_6
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 1995.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27db097766d0de3478b37ff20e8b5507
+      internalID: -1609472865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_7
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 1995.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a2d71f3c47603d4589843e38b168abc
+      internalID: 358558436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_8
+      rect:
+        serializedVersion: 2
+        x: 2706
+        y: 1995.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0075edae39fb7644bb89bb63e49d1928
+      internalID: -1769180782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_9
+      rect:
+        serializedVersion: 2
+        x: 3608
+        y: 1995.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9651273762ee5ef44996a94babb0c4c0
+      internalID: -113191843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1331.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50215db62686d744eb65a7c2e0ce2c37
+      internalID: 937659051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_11
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 1331.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4140f7b533632674ba9c80f8c4725628
+      internalID: -899733204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_12
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 1331.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b6b69cdbf3b68242aa77c08f01bf41b
+      internalID: 1984172709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_13
+      rect:
+        serializedVersion: 2
+        x: 2706
+        y: 1331.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b8354c7665565948909edaa4145afc6
+      internalID: 1731437234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_14
+      rect:
+        serializedVersion: 2
+        x: 3608
+        y: 1331.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f9e9fa877e42814cafa1734ab25ecf5
+      internalID: 2027953009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 667.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d10662c47b2941543ad10f2a6612b661
+      internalID: 406924215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_16
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 667.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03bec08f35473c147986402133920bce
+      internalID: -1793137501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_17
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 667.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9f2146e4f140b043b21f453fc0cbc74
+      internalID: 215391779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_18
+      rect:
+        serializedVersion: 2
+        x: 2706
+        y: 667.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db0566a79bfdefb4f9c7f7fc659137d7
+      internalID: 1788514149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_19
+      rect:
+        serializedVersion: 2
+        x: 3608
+        y: 667.2
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 631ed47b290ef294db9487c7ed552a35
+      internalID: -237648685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3.2000122
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9754440f9d89f50429fab6c16bce671a
+      internalID: -1813693456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_21
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 3.2000122
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f90ce5707d048fc4f802fc93c12982eb
+      internalID: 1467003427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_22
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 3.2000122
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28e3f10a32ccbb34b9336c957cd86c19
+      internalID: -1072845663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_23
+      rect:
+        serializedVersion: 2
+        x: 2706
+        y: 3.2000122
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65a45737aedea564498a8a105d177815
+      internalID: -2131878875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eagle_Icon_24
+      rect:
+        serializedVersion: 2
+        x: 3608
+        y: 3.2000122
+        width: 902.4
+        height: 664.8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09ab35e4665f67a41a619eb43b8940ab
+      internalID: -508611168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: f0cb2cd89dcb7214b8f42063d8c075d4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Eagle_Icon_0: 476773257
+      Eagle_Icon_1: -990180783
+      Eagle_Icon_10: 937659051
+      Eagle_Icon_11: -899733204
+      Eagle_Icon_12: 1984172709
+      Eagle_Icon_13: 1731437234
+      Eagle_Icon_14: 2027953009
+      Eagle_Icon_15: 406924215
+      Eagle_Icon_16: -1793137501
+      Eagle_Icon_17: 215391779
+      Eagle_Icon_18: 1788514149
+      Eagle_Icon_19: -237648685
+      Eagle_Icon_2: -1053926493
+      Eagle_Icon_20: -1813693456
+      Eagle_Icon_21: 1467003427
+      Eagle_Icon_22: -1072845663
+      Eagle_Icon_23: -2131878875
+      Eagle_Icon_24: -508611168
+      Eagle_Icon_3: -2035154828
+      Eagle_Icon_4: 650964027
+      Eagle_Icon_5: 1453087011
+      Eagle_Icon_6: -1609472865
+      Eagle_Icon_7: 358558436
+      Eagle_Icon_8: -1769180782
+      Eagle_Icon_9: -113191843
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
