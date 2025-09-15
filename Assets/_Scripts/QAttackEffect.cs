@@ -3,7 +3,7 @@ using UnityEngine;
 public class QAttackEffect : AnimationRelay
 {
     Animator _QAttackEffectAnimatorController;
-    void Start()
+    void Awake()
     {
         _QAttackEffectAnimatorController = gameObject.GetComponent<Animator>();
         gameObject.SetActive(false);

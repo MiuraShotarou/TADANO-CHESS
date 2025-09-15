@@ -89,6 +89,7 @@ public class InGameManager : MonoBehaviour
         // }
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _selectTileController = GetComponent<SelectTileController>();
+        _turnBegin = GetComponent<TurnBegin>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
         IsWhiteShortCastlingSwitch = false;

@@ -2,31 +2,31 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 using System.Linq;
-public class RotateRock : AnimationRelay
+public class R_AttackEffect : AnimationRelay
 {
-    GameObject _rotateRockObj;
-    Animator _rotateRockAnimatorController;
-    RuntimeAnimatorController _rotateRuntimeRockAnimatorController;
+    GameObject _RAttackEffectObj;
+    Animator _RAttackEffectAnimatorController;
+    RuntimeAnimatorController _RAttackEffectRuntimeAnimatorController;
     PlayableGraph _playableGraph;
     public Vector3 _targetPos;
     /// <summary>
     /// Awakeの代わり。非アクティブなまま始まるのでOnDisableから呼ばれる
     /// </summary>
-    void Start()
+    void Awake()
     {
-        _rotateRockObj = this.gameObject;
-        _rotateRockAnimatorController = _rotateRockObj.GetComponent<Animator>();
-        _rotateRuntimeRockAnimatorController = _rotateRockAnimatorController.runtimeAnimatorController;
+        _RAttackEffectObj = this.gameObject;
+        _RAttackEffectAnimatorController = _RAttackEffectObj.GetComponent<Animator>();
+        _RAttackEffectRuntimeAnimatorController = _RAttackEffectAnimatorController.runtimeAnimatorController;
         gameObject.SetActive(false);
     }
     void OnEnable()
     {
-        StartRotateRockAnimation();
+        StartRAttackEffectAnimation();
     }
     /// <summary>
     /// ルークの攻撃モーション「投石」の石が始点から終点に向かって回転していくだけのAnimationを再生する。動作が独立している。
     /// </summary>
-    void StartRotateRockAnimation()
+    void StartRAttackEffectAnimation()
     {
         AnimationCurve animationCurvePosX = AnimationCurve.Linear(0f, transform.position.x, 1f, _targetPos.x);
         AnimationCurve animationCurvePosY = AnimationCurve.EaseInOut(0f, transform.position.y, 1f, _targetPos.y);
@@ -38,7 +38,7 @@ public class RotateRock : AnimationRelay
             animationCurveRotZ = AnimationCurve.Linear(0f, transform.rotation.z, 1f, -1080);
         }
         //"Run"という名前のついたanimationClipからコピーを新規作成
-        AnimationClip animationClip = _rotateRuntimeRockAnimatorController.animationClips.First();
+        AnimationClip animationClip = _RAttackEffectRuntimeAnimatorController.animationClips.First();
         //新しく作成・編集したAnimationCurveをAnimationClipに代入する
         animationClip.SetCurve("", typeof(Transform), "localPosition.x", animationCurvePosX);
         animationClip.SetCurve("", typeof(Transform), "localPosition.y", animationCurvePosY);
@@ -48,9 +48,8 @@ public class RotateRock : AnimationRelay
         //AnimationClipPlayableを作成
         AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_playableGraph, animationClip);
         //AnimationPlayableOutputを作成してAnimatorと連結
-        AnimationPlayableOutput animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _rotateRockAnimatorController);
+        AnimationPlayableOutput animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _RAttackEffectAnimatorController);
         animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
-        //放物線を描く必要
         //再生
         _playableGraph.Play();
     }
@@ -61,8 +60,8 @@ public class RotateRock : AnimationRelay
     {
         _playableGraph.Stop();
         _playableGraph.Destroy();
-        _rotateRockObj.SetActive(false);
-        _rotateRockObj.transform.position = default;
-        _rotateRockObj.transform.rotation = default;
+        _RAttackEffectObj.SetActive(false);
+        _RAttackEffectObj.transform.position = default;
+        _RAttackEffectObj.transform.rotation = default;
     }
 }

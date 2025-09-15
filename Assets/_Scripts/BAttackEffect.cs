@@ -3,7 +3,7 @@ using UnityEngine;
 public class BAttackEffect : AnimationRelay
 {
     Animator _BAttackEffectAnimatorController;
-    void Start()
+    void Awake()
     {
         _BAttackEffectAnimatorController = gameObject.GetComponent<Animator>();
         gameObject.SetActive(false);

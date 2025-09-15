@@ -21,6 +21,7 @@ public class TurnBegin : MonoBehaviour
     private void Start()
     {
         _inGameManager = GetComponent<InGameManager>();
+        _addPieceFunction = GetComponent<AddPieceFunction>();
         _squereArrays = _inGameManager._SquereArrays;
     }
 
@@ -32,7 +33,7 @@ public class TurnBegin : MonoBehaviour
         _inGameManager.Check(_isCheck ,_checkedKingSquere, _checkAttackerSqueres);
         //Checkの場合はキャスリング出来ないようにだけ書くこと
         FilterCastling();
-        _inGameManager._AnimatorController.Play("TurnBegin");
+        _inGameManager._AnimatorController.Play("TurnStart");
     }
     /// <summary>
     /// キングとルークの間のマスを登録する
@@ -81,16 +82,20 @@ public class TurnBegin : MonoBehaviour
                     attackAreas[d] += attackerPiece._AttackAreas()[d]; //d == 方角
                     int alphabet = attackAreas[d].y;
                     int number = attackAreas[d].x;
-                    Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
-                    //駒がある || 盤外である　は二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
-                    if (difendSquere._IsOnPieceObj
-                        ||
-                        !(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
+                    //盤外である　は二度と検索しなくて良い条件 
+                    if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
                     {
                         attackAreas[d].z = -1;
+                        continue;
+                    }
+                    Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
+                    // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
+                    if (difendSquere._IsOnPieceObj)
+                    {
+                        attackAreas[d].z = -1;
+                        //敵から見て敵の駒(ally)が見つかった場合の条件
                         if (difendSquere._IsOnPieceObj && difendSquere._IsOnPieceObj.name.Contains(allyGroup))
                         {
-                            //敵から見て敵の駒(ally)が見つかった
                             _enemyAttackRange.Add(difendSquere._SquereID);
                             if (difendSquere._IsOnPieceObj.name.First().ToString().Contains("K"))
                             {

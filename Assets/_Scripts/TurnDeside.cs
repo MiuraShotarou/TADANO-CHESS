@@ -236,17 +236,17 @@ public class TurnDeside : ColorPallet
 
     public void StartStageOutAddForce()
     {
-        _targetObj.GetComponent<BoxCollider2D>().enabled = false;
+        _targetObj.GetComponent<Collider2D>().enabled = false;
         Rigidbody2D rigidbody2D = _targetObj.GetComponent<Rigidbody2D>();
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
         Vector2 duration = new Vector2(0, 0);
         if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
         {
-            duration = new Vector2(-100, 100);
+            duration = new Vector2(100, 100);
         }
         else
         {
-            duration = new Vector2(100, 100);
+            duration = new Vector2(-100, 100);
         }
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
@@ -282,7 +282,7 @@ public class TurnDeside : ColorPallet
         }
         adjustPos += basePos;
         _RAttackEffectObj.transform.position = adjustPos;
-        _RAttackEffectObj.GetComponent<RotateRock>()._targetPos = _targetObj.transform.position;
+        _RAttackEffectObj.GetComponent<R_AttackEffect>()._targetPos = _targetObj.transform.position;
         _RAttackEffectObj.SetActive(true);
         //SetActiveがtrueになると岩が回転するAnimationが再生される
     }
