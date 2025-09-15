@@ -133,11 +133,18 @@ public class InGameManager : MonoBehaviour
     {
         _selectTileController.enabled = true;
     }
-
+    /// <summary>
+    /// public Bool _IsWihte から呼び出される
+    /// </summary>
     void StartTurnRelay()
     {
         Initialize();
         _turnBegin.StartTurn();
+    }
+
+    public void StartActivePromotionRelay()
+    {
+        _AnimatorController.Play("ActivePromotionPanel");
     }
 
     void Initialize()

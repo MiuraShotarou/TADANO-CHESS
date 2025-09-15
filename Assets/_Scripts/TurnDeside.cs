@@ -330,7 +330,7 @@ public class TurnDeside : ColorPallet
             }
             else if (_targetSquere._SquereID.ToString().Contains("1, 8"))
             {
-                _inGameManager._AnimatorController.Play("ActivePromotion");
+                _inGameManager.StartActivePromotionRelay();
                 // //プロモーションを行う処理
                 // _promotionObj　= _addPieceFunction.Promotion(); //上手くいけばUI選択で入力があるのまで動かないようにできるかも
                 // //①ユーザーの待機処理
