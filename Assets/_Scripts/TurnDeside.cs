@@ -106,7 +106,7 @@ public class TurnDeside : ColorPallet
                         _inGameManager.IsBlackShortCastling = () => false;
                         _inGameManager.IsBlackLongCastling = () => false;
                         break;
-                    }
+                }
             }
         }
         //Collider生成のif文
@@ -182,16 +182,22 @@ public class TurnDeside : ColorPallet
             &&
             _targetSquere._IsActiveEnpassant)
         {
-            _playableGraph.Stop();
-            _playableGraph.Destroy();
+            if (_playableGraph.IsValid())
+            {
+                _playableGraph.Stop();
+                _playableGraph.Destroy();
+            }
             _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_selectedPieceObj.GetComponent<SpriteRenderer>().flipX; //攻撃するPieceの向いている方向を反転する
             _selectedPieceAnimatorController.Play("P_Attack");
             _targetSquere._IsActiveEnpassant = false;
         }
         else if (_targetSquere._IsOnPieceObj)
         {
-            _playableGraph.Stop();
-            _playableGraph.Destroy();
+            if (_playableGraph.IsValid())
+            {
+                _playableGraph.Stop();
+                _playableGraph.Destroy();
+            }
             string search = $"{_selectedPiece._PieceName}_Attack";
             _selectedPieceAnimatorController.Play(search);
             _targetSquere._IsOnPieceObj = null;
@@ -202,8 +208,12 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartIdleAnimation()
     {
-        _playableGraph.Stop();
-        _playableGraph.Destroy();
+        if (_playableGraph.IsValid())
+        {
+            _playableGraph.Stop();
+            _playableGraph.Destroy();
+        }
+        _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_inGameManager._IsWhite;
         string search = new string($"{_selectedPiece._PieceName}_Idle");
         _selectedPieceAnimatorController.Play(search);
         //ターンを終えた後の処理
@@ -220,7 +230,6 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartTakeHitAnimation()
     {
-        //TakeHitアニメーションを作成すること
         string search = new string($"{_targetObj.name.First()}_TakeHit");
         _targetPieceAnimatorController.Play(search);
     }
@@ -230,6 +239,7 @@ public class TurnDeside : ColorPallet
     public void StartDeathAnimation()
     {
         // _hitStopObj.SetActive(true);
+        _targetObj.GetComponent<SpriteRenderer>().flipX = !_selectedPieceObj.GetComponent<SpriteRenderer>().flipX;
         string search = new string($"{_targetObj.name.First()}_Death"); //_targetobjがnull
         _targetPieceAnimatorController.Play(search);
     }
@@ -239,15 +249,7 @@ public class TurnDeside : ColorPallet
         _targetObj.GetComponent<Collider2D>().enabled = false;
         Rigidbody2D rigidbody2D = _targetObj.GetComponent<Rigidbody2D>();
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-        Vector2 duration = new Vector2(0, 0);
-        if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX)
-        {
-            duration = new Vector2(100, 100);
-        }
-        else
-        {
-            duration = new Vector2(-100, 100);
-        }
+        Vector2 duration = _selectedPieceObj.GetComponent<SpriteRenderer>().flipX ? new Vector2(-100, 100): new Vector2(100, 100);
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
         int destroyTimer = 3;
@@ -259,13 +261,16 @@ public class TurnDeside : ColorPallet
     public void StartAdjustFlipX()
     {
         //向かっていく方向によって決まる → Directionを取得すれば良い → ここの set をして、AnimationEventに割り当てる
-        if (_isDirectionRight)
+        _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
+    }
+
+    public void StartAdjustPosition()
+    {
+        if (_selectedPiece._PieceName == "N")
         {
-            _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = false;
-        }
-        else
-        {
-            _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = true;
+            Vector3 updatePos = _selectedPieceObj.transform.position;
+            updatePos.x += _isDirectionRight? 1.5f : -1.5f;
+            _selectedPieceObj.transform.position = updatePos;;
         }
     }
     /// <summary>
@@ -279,6 +284,11 @@ public class TurnDeside : ColorPallet
         if (!_isDirectionRight)
         {
             adjustPos = new Vector3(-0.24f, 1.8f, 0);
+            _RAttackEffectObj.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else
+        {
+            _RAttackEffectObj.GetComponent<SpriteRenderer>().flipX = false;
         }
         adjustPos += basePos;
         _RAttackEffectObj.transform.position = adjustPos;
@@ -288,7 +298,8 @@ public class TurnDeside : ColorPallet
     }
 
     public void StartBAttackEffect()
-    {
+    { 
+        _RAttackEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
         Vector3 basePos = _targetObj.transform.position;
         _BAttackEffectObj.transform.position = basePos;
         _BAttackEffectObj.SetActive(true);
@@ -296,7 +307,7 @@ public class TurnDeside : ColorPallet
 
     public void StartQAttackEffect()
     {
-        //70f
+        _QAttckEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
         Vector3 basePos = _selectedPieceObj.transform.position;
         _QAttckEffectObj.transform.position = basePos;
         _QAttckEffectObj.SetActive(true);
@@ -319,6 +330,7 @@ public class TurnDeside : ColorPallet
             }
             else if (_targetSquere._SquereID.ToString().Contains("1, 8"))
             {
+                _inGameManager._AnimatorController.Play("ActivePromotion");
                 // //プロモーションを行う処理
                 // _promotionObj　= _addPieceFunction.Promotion(); //上手くいけばUI選択で入力があるのまで動かないようにできるかも
                 // //①ユーザーの待機処理

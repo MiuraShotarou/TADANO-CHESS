@@ -108,7 +108,6 @@ public class InGameManager : MonoBehaviour
     /// <param name="enemySquere"></param>
     public void Check(bool isCheck, Squere allySquere, List<Squere> enemySquere)
     {
-        Debug.Log("Check");
         if (_IsWhite)
         {
             _IsCheckedWhiteKing = isCheck;
@@ -117,6 +116,7 @@ public class InGameManager : MonoBehaviour
         {
             _IsCheckedBlackKing = isCheck;
         }
+        if (isCheck){Debug.Log("Check");}
     }
     /// <summary>
     /// TurnBegin.cs にて moveRange全検索からのenemyRange全検索で判定できるかもしれないが、あまりにも難しすぎるので今回は断念する
