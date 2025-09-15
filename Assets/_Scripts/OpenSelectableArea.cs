@@ -73,7 +73,7 @@ public class OpenSelectableArea : ColorPallet
                 _selectedPiece = _addPieceFunction.AddMoveCount(_selectedPiece);
             }
         }
-        else if (_selectedPiece._PieceName == "K") //チェックされていない、Kの通過するマスが攻撃範囲に入っていない
+        else if (_selectedPiece._PieceName == "K")
         {
             if (_inGameManager.IsCastling[0]())
             {
@@ -90,7 +90,7 @@ public class OpenSelectableArea : ColorPallet
         _pieceMoveCount = _selectedPiece._MoveCount();
         Initialize();
         DrawOutline(_selectedPieceObj);
-        _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
+        _inGameManager._AnimatorController.Play("AddOneLine");//
         //pieceObjの移動可能領域を検索 → 移動可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
         //pieceObjの攻撃可能領域を検索 → 攻撃可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
         //移動可能領域に_selectedTileを描画する

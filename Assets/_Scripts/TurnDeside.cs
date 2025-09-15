@@ -13,6 +13,7 @@ public class TurnDeside : ColorPallet
 {
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;
+    UIManager _uiManager;
     AddPieceFunction _addPieceFunction;
     CollisionEvent _collisionEvent; //いらない
     SpriteRenderer _selectedTileSpriteRenderer; //移動後の透明化用
@@ -46,6 +47,7 @@ public class TurnDeside : ColorPallet
         _collider2DPrefab = _inGameManager._Collider2DPrefab;
         _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
+        _uiManager = GetComponent<UIManager>();
         _RAttackEffectObj = transform.GetChild(0).gameObject;
         _BAttackEffectObj = transform.GetChild(1).gameObject;
         // _hitStopObj = transform.GetChild(2?).gameObject;
@@ -86,25 +88,21 @@ public class TurnDeside : ColorPallet
                 SquereID id = _selectedSquere._SquereID;
                 switch (id)
                 {
+                    //short && R
                     case SquereID.a1:
-                        _inGameManager.IsWhiteShortCastling = () => false;
-                        break;
-                    case SquereID.h1:
-                        _inGameManager.IsWhiteLongCastling = () => false;
-                        break;
                     case SquereID.a8:
-                        _inGameManager.IsBlackShortCastling = () => false;
+                        _inGameManager.IsCastling[0] = () => false;
                         break;
+                    //long && R
+                    case SquereID.h1:
                     case SquereID.h8:
-                        _inGameManager.IsBlackLongCastling = () => false;
+                        _inGameManager.IsCastling[1] = () => false;
                         break;
+                    //K
                     case SquereID.d1:
-                        _inGameManager.IsWhiteShortCastling = () => false;
-                        _inGameManager.IsWhiteLongCastling = () => false;
-                        break;
-                    case  SquereID.d8:
-                        _inGameManager.IsBlackShortCastling = () => false;
-                        _inGameManager.IsBlackLongCastling = () => false;
+                    case SquereID.d8:
+                        _inGameManager.IsCastling[0] = () => false;
+                        _inGameManager.IsCastling[1] = () => false;
                         break;
                 }
             }
@@ -252,7 +250,7 @@ public class TurnDeside : ColorPallet
         Vector2 duration = _selectedPieceObj.GetComponent<SpriteRenderer>().flipX ? new Vector2(-100, 100): new Vector2(100, 100);
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
-        int destroyTimer = 3;
+        int destroyTimer = 2;
         Destroy(_targetObj, destroyTimer);
     }
     /// <summary>
@@ -316,6 +314,8 @@ public class TurnDeside : ColorPallet
     {
         Squere movedSquere = _targetSquere;
         movedSquere._IsOnPieceObj = _selectedPieceObj; //ここまでにはtargetSquereを移動先の状態にしたい
+        _uiManager._selectedSquereID = movedSquere._SquereID;
+        _uiManager._selectedPieceObj = movedSquere._IsOnPieceObj;
         if (_enpassantSquere) {_enpassantSquere._IsActiveEnpassant = false;}
         Destroy(_enpassantObj);
         _openSelectableArea.BeforeRendereringClear();

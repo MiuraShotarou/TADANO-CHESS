@@ -11,6 +11,8 @@ TagManager:
   - N
   - Q
   - DeceptionTileField
+  - White
+  - Black
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,7 @@ using UnityEngine;
 public class AnimationRelay : MonoBehaviour
 {
     [SerializeField] TurnDeside _turnDeside;
+    [SerializeField] UIManager _uiManager;
     // Animator _thisAnimator;
     // void Start()
     // {
@@ -72,6 +73,13 @@ public class AnimationRelay : MonoBehaviour
     void StartQAttackEffectRelay()
     {
         _turnDeside.StartQAttackEffect();
+    }
+    /// <summary>
+    /// 駒にアタッチされているためStageOutAddForceAnimationの再生後に呼ばれる
+    /// </summary>
+    void OnDestroy()
+    {
+        _uiManager._deathPieceObj = this.gameObject;
     }
     // void PauseAnimator()
     // {

@@ -10,27 +10,24 @@ public class InGameManager : MonoBehaviour
     public bool _IsCheckedWhiteKing { get; set; }
     public bool _IsCheckedBlackKing { get; set; }
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
-    public bool IsWhiteShortCastlingSwitch;
-    public bool IsWhiteLongCastlingSwitch;
-    public bool IsBlackShortCastlingSwitch;
-    public bool IsBlackLongCastlingSwitch;
+    bool _isWhiteShortCastlingSwitch;
+    bool _isWhiteLongCastlingSwitch; 
+    bool _isBlackShortCastlingSwitch;
+    bool _isBlackLongCastlingSwitch;
     public bool[] IsCastlingSwitch;
-    public Func<bool> IsWhiteShortCastling;
-    public Func<bool> IsWhiteLongCastling;
-    public Func<bool> IsBlackShortCastling;
-    public Func<bool> IsBlackLongCastling;
+    Func<bool> _isWhiteShortCastling; 
+    Func<bool> _isWhiteLongCastling;
+    Func<bool> _isBlackShortCastling;
+    Func<bool> _isBlackLongCastling;
     public Func<bool>[] IsCastling;
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
     [SerializeField] GameObject[] _setPieceObjects;
-    [SerializeField] SpriteRenderer[] _setDeceptionTileFields; //プロパティにしておけ
-    [SerializeField] RuntimeAnimatorController[] _setPeiceruntimeAnimatorControllers; //そのままdictionaryに登録しちゃえば良い
-    [SerializeField] Piece _whitePieceK;
-    [SerializeField] Piece _blackPieceK;
-    Dictionary<string, Piece> _pieceDict = new Dictionary<string, Piece>();
+    [SerializeField] SpriteRenderer[] _setDeceptionTileFields;
+    [SerializeField] RuntimeAnimatorController[] _setPeiceRuntimeAnims;
+    Dictionary<string, Piece> _pieceDict;
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
-    Dictionary<string, RuntimeAnimatorController> _pieceRuntimeAnimatorControllers = new Dictionary<string, RuntimeAnimatorController>();
     TurnBegin _turnBegin;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
@@ -38,16 +35,12 @@ public class InGameManager : MonoBehaviour
     Animator _animatorController;
     GameObject _collider2DPrefab;
     public bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
+    public int _WhiteTurnCount { get; set; }
+    public int _BlackTurnCount { get; set;}
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Squere[][] _SquereArrays => _squereArrays; //s
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays; //fs
-
-    public Dictionary<string, RuntimeAnimatorController> _PieceRuntimeAnimatorControllers => _pieceRuntimeAnimatorControllers;
-    public Piece _WhitePieceK {get => _whitePieceK; set => _whitePieceK = value;}
-    public Piece _BlackPieceK {get => _blackPieceK; set => _blackPieceK = value;}
-    public OpenSelectableArea _OpenSelectableArea => _openSelectableArea; //いらない
-    public SelectTileController SelectTileController => _selectTileController; //いらない
     public Animator _AnimatorController => _animatorController;
     public GameObject _Collider2DPrefab => _collider2DPrefab; //s ro fs
     void Awake()
@@ -96,14 +89,14 @@ public class InGameManager : MonoBehaviour
         _turnBegin = GetComponent<TurnBegin>();
         _animatorController = GetComponent<Animator>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
-        IsWhiteShortCastlingSwitch = false;
-        IsWhiteLongCastlingSwitch = false;
-        IsBlackShortCastlingSwitch = false;
-        IsBlackLongCastlingSwitch = false;
-        IsWhiteShortCastling = () => IsWhiteShortCastlingSwitch;
-        IsWhiteLongCastling = () => IsWhiteShortCastlingSwitch;
-        IsBlackShortCastling = () => IsBlackShortCastlingSwitch;
-        IsBlackLongCastling = () => IsBlackShortCastlingSwitch;
+        _isWhiteShortCastlingSwitch = false;
+        _isWhiteLongCastlingSwitch = false;
+        _isBlackShortCastlingSwitch = false;
+        _isBlackLongCastlingSwitch = false;
+        _isWhiteShortCastling = () => _isWhiteShortCastlingSwitch;
+        _isWhiteLongCastling = () => _isWhiteShortCastlingSwitch;
+        _isBlackShortCastling = () => _isBlackShortCastlingSwitch;
+        _isBlackLongCastling = () => _isBlackShortCastlingSwitch;
     }
     /// <summary>
     /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる
@@ -145,18 +138,25 @@ public class InGameManager : MonoBehaviour
         Initialize();
         _turnBegin.StartTurn();
     }
-
     public void StartActivePromotionRelay()
     {
-        _AnimatorController.Play("ActivePromotionPanel");
+        _AnimatorController.Play("ActivePromotion");
     }
 
+    public void StartInactivePromotionRelay()
+    {
+        _AnimatorController.Play("InactivePromotion");
+    }
+    void EndPromotion()
+    {
+        _IsWhite = !_IsWhite;
+    }
     void Initialize()
     {
-        IsCastling = _IsWhite? new[] { IsWhiteShortCastling, IsWhiteLongCastling }:
-                                new []{ IsBlackShortCastling, IsBlackLongCastling};
-        IsCastlingSwitch = _IsWhite? new []{IsWhiteShortCastlingSwitch, IsWhiteLongCastlingSwitch}:
-                                        new []{IsBlackShortCastlingSwitch, IsBlackLongCastlingSwitch};
+        IsCastling = _IsWhite? new[] { _isWhiteShortCastling, _isWhiteLongCastling }:
+                                new []{ _isBlackShortCastling, _isBlackLongCastling};
+        IsCastlingSwitch = _IsWhite? new []{_isWhiteShortCastlingSwitch, _isWhiteLongCastlingSwitch}:
+                                        new []{_isBlackShortCastlingSwitch, _isBlackLongCastlingSwitch};
     }
 }
 public enum SquereID //8 * 8 の配列OnPieceだったら該当のbitを1にする 

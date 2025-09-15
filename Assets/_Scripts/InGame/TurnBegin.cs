@@ -29,6 +29,7 @@ public class TurnBegin : MonoBehaviour
     {
         //判定基準 → K が動いているかいないか R が動いているかいないか 間に駒があるかないか 間が敵の攻撃範囲に該当するか（ここをなるべく調べたくない）
         Initialize();
+        AddTurnCount();
         CreateEnemyAtackRange(); //戻り値にして、ローカルに保存することを検討
         _inGameManager.Check(_isCheck ,_checkedKingSquere, _checkAttackerSqueres);
         //Checkの場合はキャスリング出来ないようにだけ書くこと
@@ -52,19 +53,30 @@ public class TurnBegin : MonoBehaviour
     /// 
     /// </summary>
     /// <returns></returns>
+    void AddTurnCount()
+    {
+        if (_inGameManager._IsWhite)
+        {
+            _inGameManager._WhiteTurnCount++;
+        }
+        else
+        {
+            _inGameManager._BlackTurnCount++;
+        }
+    }
     HashSet<SquereID> CreateEnemyAtackRange()
     {
-        string allyGroup = _inGameManager._IsWhite ? "W" : "B";
-        string enemyGroup = _inGameManager._IsWhite ? "B" : "W";
-        Squere[] enemyPieceSqueres = _squereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.name.Contains(enemyGroup))).ToArray();
+        string allyTag = _inGameManager._IsWhite ? "White" : "Black";
+        string enemyTag = _inGameManager._IsWhite ? "Black" : "White";
+        Squere[] enemyPieceSqueres = _squereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(enemyTag))).ToArray();
         _enemyAttackRange = new HashSet<SquereID>();
         //for すべての駒で 
         for (int i = 0; i < enemyPieceSqueres.Length; i++)
         {
-            string[] search = enemyPieceSqueres[i]._IsOnPieceObj.name.Split('_');
-            Piece attackerPiece = Instantiate(_inGameManager._PieceDict[search[0]]);
+            string search = enemyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
+            Piece attackerPiece = Instantiate(_inGameManager._PieceDict[search]);
             Vector3Int[] attackAreas = Enumerable.Repeat(enemyPieceSqueres[i]._SquereTilePos, attackerPiece._AttackAreas().Length).ToArray();
-            if (search[0] == "P" && !_inGameManager._IsWhite)
+            if (search == "P" && !_inGameManager._IsWhite)
             {
                 //ポーンの攻撃方向を修正している
                 attackerPiece = _addPieceFunction.UpdatePoneGroup(attackerPiece);
@@ -94,7 +106,7 @@ public class TurnBegin : MonoBehaviour
                     {
                         attackAreas[d].z = -1;
                         //敵から見て敵の駒(ally)が見つかった場合の条件
-                        if (difendSquere._IsOnPieceObj && difendSquere._IsOnPieceObj.name.Contains(allyGroup))
+                        if (difendSquere._IsOnPieceObj && difendSquere._IsOnPieceObj.CompareTag(allyTag))
                         {
                             _enemyAttackRange.Add(difendSquere._SquereID);
                             if (difendSquere._IsOnPieceObj.name.First().ToString().Contains("K"))
