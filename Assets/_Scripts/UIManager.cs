@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
 {
     InGameManager _inGameManager;
     TurnDeside _turnDeside;
+    [SerializeField] GameObject _fadePanel;
     [SerializeField] TextMeshProUGUI t_deceptionMoveCount;
     [SerializeField] TextMeshProUGUI t_truthMoveCount;
     [SerializeField] TextMeshProUGUI[] t_residuesCountW;
@@ -25,8 +26,11 @@ public class UIManager : MonoBehaviour
     public GameObject _DeathPieceObj {get;set;}
     public Squere _TargetSquere {get;set;}
     public GameObject _TargetPieceObj {get;set;}
+
+    public GameObject FadePanel => _fadePanel;
+
     bool _isPromotion;
-    void Start()
+    void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
         _turnDeside = GetComponent<TurnDeside>();
@@ -39,6 +43,14 @@ public class UIManager : MonoBehaviour
         t_squereIdsDictW = t_squereIdsW.GroupBy(t => t.name[3].ToString()).ToDictionary(gc => gc.Key, gc => gc.ToList());
         t_squereIdsDictB = t_squereIdsB.GroupBy(t => t.name[3].ToString()).ToDictionary(gc => gc.Key, gc => gc.ToList());
         //すべてのDicのKeyは同一にしてあるが、コードが悪いのでそれがわかりずらい
+    }
+    public void ActiveFadePanel()
+    {
+        _fadePanel.SetActive(true);
+    }
+    public void InactiveFadePanel()
+    {
+        _fadePanel.SetActive(false);
     }
     /// <summary>
     /// ターンが切り替わった時、InGameManagerから一度だけ呼び出される。TurnBegin.csの後に呼び出される

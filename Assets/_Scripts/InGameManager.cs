@@ -24,6 +24,10 @@ public class InGameManager : MonoBehaviour
     [SerializeField] GameObject[] _setPieceObjects;
     [SerializeField] SpriteRenderer[] _setDeceptionTileFields;
     [SerializeField] RuntimeAnimatorController[] _setPeiceRuntimeAnims;
+    [SerializeField] AudioSource _bgmAudioSource;
+    [SerializeField] AudioSource _seAudioSource;
+    [SerializeField] AudioClip[] _bgmAudioClips;
+    [SerializeField] AudioClip[] _seAudioClips;
     Dictionary<string, Piece> _pieceDict;
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
@@ -42,11 +46,18 @@ public class InGameManager : MonoBehaviour
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Squere[][] _SquereArrays => _squereArrays; //s
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays; //fs
+    public AudioSource _BGMAudioSource => _bgmAudioSource;
+    public AudioSource _SEAudioSource => _seAudioSource;
+    public Dictionary<string, AudioClip[]> _BGMAudioClipDict { get; set; }
+    public Dictionary<string, AudioClip[]> _SEAudioClipDict { get; set; }
     public Animator _AnimatorController => _animatorController;
     public GameObject _Collider2DPrefab => _collider2DPrefab; //s ro fs
     void Awake()
     {
         _pieceDict = _setPieces.ToDictionary(piece => piece._PieceName, piece => piece);
+        //配列が番号順になっている保証はないので注意
+        _BGMAudioClipDict = _bgmAudioClips.GroupBy(bc => bc.name.First().ToString()).ToDictionary(gc => gc.Key, g => g.ToArray());
+        _SEAudioClipDict = _seAudioClips.GroupBy(sc => sc.name.First().ToString()).ToDictionary(gc => gc.Key, g => g.ToArray());
         int arraySize = 8;
         _deceptionTileFieldArrays = new SpriteRenderer[arraySize][];
         _squereArrays = new Squere[arraySize][];
@@ -73,18 +84,18 @@ public class InGameManager : MonoBehaviour
                 // _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
             }
         }
-        // for (int i = 0; i < arraySize; i++)
-        // {
-        //     for (int j = 0; j < arraySize; j++)
-        //     {
-        //         //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
-        //         if (_SquereArrays[i][j]._IsOnPieceObj)
-        //         {
-        //             // Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
-        //             // Debug.Log(_SquereArrays[i][j]._SquereID);
-        //         }
-        //     }
-        // }
+        for (int i = 0; i < arraySize; i++)
+        {
+            for (int j = 0; j < arraySize; j++)
+            {
+                //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
+                if (_SquereArrays[i][j]._IsOnPieceObj)
+                {
+                    Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
+                    // Debug.Log(_SquereArrays[i][j]._SquereID);
+                }
+            }
+        }
         _uiManager = GetComponent<UIManager>();
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _selectTileController = GetComponent<SelectTileController>();
@@ -100,6 +111,19 @@ public class InGameManager : MonoBehaviour
         _isBlackShortCastling = () => _isBlackShortCastlingSwitch;
         _isBlackLongCastling = () => _isBlackShortCastlingSwitch;
     }
+
+    void Start()
+    {
+        if (_uiManager.FadePanel.activeSelf)
+        {
+            _AnimatorController.Play("StartInGame");
+        }
+        else
+        {
+            
+        }
+    }
+
     /// <summary>
     /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる
     /// </summary>

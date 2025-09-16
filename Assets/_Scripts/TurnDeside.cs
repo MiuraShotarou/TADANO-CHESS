@@ -347,9 +347,10 @@ public class TurnDeside : ColorPallet
 
     public void StartBAttackEffect()
     {
-        _RAttackEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
+        _BAttackEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
         Vector3 basePos = _targetObj.transform.position;
         _BAttackEffectObj.transform.position = basePos;
+        _BAttackEffectObj.transform.localScale = _selectedPieceObj.transform.localScale;
         _BAttackEffectObj.SetActive(true);
     }
 
@@ -358,6 +359,7 @@ public class TurnDeside : ColorPallet
         _QAttckEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
         Vector3 basePos = _selectedPieceObj.transform.position;
         _QAttckEffectObj.transform.position = basePos;
+        _QAttckEffectObj.transform.localScale = _selectedPieceObj.transform.localScale;
         _QAttckEffectObj.SetActive(true);
     }
     void EndTurn()

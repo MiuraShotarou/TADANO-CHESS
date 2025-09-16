@@ -6,10 +6,6 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-//特殊ルール群
-//アンパッサン
-//
-
 /// <summary>
 /// _canSelectedTileBaseを描画するためのクラス
 /// </summary>
