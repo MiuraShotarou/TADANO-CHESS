@@ -160,6 +160,10 @@ public class TurnDeside : ColorPallet
         //knightの時は攻撃の移動に合わせて始点と終点を指定したい
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
+        float adjustScale = _selectedPieceObj.transform.localScale.y + ((_targetSquere._SquereTilePos.y - _selectedSquere._SquereTilePos.y) * 0.143f);
+        AnimationCurve animationCurveSX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.x, 1f, adjustScale);
+        AnimationCurve animationCurveSY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.y, 1f, adjustScale);
+        AnimationCurve animationCurveSZ = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.z, 1f, adjustScale);
         //"Run"という名前のついたanimationClipからコピーを新規作成
         AnimationClip animationClip = _selectedPieceRuntimeAnimator.animationClips.FirstOrDefault(clip => clip.name.Contains("Run"));
         //新しく作成・編集したAnimationCurveをAnimationClipに代入する
@@ -251,6 +255,7 @@ public class TurnDeside : ColorPallet
     {
         _targetObj.GetComponent<Collider2D>().enabled = false;
         Rigidbody2D rigidbody2D = _targetObj.GetComponent<Rigidbody2D>();
+        rigidbody2D.velocity = Vector2.zero;
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
         Vector2 duration = _selectedPieceObj.GetComponent<SpriteRenderer>().flipX ? new Vector2(-100, 100): new Vector2(100, 100);
         _targetPieceAnimatorController.enabled = false;
@@ -260,13 +265,17 @@ public class TurnDeside : ColorPallet
         Destroy(_targetObj, destroyTimer);
     }
 
+    public void StartAdjustRigidbody()
+    {
+        _targetObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+    }
+
     public void StartCastlingAnimation()
     {
         _castlingAnimation?.Invoke();
     }
     void StartShortCastlingAnimation()
     {
-        //long King f1 Rook e1
         if (_inGameManager.IsWhite)
         {
             _selectedPieceAnimatorController.Play("K_ShortCastling_W");
@@ -309,7 +318,7 @@ public class TurnDeside : ColorPallet
         {
             Vector3 updatePos = _selectedPieceObj.transform.position;
             updatePos.x += _isDirectionRight? 1.5f : -1.5f;
-            _selectedPieceObj.transform.position = updatePos;;
+            _selectedPieceObj.transform.position = updatePos;
         }
     }
     /// <summary>
@@ -337,7 +346,7 @@ public class TurnDeside : ColorPallet
     }
 
     public void StartBAttackEffect()
-    { 
+    {
         _RAttackEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
         Vector3 basePos = _targetObj.transform.position;
         _BAttackEffectObj.transform.position = basePos;

@@ -23,8 +23,8 @@ public class UIManager : MonoBehaviour
     Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictW;
     Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictB;
     public GameObject _DeathPieceObj {get;set;}
-    public Squere _TargetSquere;// {get;set;}
-    public GameObject _TargetPieceObj;// {get;set;}
+    public Squere _TargetSquere {get;set;}
+    public GameObject _TargetPieceObj {get;set;}
     bool _isPromotion;
     void Start()
     {

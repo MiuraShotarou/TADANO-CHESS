@@ -19,7 +19,6 @@ public class OpenSelectableArea : ColorPallet
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
     TurnDeside _turnDeside;
-    CollisionEvent _collisionEvent; //いらない
     GameObject _selectedPieceObj;
     SpriteRenderer[][] _deceptionTileFieldArrays;
     Piece _selectedPiece;
@@ -40,7 +39,6 @@ public class OpenSelectableArea : ColorPallet
         _turnDeside = GetComponent<TurnDeside>();
         _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
         _collider2DPrefab = _inGameManager._Collider2DPrefab;
-        _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
     }
     /// <summary>
     /// 駒を選択してから一回だけ呼ばれる
@@ -48,8 +46,9 @@ public class OpenSelectableArea : ColorPallet
     /// <param name="pieceObj"></param>
     public void StartOpenArea(GameObject pieceObj)
     {
-        Debug.Log("Start open area");
-        if (pieceObj == _selectedPieceObj){ return; }
+        if (pieceObj == _selectedPieceObj
+            || 
+            (_inGameManager.IsWhite && pieceObj.CompareTag("Black")) || (!_inGameManager.IsWhite && pieceObj.CompareTag("White"))){ return; }
         if (_selectedPieceObj)
         {
             BeforeRendereringClear();
@@ -91,7 +90,7 @@ public class OpenSelectableArea : ColorPallet
         _pieceMoveCount = _selectedPiece._MoveCount();
         Initialize();
         DrawOutline(_selectedPieceObj);
-        _inGameManager._AnimatorController.Play("AddOneLine");//
+        _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
         //pieceObjの移動可能領域を検索 → 移動可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
         //pieceObjの攻撃可能領域を検索 → 攻撃可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
         //移動可能領域に_selectedTileを描画する

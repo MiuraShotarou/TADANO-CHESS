@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 //変換処理・コレクション処理を探せ
 public class InGameManager : MonoBehaviour
 {

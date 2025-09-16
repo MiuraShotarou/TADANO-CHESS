@@ -43,6 +43,11 @@ public class AnimationRelay : MonoBehaviour
     {
         _turnDeside.StartStageOutAddForce();
     }
+
+    void StartAdjustRigidbodyRelay()
+    {
+        _turnDeside.StartAdjustRigidbody();
+    }
     /// <summary>
     /// 両キャスリングを実行するためのAnimationを再生する。K_Run.animからしか呼ばれない
     /// </summary>
