@@ -1,8 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 /// <summary>
 /// UIのバックエンドを担当
 /// </summary>
@@ -12,51 +14,101 @@ public class UIManager : MonoBehaviour
     TurnDeside _turnDeside;
     [SerializeField] TextMeshProUGUI t_deceptionMoveCount;
     [SerializeField] TextMeshProUGUI t_truthMoveCount;
-    [SerializeField] TextMeshProUGUI[] t_residuesW;
-    [SerializeField] TextMeshProUGUI[] t_residuesB;
-    [SerializeField] TextMeshProUGUI[] t_squeresW;
-    [SerializeField] TextMeshProUGUI[] t_squeresB;
+    [SerializeField] TextMeshProUGUI[] t_residuesCountW;
+    [SerializeField] TextMeshProUGUI[] t_residuesCountB;
+    [SerializeField] TextMeshProUGUI[] t_squereIdsW;
+    [SerializeField] TextMeshProUGUI[] t_squereIdsB;
     Dictionary<string, TextMeshProUGUI> t_residuesDictW;
-    Dictionary<string, TextMeshProUGUI> t_residuesDictB;
-    public GameObject _deathPieceObj;
-    public SquereID _selectedSquereID;
-    public GameObject _selectedPieceObj;
+    Dictionary<string, TextMeshProUGUI> t_residuesDictB;    
+    Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictW;
+    Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictB;
+    public GameObject _DeathPieceObj {get;set;}
+    public Squere _TargetSquere;// {get;set;}
+    public GameObject _TargetPieceObj;// {get;set;}
+    bool _isPromotion;
     void Start()
     {
         _inGameManager = GetComponent<InGameManager>();
         _turnDeside = GetComponent<TurnDeside>();
-        _deathPieceObj = null;
-        t_residuesDictW = t_residuesW.ToDictionary(t => t.name.Last().ToString(), t => t);
-        t_residuesDictB = t_residuesB.ToDictionary(t => t.name.Last().ToString(), t => t);
+        _DeathPieceObj = null;
+        _isPromotion = false;
+        _isPromotion = true;//デバッグ
+        t_residuesDictW = t_residuesCountW.ToDictionary(t => t.name.Last().ToString(), t => t);
+        t_residuesDictB = t_residuesCountB.ToDictionary(t => t.name.Last().ToString(), t => t);
+        //(KeyGroupCollection(Key, Value[])) ← Valueが配列なのでToArrayが必要
+        t_squereIdsDictW = t_squereIdsW.GroupBy(t => t.name[3].ToString()).ToDictionary(gc => gc.Key, gc => gc.ToList());
+        t_squereIdsDictB = t_squereIdsB.GroupBy(t => t.name[3].ToString()).ToDictionary(gc => gc.Key, gc => gc.ToList());
+        //すべてのDicのKeyは同一にしてあるが、コードが悪いのでそれがわかりずらい
     }
     /// <summary>
-    /// TurnStartAnimation再生時に一度だけ呼び出される
+    /// ターンが切り替わった時、InGameManagerから一度だけ呼び出される。TurnBegin.csの後に呼び出される
     /// </summary>
-    void UpdateTurnCountUI()
+    public void StartTurnUI()
     {
-        t_deceptionMoveCount.text = _inGameManager._IsWhite? (_inGameManager._WhiteTurnCount -1).ToString() : (_inGameManager._BlackTurnCount -1).ToString();
-        t_truthMoveCount.text = _inGameManager._IsWhite? _inGameManager._WhiteTurnCount.ToString() : _inGameManager._BlackTurnCount.ToString();
-        int SquereIndex = int.Parse(_selectedPieceObj.name.Substring(8));
-        TextMeshProUGUI t_squereId = _inGameManager._IsWhite? t_squeresW[SquereIndex] : t_squeresB[SquereIndex];
-        t_squereId.text = _selectedSquereID.ToString();
-        if (_deathPieceObj != null)
+        //t_turnCountの更新
+        t_deceptionMoveCount.text = _inGameManager.IsWhite? (_inGameManager._WhiteTurnCount -1).ToString() : (_inGameManager._BlackTurnCount -1).ToString();
+        t_truthMoveCount.text = _inGameManager.IsWhite? _inGameManager._WhiteTurnCount.ToString() : _inGameManager._BlackTurnCount.ToString();
+        //t_residues の更新
+        if (_DeathPieceObj != null)
         {
-            int ripSquereIndex = int.Parse(_deathPieceObj.name.Substring(8));
-            TextMeshProUGUI t_ripSquere = _inGameManager._IsWhite? t_squeresW[ripSquereIndex] : t_squeresB[ripSquereIndex];
-            t_ripSquere.gameObject.SetActive(false);
-            string search = _deathPieceObj.name.First().ToString();
-            TextMeshProUGUI t_influenceRediues = _deathPieceObj.CompareTag("White")? t_residuesDictW[search] : t_residuesDictB[search];
-            t_influenceRediues.text = (int.Parse(t_influenceRediues.text) - 1).ToString();
-            _deathPieceObj = null;
+            TextMeshProUGUI t_decreaseResiduesCount = _inGameManager.IsWhite? t_residuesDictW[_DeathPieceObj.name.First().ToString()] : t_residuesDictB[_DeathPieceObj.name.First().ToString()];
+            t_decreaseResiduesCount.text = (int.Parse(t_decreaseResiduesCount.text) - 1).ToString();
+            //t_residues の更新にともなってt_squereIdを削除する
+            TextMeshProUGUI[] t_decreaseSquereIds = _inGameManager.IsWhite? t_squereIdsDictW[_DeathPieceObj.name.First().ToString()].ToArray() : t_squereIdsDictB[_DeathPieceObj.name.First().ToString()].ToArray();
+            TextMeshProUGUI t_decreaseSquereId = t_decreaseSquereIds.FirstOrDefault(t => t.name.Contains(_DeathPieceObj.name.Last().ToString()));
+            t_decreaseSquereId.gameObject.SetActive(false);
+            Destroy(_DeathPieceObj);
+        }
+        if (_isPromotion)
+        {
+            //自身が属している駒カテゴリのTMPをエディタ上で移動させる → t_residuesの子に設定すれば良い
+            TextMeshProUGUI t_decreaseResiduesCount = _inGameManager.IsWhite? t_residuesDictW["P"] : t_residuesDictB["P"];
+            t_decreaseResiduesCount.text = (int.Parse(t_decreaseResiduesCount.text) - 1).ToString();
+            //t_residues の更新にともなってt_squereIdをプロモーション後のUIに移動させる
+            TextMeshProUGUI[] t_shiftSquereIds = _inGameManager.IsWhite? t_squereIdsDictW["P"].ToArray() : t_squereIdsDictB["P"].ToArray();
+            TextMeshProUGUI t_shiftSquereId = t_shiftSquereIds.FirstOrDefault(t => t.name.Contains(_TargetPieceObj.name.Last().ToString())); //name.last == PieceObjID
+            t_shiftSquereId.gameObject.transform.SetParent(t_decreaseResiduesCount.gameObject.transform); //移動するのかどうかを見る必要あり
+            t_shiftSquereId.text = _TargetSquere._SquereID.ToString();
+            // t_shiftSquereId.gameObject.SetActive(false);
+            if (_inGameManager.IsWhite)
+            {
+                t_squereIdsDictW[_TargetPieceObj.name.First().ToString()].Add(t_shiftSquereId);
+            }
+            else
+            {
+                t_squereIdsDictB[_TargetPieceObj.name.First().ToString()].Add(t_shiftSquereId);
+            }
+            _isPromotion = false;
+        }
+        else
+        {
+            //t_squereIdの更新
+            string[] search = _TargetPieceObj.name.Split('_'); //Key[0] Index[4]
+            List<TextMeshProUGUI> t_squereIds = _inGameManager.IsWhite? t_squereIdsDictW[search[0]] : t_squereIdsDictB[search[0]];
+            TextMeshProUGUI t_squereId = t_squereIds[int.Parse(search[4])];
+            t_squereId.text = _TargetSquere._SquereID.ToString();
         }
     }
+    /// <summary>
+    /// _turnDeside._selectedPieceObj を プロモーション後のPieceObjに置き換えるだけのメソッド
+    /// </summary>
+    /// <param name="promotionName"></param>
     public void DesidePromotion(string promotionName)
     {
-        GameObject promotionObj = Instantiate(Resources.Load<GameObject>($"Objects/{promotionName}"), _turnDeside._promotionObj.transform.position, _turnDeside._promotionObj.transform.rotation);
-        promotionObj.transform.localScale = _turnDeside._promotionObj.transform.localScale;
-        promotionObj.GetComponent<SpriteRenderer>().flipX = !_inGameManager._IsWhite;
-        promotionObj.name = promotionName + _turnDeside._promotionObj.name.Substring(1);
-        Destroy(_turnDeside._promotionObj);
+        _isPromotion = true;
+        GameObject promotionObj = Instantiate(Resources.Load<GameObject>($"Objects/{promotionName}"), _TargetPieceObj.transform.position, _TargetPieceObj.transform.rotation);
+        promotionObj.transform.localScale = _TargetPieceObj.transform.localScale;
+        promotionObj.GetComponent<SpriteRenderer>().flipX = !_inGameManager.IsWhite;
+        promotionObj.name = promotionName + _TargetPieceObj.name.Substring(1);
+        EventTrigger.Entry entry = new EventTrigger.Entry{eventID = EventTriggerType.PointerClick};
+        // 実行したい処理を登録
+        entry.callback.AddListener(e => _inGameManager.PieceObjectPressed(promotionObj));
+        promotionObj.GetComponent<EventTrigger>().triggers.Add(entry);
+        Destroy(_TargetPieceObj);
+        _TargetPieceObj = promotionObj;
+        //このあとの処理の挙動を見た方が良い
+        // _TargetPieceObj.SetActive(false);
+        _TargetSquere._IsOnPieceObj = promotionObj;
         _inGameManager.StartInactivePromotionRelay();
     }
 }

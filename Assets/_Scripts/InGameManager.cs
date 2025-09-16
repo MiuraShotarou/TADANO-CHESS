@@ -7,8 +7,8 @@ using UnityEngine.Rendering;
 public class InGameManager : MonoBehaviour
 {
     bool _isWhite = true;
-    public bool _IsCheckedWhiteKing { get; set; }
-    public bool _IsCheckedBlackKing { get; set; }
+    bool _IsCheckedWhiteKing { get; set; }
+    bool _IsCheckedBlackKing { get; set; }
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
     bool _isWhiteShortCastlingSwitch;
     bool _isWhiteLongCastlingSwitch; 
@@ -29,12 +29,14 @@ public class InGameManager : MonoBehaviour
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
     TurnBegin _turnBegin;
+    UIManager _uiManager;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
     TurnDeside _turnDeside;
     Animator _animatorController;
     GameObject _collider2DPrefab;
-    public bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
+    bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
+    public bool IsWhite{ get => _isWhite;}
     public int _WhiteTurnCount { get; set; }
     public int _BlackTurnCount { get; set;}
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
@@ -84,6 +86,7 @@ public class InGameManager : MonoBehaviour
         //         }
         //     }
         // }
+        _uiManager = GetComponent<UIManager>();
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _selectTileController = GetComponent<SelectTileController>();
         _turnBegin = GetComponent<TurnBegin>();
@@ -105,7 +108,7 @@ public class InGameManager : MonoBehaviour
     /// <param name="enemySquere"></param>
     public void Check(bool isCheck, Squere allySquere, List<Squere> enemySquere)
     {
-        if (_IsWhite)
+        if (IsWhite)
         {
             _IsCheckedWhiteKing = isCheck;
         }
@@ -131,12 +134,21 @@ public class InGameManager : MonoBehaviour
         _selectTileController.enabled = true;
     }
     /// <summary>
+    /// 攻撃側のグループを変更させるメソッド。IsWhiteが変更されると"StartTurn".animが再生される
+    /// </summary>
+    public void TrunChange()
+    {
+        _IsWhite = !_IsWhite;
+    }
+    /// <summary>
     /// public Bool _IsWihte から呼び出される
     /// </summary>
     void StartTurnRelay()
     {
         Initialize();
         _turnBegin.StartTurn();
+        _uiManager.StartTurnUI();
+        _animatorController.Play("StartTurn");
     }
     public void StartActivePromotionRelay()
     {
@@ -146,10 +158,6 @@ public class InGameManager : MonoBehaviour
     public void StartInactivePromotionRelay()
     {
         _AnimatorController.Play("InactivePromotion");
-    }
-    void EndPromotion()
-    {
-        _IsWhite = !_IsWhite;
     }
     void Initialize()
     {

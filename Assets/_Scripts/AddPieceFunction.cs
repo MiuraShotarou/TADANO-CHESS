@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// OpenSelectableAreaで新規生成したPieceクラスに特有の機能を追加する
 /// </summary>
-public class AddPieceFunction : UIManager
+public class AddPieceFunction : MonoBehaviour
 {
     public Piece UpdatePoneGroup(Piece piece)
     {

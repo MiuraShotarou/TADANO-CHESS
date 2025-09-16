@@ -48,6 +48,7 @@ public class OpenSelectableArea : ColorPallet
     /// <param name="pieceObj"></param>
     public void StartOpenArea(GameObject pieceObj)
     {
+        Debug.Log("Start open area");
         if (pieceObj == _selectedPieceObj){ return; }
         if (_selectedPieceObj)
         {
@@ -210,7 +211,8 @@ public class OpenSelectableArea : ColorPallet
         //K だった場合はキャスリングで生成されたcolliderであることが確定する
         else if(_selectedPieceObj.name.First().ToString().Contains("K"))
         {
-            
+            //キャスリング移動のフラグを立てる → なにもしない設計に変更
+            //collisionObj == turnDesideにいくまで消してはならない
         }
         _PrefabCount--;
     }

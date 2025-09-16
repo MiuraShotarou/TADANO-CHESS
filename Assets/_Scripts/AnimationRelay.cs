@@ -43,6 +43,13 @@ public class AnimationRelay : MonoBehaviour
     {
         _turnDeside.StartStageOutAddForce();
     }
+    /// <summary>
+    /// 両キャスリングを実行するためのAnimationを再生する。K_Run.animからしか呼ばれない
+    /// </summary>
+    void StartCastlingRelay()
+    {
+        _turnDeside.StartCastlingAnimation();
+    }
 
     void StartAdjustFlipXRelay()
     {
@@ -79,7 +86,8 @@ public class AnimationRelay : MonoBehaviour
     /// </summary>
     void OnDestroy()
     {
-        _uiManager._deathPieceObj = this.gameObject;
+        Debug.Log(gameObject.name);
+        _uiManager._DeathPieceObj = this.gameObject;
     }
     // void PauseAnimator()
     // {

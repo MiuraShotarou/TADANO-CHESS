@@ -32,8 +32,8 @@ public class TurnDeside : ColorPallet
     GameObject _QAttckEffectObj;
     GameObject _targetObj;
     GameObject _enpassantObj;
+    Action _castlingAnimation;
     // GameObject _hitStopObj;
-    public GameObject _promotionObj; //試験的
     PlayableGraph _playableGraph;
     AnimationPlayableOutput _animationPlayableOutput;
     bool _isDirectionRight;
@@ -86,6 +86,11 @@ public class TurnDeside : ColorPallet
             if (updateName[0] == 'R' || updateName[0] == 'K') //stringにしたい
             {
                 SquereID id = _selectedSquere._SquereID;
+                // キャスリング
+                if (_selectedPieceObj.CompareTag(_targetSquere._IsOnPieceObj.tag))
+                {
+                    _castlingAnimation = _inGameManager.IsCastling[0]()? () => StartShortCastlingAnimation() : () => StartLongCastlingAnimation();
+                }
                 switch (id)
                 {
                     //short && R
@@ -156,7 +161,7 @@ public class TurnDeside : ColorPallet
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
         //"Run"という名前のついたanimationClipからコピーを新規作成
-        AnimationClip animationClip = _selectedPieceRuntimeAnimator.animationClips.FirstOrDefault(clip => clip.name.Contains("Run")); 
+        AnimationClip animationClip = _selectedPieceRuntimeAnimator.animationClips.FirstOrDefault(clip => clip.name.Contains("Run"));
         //新しく作成・編集したAnimationCurveをAnimationClipに代入する
         animationClip.SetCurve("", typeof(Transform), "localPosition.x", animationCurveX);
         animationClip.SetCurve("", typeof(Transform), "localPosition.y", animationCurveY);
@@ -211,7 +216,7 @@ public class TurnDeside : ColorPallet
             _playableGraph.Stop();
             _playableGraph.Destroy();
         }
-        _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_inGameManager._IsWhite;
+        _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_inGameManager.IsWhite;
         string search = new string($"{_selectedPiece._PieceName}_Idle");
         _selectedPieceAnimatorController.Play(search);
         //ターンを終えた後の処理
@@ -250,8 +255,44 @@ public class TurnDeside : ColorPallet
         Vector2 duration = _selectedPieceObj.GetComponent<SpriteRenderer>().flipX ? new Vector2(-100, 100): new Vector2(100, 100);
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
+        if (_targetObj.tag.Contains(_selectedPieceObj.tag)){ return; }
         int destroyTimer = 2;
         Destroy(_targetObj, destroyTimer);
+    }
+
+    public void StartCastlingAnimation()
+    {
+        _castlingAnimation?.Invoke();
+    }
+    void StartShortCastlingAnimation()
+    {
+        //long King f1 Rook e1
+        if (_inGameManager.IsWhite)
+        {
+            _selectedPieceAnimatorController.Play("K_ShortCastling_W");
+            _targetPieceAnimatorController.Play("R_ShortCastling_W");
+        }
+        else
+        {
+            _selectedPieceAnimatorController.Play("K_ShortCastling_B");
+            _targetPieceAnimatorController.Play("R_ShortCastling_B");
+        }
+        _castlingAnimation = null;
+    }
+    void StartLongCastlingAnimation()
+    {
+        //long King f1 Rook e1
+        if (_inGameManager.IsWhite)
+        {
+            _selectedPieceAnimatorController.Play("K_LongCastling_W");
+            _targetPieceAnimatorController.Play("R_LongCastling_W");
+        }
+        else
+        {
+            _selectedPieceAnimatorController.Play("K_LongCastling_B");
+            _targetPieceAnimatorController.Play("R_LongCastling_B");
+        }
+        _castlingAnimation = null;//
     }
     /// <summary>
     /// 適宜、flipXを反転させるAnimation。ほとんどのAnimationClipで再生時にEventとして呼ばれる
@@ -312,10 +353,9 @@ public class TurnDeside : ColorPallet
     }
     void EndTurn()
     {
-        Squere movedSquere = _targetSquere;
-        movedSquere._IsOnPieceObj = _selectedPieceObj; //ここまでにはtargetSquereを移動先の状態にしたい
-        _uiManager._selectedSquereID = movedSquere._SquereID;
-        _uiManager._selectedPieceObj = movedSquere._IsOnPieceObj;
+        _targetSquere._IsOnPieceObj = _selectedPieceObj; //_targetSquereに_selectedPieceObjが到着した
+        _uiManager._TargetSquere = _targetSquere;
+        _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj;
         if (_enpassantSquere) {_enpassantSquere._IsActiveEnpassant = false;}
         Destroy(_enpassantObj);
         _openSelectableArea.BeforeRendereringClear();
@@ -330,13 +370,12 @@ public class TurnDeside : ColorPallet
             }
             else if (_targetSquere._SquereID.ToString().Contains("1, 8"))
             {
-                _promotionObj = _selectedPieceObj;
                 _inGameManager.StartActivePromotionRelay();
                 return;
                 //プロモーション先の駒をUIで選択したら_inGameManager._IsWhiteを切り替える
             }
         }
-        _inGameManager._IsWhite = !_inGameManager._IsWhite; //攻守交代
+        _inGameManager.TrunChange(); //攻守交代
         //次のターンへ
     }
     /// <summary>
@@ -348,7 +387,7 @@ public class TurnDeside : ColorPallet
         string[] selectedPieceObjName = _selectedPieceObj.name.Split("_"); //P_alphabet_number
         int alphabet = int.Parse(selectedPieceObjName[1]);
         int enpassantNumber;
-        if (_inGameManager._IsWhite)
+        if (_inGameManager.IsWhite)
         {
             //WhitePieceのenpassant座標Xは必然的に[2]である
             enpassantNumber = 2;

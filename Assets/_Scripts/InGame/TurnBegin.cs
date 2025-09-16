@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,7 +25,9 @@ public class TurnBegin : MonoBehaviour
         _addPieceFunction = GetComponent<AddPieceFunction>();
         _squereArrays = _inGameManager._SquereArrays;
     }
-
+    /// <summary>
+    /// ターンが切り替わった時、InGameManagerから一度だけ呼び出される
+    /// </summary>
     public void StartTurn()
     {
         //判定基準 → K が動いているかいないか R が動いているかいないか 間に駒があるかないか 間が敵の攻撃範囲に該当するか（ここをなるべく調べたくない）
@@ -34,7 +37,6 @@ public class TurnBegin : MonoBehaviour
         _inGameManager.Check(_isCheck ,_checkedKingSquere, _checkAttackerSqueres);
         //Checkの場合はキャスリング出来ないようにだけ書くこと
         FilterCastling();
-        _inGameManager._AnimatorController.Play("TurnStart");
     }
     /// <summary>
     /// キングとルークの間のマスを登録する
@@ -44,10 +46,10 @@ public class TurnBegin : MonoBehaviour
         _isCheck = false;
         _checkedKingSquere = null;
         _checkAttackerSqueres = new List<Squere>();
-        _shortDistanceIDs = _inGameManager._IsWhite? new[] { SquereID.b1, SquereID.c1 }: //w_s_c
+        _shortDistanceIDs = _inGameManager.IsWhite? new[] { SquereID.b1, SquereID.c1 }: //w_s_c
                                                     new[] { SquereID.b8, SquereID.c8 };//b_s_c
-        _longDistanceID = _inGameManager._IsWhite? new [] { SquereID.f1 , SquereID.g1, SquereID.h1}://w_l_c 
-                                                    new []{SquereID.f8, SquereID.g8, SquereID.h8};//B_l_c
+        _longDistanceID = _inGameManager.IsWhite? new [] { SquereID.e1, SquereID.f1, SquereID.g1}://w_l_c 
+                                                    new []{ SquereID.e8, SquereID.f8, SquereID.g8};//b_l_c
     }
     /// <summary>
     /// 
@@ -55,7 +57,7 @@ public class TurnBegin : MonoBehaviour
     /// <returns></returns>
     void AddTurnCount()
     {
-        if (_inGameManager._IsWhite)
+        if (_inGameManager.IsWhite)
         {
             _inGameManager._WhiteTurnCount++;
         }
@@ -66,8 +68,8 @@ public class TurnBegin : MonoBehaviour
     }
     HashSet<SquereID> CreateEnemyAtackRange()
     {
-        string allyTag = _inGameManager._IsWhite ? "White" : "Black";
-        string enemyTag = _inGameManager._IsWhite ? "Black" : "White";
+        string allyTag = _inGameManager.IsWhite ? "White" : "Black";
+        string enemyTag = _inGameManager.IsWhite ? "Black" : "White";
         Squere[] enemyPieceSqueres = _squereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(enemyTag))).ToArray();
         _enemyAttackRange = new HashSet<SquereID>();
         //for すべての駒で 
@@ -76,7 +78,7 @@ public class TurnBegin : MonoBehaviour
             string search = enemyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
             Piece attackerPiece = Instantiate(_inGameManager._PieceDict[search]);
             Vector3Int[] attackAreas = Enumerable.Repeat(enemyPieceSqueres[i]._SquereTilePos, attackerPiece._AttackAreas().Length).ToArray();
-            if (search == "P" && !_inGameManager._IsWhite)
+            if (search == "P" && !_inGameManager.IsWhite)
             {
                 //ポーンの攻撃方向を修正している
                 attackerPiece = _addPieceFunction.UpdatePoneGroup(attackerPiece);
@@ -153,6 +155,8 @@ public class TurnBegin : MonoBehaviour
     {
         _isShortCastlingPossible = _shortDistanceIDs.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
         _isLongCastlingPossible = _longDistanceID.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
+        _longDistanceID = _inGameManager.IsWhite? new [] { SquereID.e1, SquereID.f1}://w_l_c 
+                                                     new []{ SquereID.e8, SquereID.f8};//b_l_c
         if (!_isShortCastlingPossible && !_isLongCastlingPossible)
         {
             return false;
@@ -161,21 +165,6 @@ public class TurnBegin : MonoBehaviour
         {
             return true;
         }
-    }
-
-    /// <summary>
-    /// すべての敵の駒からAttackAreaを広げていったとき、b1, c1, / f1, g1, h1 / b8, c8, / f8, g8, h8 / d1 / d8 に一度でもヒットしたら該当のキャスリングはできない
-    /// </summary>
-    void FilterShortCastling()
-    {
-
-        
-            // SqureID[] 
-            //最後に欲しいもの → SqureID
-    }
-
-    void FilterLongCastling()
-    {
         
     }
 }
