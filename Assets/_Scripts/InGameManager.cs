@@ -40,8 +40,7 @@ public class InGameManager : MonoBehaviour
     GameObject _collider2DPrefab;
     bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     public bool IsWhite{ get => _isWhite;}
-    public int _WhiteTurnCount { get; set; }
-    public int _BlackTurnCount { get; set;}
+    public int _TurnCount { get; set; }
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Squere[][] _SquereArrays => _squereArrays; //s
@@ -116,11 +115,12 @@ public class InGameManager : MonoBehaviour
     {
         if (_uiManager.FadePanel.activeSelf)
         {
+            _BGMAudioSource.Play();
             _AnimatorController.Play("StartInGame");
         }
         else
         {
-            
+            //審査会用の処理
         }
     }
 

@@ -57,14 +57,7 @@ public class TurnBegin : MonoBehaviour
     /// <returns></returns>
     void AddTurnCount()
     {
-        if (_inGameManager.IsWhite)
-        {
-            _inGameManager._WhiteTurnCount++;
-        }
-        else
-        {
-            _inGameManager._BlackTurnCount++;
-        }
+        _inGameManager._TurnCount++;
     }
     HashSet<SquereID> CreateEnemyAtackRange()
     {

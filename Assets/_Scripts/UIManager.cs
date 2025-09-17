@@ -58,9 +58,9 @@ public class UIManager : ColorPallet
     public void StartTurnUI()
     {
         //t_turnCountの更新
-        t_deceptionMoveCount.text = _inGameManager.IsWhite? (_inGameManager._WhiteTurnCount -1).ToString() : (_inGameManager._BlackTurnCount -1).ToString();
-        t_truthMoveCount.text = _inGameManager.IsWhite? _inGameManager._WhiteTurnCount.ToString() : _inGameManager._BlackTurnCount.ToString();
-        t_deceptionMoveCount.color = _inGameManager.IsWhite? Color.white : Color.black;
+        t_deceptionMoveCount.text = _inGameManager._TurnCount.ToString();
+        t_truthMoveCount.text = _inGameManager._TurnCount.ToString();
+        t_deceptionMoveCount.color = _inGameManager.IsWhite? Color.black : Color.white;
         t_truthMoveCount.color = _inGameManager.IsWhite? Color.white : Color.black;
         //t_residues の更新
         if (_DeathPieceObj != null)

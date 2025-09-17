@@ -30,8 +30,9 @@ public class SelectTileController : ColorPallet
     {
         //毎フレームマウスのポジションを記録し、カーソルの下にあるタイルベースも更新する。
         Vector3 mousePos = Mouse.current.position.ReadValue();
+        int mouseX;
         int mousePosZ;
-        if (mousePos.y >= 160)
+        if (mousePos.y >= 200)
         {
             mousePosZ = 9;
         }
@@ -51,7 +52,8 @@ public class SelectTileController : ColorPallet
         }
         else
         {
-            if (hit2D.transform.gameObject.name.Length == 3 && _memoraizedHit != hit2D)
+            Debug.Log("Hit");
+            if (hit2D.transform.gameObject.name.Length == 3)
             {
                 _currentSpriteRenderer = hit2D.transform.gameObject.GetComponent<SpriteRenderer>();
                 Color32 checkColor  = _currentSpriteRenderer.color;
