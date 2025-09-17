@@ -115,11 +115,16 @@ public class InGameManager : MonoBehaviour
     {
         if (_uiManager.FadePanel.activeSelf)
         {
+            _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("0")); //本番用
             _BGMAudioSource.Play();
+            Debug.Log("");
             _AnimatorController.Play("StartInGame");
         }
         else
         {
+            _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
+            _BGMAudioSource.Play();
+            _AnimatorController.Play("StartDemoTitle");
             //審査会用の処理
         }
     }
