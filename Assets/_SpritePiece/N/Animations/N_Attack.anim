@@ -298,7 +298,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.9
+  - time: 1.9333333
     functionName: NAttack001
     data: 
     objectReferenceParameter: {fileID: 0}

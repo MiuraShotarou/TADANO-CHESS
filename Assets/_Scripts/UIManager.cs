@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// UIのバックエンドを担当
 /// </summary>
-public class UIManager : MonoBehaviour
+public class UIManager : ColorPallet
 {
     InGameManager _inGameManager;
     TurnDeside _turnDeside;
@@ -60,6 +60,8 @@ public class UIManager : MonoBehaviour
         //t_turnCountの更新
         t_deceptionMoveCount.text = _inGameManager.IsWhite? (_inGameManager._WhiteTurnCount -1).ToString() : (_inGameManager._BlackTurnCount -1).ToString();
         t_truthMoveCount.text = _inGameManager.IsWhite? _inGameManager._WhiteTurnCount.ToString() : _inGameManager._BlackTurnCount.ToString();
+        t_deceptionMoveCount.color = _inGameManager.IsWhite? Color.white : Color.black;
+        t_truthMoveCount.color = _inGameManager.IsWhite? Color.white : Color.black;
         //t_residues の更新
         if (_DeathPieceObj != null)
         {

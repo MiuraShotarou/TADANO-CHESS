@@ -84,18 +84,18 @@ public class InGameManager : MonoBehaviour
                 // _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
             }
         }
-        for (int i = 0; i < arraySize; i++)
-        {
-            for (int j = 0; j < arraySize; j++)
-            {
-                //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
-                if (_SquereArrays[i][j]._IsOnPieceObj)
-                {
-                    Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
-                    // Debug.Log(_SquereArrays[i][j]._SquereID);
-                }
-            }
-        }
+        // for (int i = 0; i < arraySize; i++)
+        // {
+        //     for (int j = 0; j < arraySize; j++)
+        //     {
+        //         //１次元目にアルファベット（縦列）座標を、２次元目に数値（横列）座標を割り当てる
+        //         if (_SquereArrays[i][j]._IsOnPieceObj)
+        //         {
+        //             Debug.Log(_SquereArrays[i][j]._IsOnPieceObj.name + _SquereArrays[i][j]._SquereID);
+        //             // Debug.Log(_SquereArrays[i][j]._SquereID);
+        //         }
+        //     }
+        // }
         _uiManager = GetComponent<UIManager>();
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _selectTileController = GetComponent<SelectTileController>();
@@ -124,6 +124,15 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    void UnLockSafety()
+    {
+        _uiManager.InactiveFadePanel();
+    }
+
+    void LockSafety()
+    {
+        
+    }
     /// <summary>
     /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる
     /// </summary>
