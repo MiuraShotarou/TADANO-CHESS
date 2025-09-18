@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
+
 //変換処理・コレクション処理を探せ
 public class InGameManager : MonoBehaviour
 {
@@ -37,6 +39,7 @@ public class InGameManager : MonoBehaviour
     SelectTileController _selectTileController;
     TurnDeside _turnDeside;
     Animator _animatorController;
+    PlayableDirector _playableDirector;
     GameObject _collider2DPrefab;
     bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     public bool IsWhite{ get => _isWhite;}
@@ -100,6 +103,7 @@ public class InGameManager : MonoBehaviour
         _selectTileController = GetComponent<SelectTileController>();
         _turnBegin = GetComponent<TurnBegin>();
         _animatorController = GetComponent<Animator>();
+        _playableDirector = GetComponent<PlayableDirector>();
         _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
         _isWhiteShortCastlingSwitch = false;
         _isWhiteLongCastlingSwitch = false;
@@ -113,19 +117,20 @@ public class InGameManager : MonoBehaviour
 
     void Start()
     {
-        if (_uiManager.FadePanel.activeSelf)
-        {
-            _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("0")); //本番用
-            _BGMAudioSource.Play();
-            Debug.Log("");
-            _AnimatorController.Play("StartInGame");
-        }
-        else
+        // if (_uiManager.FadePanel.activeSelf)
+        // {
+        //     _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("0")); //本番用
+        //     _BGMAudioSource.Play();
+        //     Debug.Log("");
+        //     _AnimatorController.Play("StartInGame"); 460 750 810
+        // }
+        // else
         {
             _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
             _BGMAudioSource.Play();
-            _AnimatorController.Play("StartDemoTitle");
-            //審査会用の処理
+            _playableDirector.Play();
+            //審査会用の処理 → 20秒後に音楽が良い感じになる
+            //1s start 7sb 11s 17sb 20s
         }
     }
 
