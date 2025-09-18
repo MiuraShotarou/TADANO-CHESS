@@ -138,7 +138,7 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     void StartTitle()
     {
-        _playableDirector.Stop();
+        // _playableDirector.Stop();
         _AnimatorController.Play("Title");
     }
 
