@@ -133,6 +133,14 @@ public class InGameManager : MonoBehaviour
             //1s start 7sb 11s 17sb 20s
         }
     }
+    /// <summary>
+    /// void Start → playableDirct → の再生後に一度だけ呼び出される
+    /// </summary>
+    void StartTitle()
+    {
+        _playableDirector.Stop();
+        _AnimatorController.Play("Title");
+    }
 
     void UnLockSafety()
     {
