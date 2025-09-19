@@ -14,9 +14,6 @@ public class TurnDeside : ColorPallet
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;
     UIManager _uiManager;
-    AddPieceFunction _addPieceFunction;
-    CollisionEvent _collisionEvent; //いらない
-    SpriteRenderer _selectedTileSpriteRenderer; //移動後の透明化用
     GameObject _selectedPieceObj;
     Piece _selectedPiece;
     Squere _selectedSquere;
@@ -26,12 +23,12 @@ public class TurnDeside : ColorPallet
     Animator _targetPieceAnimatorController;
     RuntimeAnimatorController _selectedPieceRuntimeAnimator;
     AnimationCurve _endPositionCurve;
-    GameObject _collider2DPrefab;
     GameObject _RAttackEffectObj;
     GameObject _BAttackEffectObj;
     GameObject _QAttckEffectObj;
     GameObject _targetObj;
     GameObject _enpassantObj;
+    SpriteRenderer _selectedTileSpriteRenderer;
     Action _castlingAnimation;
     // GameObject _hitStopObj;
     PlayableGraph _playableGraph;
@@ -44,9 +41,6 @@ public class TurnDeside : ColorPallet
     {
         _inGameManager = GetComponent<InGameManager>();
         _openSelectableArea = GetComponent<OpenSelectableArea>();
-        _collider2DPrefab = _inGameManager._Collider2DPrefab;
-        _collisionEvent = _collider2DPrefab.GetComponent<CollisionEvent>();
-        _addPieceFunction = GetComponent<AddPieceFunction>();
         _uiManager = GetComponent<UIManager>();
         _RAttackEffectObj = transform.GetChild(0).gameObject;
         _BAttackEffectObj = transform.GetChild(1).gameObject;
@@ -113,20 +107,8 @@ public class TurnDeside : ColorPallet
                 }
             }
         }
-        //Collider生成のif文
-        if (_targetSquere._IsOnPieceObj) //enpassantの判断後にこれも判断すれば良い
-        {
-            //移動先に敵駒がある場合の処理
-            CollisionEvent.CollisionAction = RegisterTarget;
-            Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
-        }
-        else if (_targetSquere._IsActiveEnpassant)
-        {
-            CollisionEvent.CollisionAction = RegisterEnpassantTarget; //親オブジェクトを取得するためのメソッドを登録する;
-            Instantiate(_collider2DPrefab, _targetSquere._SquerePiecePosition, Quaternion.identity);
-        }
         StartRunAnimation();
-        //攻撃 → 移動 → Idle
+        //移動 → 攻撃 → 移動 → Idle
         //移動 → 攻撃 → Idle の２パターンにこの後枝分かれをする
     }
     /// <summary>
@@ -385,7 +367,7 @@ public class TurnDeside : ColorPallet
     {
         _targetSquere._IsOnPieceObj = _selectedPieceObj; //_targetSquereに_selectedPieceObjが到着した
         _uiManager._TargetSquere = _targetSquere;
-        _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj;
+        _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj; //ちょっと設計がよくない
         if (_enpassantSquere) {_enpassantSquere._IsActiveEnpassant = false;}
         Destroy(_enpassantObj);
         _openSelectableArea.BeforeRendereringClear();
@@ -422,14 +404,12 @@ public class TurnDeside : ColorPallet
             //WhitePieceのenpassant座標Xは必然的に[2]である
             enpassantNumber = 2;
             _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
-            _enpassantSquere._IsActiveEnpassant = true;
-            //enpassantObjの生成・複製・無効化
-            _enpassantObj = Instantiate(_collider2DPrefab, _enpassantSquere._SquerePiecePosition, Quaternion.identity);
-            _enpassantObj.layer = LayerMask.NameToLayer("Piece");
-            _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
-            // _enpassantSquere._IsOnPieceObj = _enpassantObj;//
+            _enpassantSquere._IsActiveEnpassant = true; //ここの処理はあっても良さそう
+            //enpassantObjの生成
+            _enpassantObj = Instantiate(_selectedPieceObj);
             //ennpassantObjの名前をポジションと同一にする
             _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");
+            _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
         else
         {
@@ -437,10 +417,9 @@ public class TurnDeside : ColorPallet
             enpassantNumber = 5;
             _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
             _enpassantSquere._IsActiveEnpassant = true;
-            _enpassantObj = Instantiate(_collider2DPrefab, _enpassantSquere._SquerePiecePosition, Quaternion.identity);
-            _enpassantObj.layer = LayerMask.NameToLayer("Piece");
-            _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
+            _enpassantObj = Instantiate(_selectedPieceObj);
             _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");
+            _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
     }
 }

@@ -6,21 +6,24 @@ using UnityEngine;
 //右側にキャスリングすることを「ショートキャスリング」、左側にキャスリングすることを「ロングキャスリング」と呼ぶ → この２つの動きは固定のようだ → それぞれ別々で判断する必要があるかもしれない
 //プロモーション（条件：ポーンが突き当りのマスに到着した時、キング・ポーン以外の好きな駒に変化することができる）
 //ステイルメイト（効果；チェックがかかっていない状態で何かの駒を動かすと敗北が決まってしまうという時、試合結果はドローになる）
-//ドロー（条件：キング対キングになること、ステイルメイト、3回同一局面、50回ポーンが動かずどの駒も取られていない、合意によるドロー）
-public class CollisionEvent : ColorPallet
-{
-    public static Action<GameObject> CollisionAction;
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (LayerMask.LayerToName(collision.gameObject.layer) == "Piece")
-        {
-            CollisionAction(collision.gameObject);
-            if (this.gameObject.name.First() != 'U')
-            {
-                // int destroyTimer = 3;
-                Destroy(this.gameObject);
-                // Destroy(this.gameObject, destroyTimer); タイマーいらないかも
-            }
-        }
-    }
-}
+//ドロー（条件：キング対キングになること、ステイルメイト、3回同一局面、50回ポーンが動かずどの駒も取られていない、合意によるドロー
+/// <summary>
+/// このクラス全体が不要なものとなった
+/// </summary>
+// public class CollisionEvent : ColorPallet
+// {
+//     public static Action<GameObject> CollisionAction;
+//     void OnCollisionEnter2D(Collision2D collision)
+//     {
+//         if (LayerMask.LayerToName(collision.gameObject.layer) == "Piece")
+//         {
+//             CollisionAction(collision.gameObject);
+//             if (this.gameObject.name.First() != 'U')
+//             {
+//                 // int destroyTimer = 3;
+//                 Destroy(this.gameObject);
+//                 // Destroy(this.gameObject, destroyTimer); タイマーいらないかも
+//             }
+//         }
+//     }
+// }
