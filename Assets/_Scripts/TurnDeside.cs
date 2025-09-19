@@ -396,8 +396,8 @@ public class TurnDeside : ColorPallet
     /// <param name="_IsWhite"></param>
     public void CreateEnpassant()
     {
-        string[] selectedPieceObjName = _selectedPieceObj.name.Split("_"); //P_alphabet_number
-        int alphabet = int.Parse(selectedPieceObjName[1]);
+        string[] search = _selectedPieceObj.name.Split("_"); //P_alphabet_number
+        int alphabet = int.Parse(search[1]);
         int enpassantNumber;
         if (_inGameManager.IsWhite)
         {
@@ -408,7 +408,7 @@ public class TurnDeside : ColorPallet
             //enpassantObjの生成
             _enpassantObj = Instantiate(_selectedPieceObj);
             //ennpassantObjの名前をポジションと同一にする
-            _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");
+            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}");
             _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
         else
@@ -418,7 +418,7 @@ public class TurnDeside : ColorPallet
             _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
             _enpassantSquere._IsActiveEnpassant = true;
             _enpassantObj = Instantiate(_selectedPieceObj);
-            _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");
+            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}");
             _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
     }

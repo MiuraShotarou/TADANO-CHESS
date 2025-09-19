@@ -138,7 +138,6 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     void StartTitle()
     {
-        Debug.Log("");
         _AnimatorController.Play("Title");
     }
 
@@ -220,6 +219,11 @@ public class InGameManager : MonoBehaviour
     public void StartInactivePromotionRelay()
     {
         _AnimatorController.Play("InactivePromotion");
+    }
+
+    void InactiveAnimator()
+    {
+        
     }
     void Initialize()
     {

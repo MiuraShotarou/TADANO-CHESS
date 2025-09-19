@@ -50,10 +50,13 @@ public class UIManager : ColorPallet
     }
     public void ActiveFadePanel()
     {
+        Debug.Log("a");
         _fadePanel.SetActive(true);
     }
     public void InactiveFadePanel()
     {
+        Debug.Log("i");
+        
         _fadePanel.SetActive(false);
     }
     /// <summary>
