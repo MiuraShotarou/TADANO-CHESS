@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-718723909605744669
+--- !u!1102 &-3627739822512093882
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
@@ -81,7 +81,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StartDemoGame
+  m_Name: StartMulti
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -243,9 +243,6 @@ AnimatorStateMachine:
     m_State: {fileID: 6675901195889419458}
     m_Position: {x: 290, y: 120, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -718723909605744669}
-    m_Position: {x: 540, y: 190, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 6671331240811864305}
     m_Position: {x: 540, y: 120, z: 0}
   - serializedVersion: 1
@@ -263,6 +260,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 2551754277161640051}
     m_Position: {x: 540, y: 330, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3627739822512093882}
+    m_Position: {x: 540, y: 190, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
