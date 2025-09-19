@@ -6,7 +6,6 @@ public class BAttackEffect : AnimationRelay
     void Awake()
     {
         _BAttackEffectAnimatorController = gameObject.GetComponent<Animator>();
-        gameObject.SetActive(false);
     }
     void OnEnable()
     {

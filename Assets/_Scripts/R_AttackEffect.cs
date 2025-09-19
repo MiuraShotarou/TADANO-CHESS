@@ -17,7 +17,6 @@ public class R_AttackEffect : AnimationRelay
         _RAttackEffectObj = this.gameObject;
         _RAttackEffectAnimatorController = _RAttackEffectObj.GetComponent<Animator>();
         _RAttackEffectRuntimeAnimatorController = _RAttackEffectAnimatorController.runtimeAnimatorController;
-        gameObject.SetActive(false);
     }
     void OnEnable()
     {
@@ -38,7 +37,7 @@ public class R_AttackEffect : AnimationRelay
             animationCurveRotZ = AnimationCurve.Linear(0f, transform.rotation.z, 1f, -1080);
         }
         //"Run"という名前のついたanimationClipからコピーを新規作成
-        AnimationClip animationClip = _RAttackEffectRuntimeAnimatorController.animationClips.First();
+        AnimationClip animationClip = _RAttackEffectRuntimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name.Contains("R"));
         //新しく作成・編集したAnimationCurveをAnimationClipに代入する
         animationClip.SetCurve("", typeof(Transform), "localPosition.x", animationCurvePosX);
         animationClip.SetCurve("", typeof(Transform), "localPosition.y", animationCurvePosY);

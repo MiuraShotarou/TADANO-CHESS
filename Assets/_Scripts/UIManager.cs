@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,9 @@ public class UIManager : ColorPallet
     InGameManager _inGameManager;
     TurnDeside _turnDeside;
     [SerializeField] GameObject _fadePanel;
+    [SerializeField] GameObject _pieceIconWhite;
+    [SerializeField] GameObject _pieceIconBlack;
+    [SerializeField] GameObject _countMask;
     [SerializeField] TextMeshProUGUI t_deceptionMoveCount;
     [SerializeField] TextMeshProUGUI t_truthMoveCount;
     [SerializeField] TextMeshProUGUI[] t_residuesCountW;
@@ -53,15 +57,34 @@ public class UIManager : ColorPallet
         _fadePanel.SetActive(false);
     }
     /// <summary>
+    /// MultiPlayButtonを押した時に一度だけ呼び出される
+    /// </summary>
+    public void StartMulti()
+    {
+        _inGameManager._AnimatorController.Play("StartMulti");
+    }
+    /// <summary>
     /// ターンが切り替わった時、InGameManagerから一度だけ呼び出される。TurnBegin.csの後に呼び出される
     /// </summary>
     public void StartTurnUI()
     {
         //t_turnCountの更新
-        t_deceptionMoveCount.text = _inGameManager._TurnCount.ToString();
+        t_deceptionMoveCount.text = (_inGameManager._TurnCount - 1).ToString();
         t_truthMoveCount.text = _inGameManager._TurnCount.ToString();
-        t_deceptionMoveCount.color = _inGameManager.IsWhite? Color.black : Color.white;
-        t_truthMoveCount.color = _inGameManager.IsWhite? Color.white : Color.black;
+        if (_inGameManager.IsWhite)
+        {
+            t_deceptionMoveCount.color = Color.black;
+            t_deceptionMoveCount.fontStyle = FontStyles.Bold;
+            t_truthMoveCount.color = Color.white;
+            t_truthMoveCount.fontStyle = FontStyles.Normal;
+        }
+        else
+        {
+            t_deceptionMoveCount.color = Color.white;
+            t_deceptionMoveCount.fontStyle = FontStyles.Normal;
+            t_truthMoveCount.color = Color.black;
+            t_truthMoveCount.fontStyle = FontStyles.Bold;
+        }
         //t_residues の更新
         if (_DeathPieceObj != null)
         {
@@ -124,5 +147,11 @@ public class UIManager : ColorPallet
         // _TargetPieceObj.SetActive(false);
         _TargetSquere._IsOnPieceObj = promotionObj;
         _inGameManager.StartInactivePromotionRelay();
+    }
+
+    void AdjustUI()
+    {
+        _pieceIconWhite.SetActive(true);
+        _pieceIconBlack.SetActive(true);
     }
 }

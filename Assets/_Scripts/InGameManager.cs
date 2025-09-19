@@ -138,8 +138,20 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     void StartTitle()
     {
-        // _playableDirector.Stop();
+        Debug.Log("");
         _AnimatorController.Play("Title");
+    }
+
+    public void StartMultiRelay()
+    {
+        _uiManager.StartMulti();
+    }
+
+    public void StartInGame()
+    {
+        _TurnCount++;
+        _playableDirector.enabled = false;
+        _AnimatorController.Play("StartInGame");
     }
 
     void UnLockSafety()
@@ -149,7 +161,7 @@ public class InGameManager : MonoBehaviour
 
     void LockSafety()
     {
-        
+        _uiManager.ActiveFadePanel();
     }
     /// <summary>
     /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる

@@ -73,12 +73,12 @@ public class OpenSelectableArea : ColorPallet
         {
             if (_inGameManager.IsCastling[0]())
             {
-                _selectedPiece = _addPieceFunction.AddShortCastlingArea(_selectedPiece);
+                 _selectedPiece = _addPieceFunction.AddShortCastlingArea(_selectedPiece);
             }
             //ロングキャスリングできるかどうかは既に判定済みである
             if (_inGameManager.IsCastling[1]())
             {
-                _selectedPiece = _addPieceFunction.AddLongCastlingArea(_selectedPiece);
+                 _selectedPiece = _addPieceFunction.AddLongCastlingArea(_selectedPiece);
             }
             //ショートキャスリングできるかどうかは既に判定済みである → あとはルークのいるポジションにコライダーをぶつけるだけ
         }
@@ -86,6 +86,7 @@ public class OpenSelectableArea : ColorPallet
         _pieceMoveCount = _selectedPiece._MoveCount();
         Initialize();
         DrawOutline(_selectedPieceObj);
+        
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
         //pieceObjの移動可能領域を検索 → 移動可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
         //pieceObjの攻撃可能領域を検索 → 攻撃可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
@@ -95,7 +96,9 @@ public class OpenSelectableArea : ColorPallet
     public void BeforeRendereringClear()
     {
         SpriteRenderer spriteRenderer = _selectedPieceObj.GetComponent<SpriteRenderer>();
-        spriteRenderer.color = _UnSelectedPieceColor;
+        Color color = spriteRenderer.color;
+        color.a = 0.5882352941176471f;
+        spriteRenderer.color = color;
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
         for (int i = 0; i < _renderingAreas.Count; i++)
         {
@@ -185,7 +188,7 @@ public class OpenSelectableArea : ColorPallet
         }
     }
     /// <summary>
-    /// 駒があることを検知して実体化されたColliderの衝突情報から呼ばれる
+    /// 駒があることを検知して実体化されたColliderの衝突情報から呼ばれる → 衝突判定は取らず、Squereから直接取得する形にする
     /// </summary>
     /// <param name="collisionObj"></param>
     void JudgmentGroup(GameObject collisionObj)
@@ -193,7 +196,7 @@ public class OpenSelectableArea : ColorPallet
         SpriteRenderer spriteRenderer = collisionObj.GetComponent<SpriteRenderer>();
         if (!spriteRenderer)
         {
-            spriteRenderer = collisionObj.transform.parent.gameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer = collisionObj.transform.parent.gameObject.GetComponent<SpriteRenderer>(); //enpassantの時、親のオブジェクトを取得する → データとしてだけobjを代入しておく
         }
         //enpassantを取得したら → Pone以外の駒の場合はColliderを出現させないようにしているのでOK
         if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX != spriteRenderer.flipX)
@@ -216,7 +219,9 @@ public class OpenSelectableArea : ColorPallet
         SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
         if (spriteRenderer)
         {
-            spriteRenderer.color = Color.white;
+            Color color = spriteRenderer.color;
+            color.a = 1;
+            spriteRenderer.color = color;
         }
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
     }

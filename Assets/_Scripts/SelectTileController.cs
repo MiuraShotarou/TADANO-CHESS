@@ -52,7 +52,7 @@ public class SelectTileController : ColorPallet
         }
         else
         {
-            Debug.Log("Hit");
+            // Debug.Log("Hit");
             if (hit2D.transform.gameObject.name.Length == 3)
             {
                 _currentSpriteRenderer = hit2D.transform.gameObject.GetComponent<SpriteRenderer>();

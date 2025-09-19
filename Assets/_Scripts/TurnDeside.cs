@@ -50,6 +50,7 @@ public class TurnDeside : ColorPallet
         _uiManager = GetComponent<UIManager>();
         _RAttackEffectObj = transform.GetChild(0).gameObject;
         _BAttackEffectObj = transform.GetChild(1).gameObject;
+        _QAttckEffectObj = transform.GetChild(2).gameObject;
         // _hitStopObj = transform.GetChild(2?).gameObject;
     }
     /// <summary>
@@ -349,17 +350,35 @@ public class TurnDeside : ColorPallet
     {
         _BAttackEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
         Vector3 basePos = _targetObj.transform.position;
+        if (_BAttackEffectObj.GetComponent<SpriteRenderer>().flipX)
+        {
+            basePos.x += 0.5f;
+        }
+        else
+        {
+            basePos.x -= 0.5f;
+        }
+        basePos.y += 0.25f;
         _BAttackEffectObj.transform.position = basePos;
-        _BAttackEffectObj.transform.localScale = _selectedPieceObj.transform.localScale;
+        _BAttackEffectObj.transform.localScale = _targetObj.transform.localScale;
         _BAttackEffectObj.SetActive(true);
     }
 
     public void StartQAttackEffect()
     {
         _QAttckEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
-        Vector3 basePos = _selectedPieceObj.transform.position;
+        Vector3 basePos = _targetObj.transform.position;
+        if (_QAttckEffectObj.GetComponent<SpriteRenderer>().flipX)
+        {
+            basePos.x += 0.5f;
+        }
+        else
+        {
+            basePos.x -= 0.5f;
+        }
+        basePos.y += 0.25f;
         _QAttckEffectObj.transform.position = basePos;
-        _QAttckEffectObj.transform.localScale = _selectedPieceObj.transform.localScale;
+        _QAttckEffectObj.transform.localScale = _targetObj.transform.localScale;
         _QAttckEffectObj.SetActive(true);
     }
     void EndTurn()
@@ -408,6 +427,7 @@ public class TurnDeside : ColorPallet
             _enpassantObj = Instantiate(_collider2DPrefab, _enpassantSquere._SquerePiecePosition, Quaternion.identity);
             _enpassantObj.layer = LayerMask.NameToLayer("Piece");
             _enpassantObj.transform.SetParent(_selectedPieceObj.transform);
+            // _enpassantSquere._IsOnPieceObj = _enpassantObj;//
             //ennpassantObjの名前をポジションと同一にする
             _enpassantObj.name = new string($"U_{alphabet}_{enpassantNumber}");
         }

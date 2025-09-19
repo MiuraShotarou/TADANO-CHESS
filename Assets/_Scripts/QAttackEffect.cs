@@ -6,7 +6,6 @@ public class QAttackEffect : AnimationRelay
     void Awake()
     {
         _QAttackEffectAnimatorController = gameObject.GetComponent<Animator>();
-        gameObject.SetActive(false);
     }
     void OnEnable()
     {
