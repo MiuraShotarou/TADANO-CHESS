@@ -77,7 +77,7 @@ public class OpenSelectableArea : ColorPallet
             {
                  _selectedPiece = _addPieceFunction.AddShortCastlingArea(_selectedPiece);
             }
-            //ロングキャスリングできるかどうかは既に判定済みである → どこで？
+            //ロングキャスリングできるかどうかは既に判定済みである
             if (_inGameManager.IsCastling[1]())
             {
                  _selectedPiece = _addPieceFunction.AddLongCastlingArea(_selectedPiece);
@@ -85,6 +85,7 @@ public class OpenSelectableArea : ColorPallet
         }
         _selectedSquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
         _pieceMoveCount = _selectedPiece._MoveCount();
+        Debug.Log(_pieceMoveCount);
         Initialize();
         DrawOutline(_selectedPieceObj);
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
@@ -97,7 +98,8 @@ public class OpenSelectableArea : ColorPallet
     {
         SpriteRenderer spriteRenderer = _selectedPieceObj.GetComponent<SpriteRenderer>();
         Color color = spriteRenderer.color;
-        color.a = 0.5882352941176471f;
+        float alpha150 = 0.5882352941176471f;
+        color.a = alpha150;
         spriteRenderer.color = color;
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
         for (int i = 0; i < _renderingAreas.Count; i++)
@@ -139,10 +141,15 @@ public class OpenSelectableArea : ColorPallet
                 &&
                 !_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
+                Debug.Log($"{_inGameManager._SquereArrays[alphabet][number]._SquereID}");
                 _renderingAreas.Add(_moveAreas[i]);
             }
             else
             {
+                if (-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)
+                {
+                    Debug.Log($"{_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj.name}");
+                }
                 _moveAreas[i] = new Vector3Int(0, 0, -1);
             }
         }
@@ -179,24 +186,28 @@ public class OpenSelectableArea : ColorPallet
         }
     }
     // /// <summary>
-    // /// 駒があることを検知して実体化されたColliderの衝突情報から呼ばれる → 衝突判定は取らず、Squereから直接取得する形にする
+    // /// targetPieceObjのいるSquareに移動するべきかを判断する
     // /// </summary>
     // /// <param name="collisionObj"></param>
-    bool IsCanAttackTargetObject(GameObject currentTargetobj)
+    bool IsCanAttackTargetObject(GameObject targetObj)
     {
-        //キャスリング可能な相手だった場合 → K && R という他の条件も必要では? → そもそもキャスリングをして良いのかどうか → K && R だった場合でもキャスリング不可能なのに当たってしまうことはある → IsCastlingで判断すべき
-        if (_selectedPieceObj.name.First().ToString().Contains("K")) //
-        {
-            
-            DrawOutline(currentTargetobj); //上に置いても良いよね
-            return true; //キャスリング可能であればtrue
-        }
         //敵だった場合
-        else if(!_selectedPieceObj.CompareTag(currentTargetobj.tag))
+        if (!_selectedPieceObj.CompareTag(targetObj.tag))
         {
-            //キャスリング移動のフラグを立てる → なにもしない設計に変更
-            //collisionObj == turnDesideにいくまで消してはならない
+            DrawOutline(targetObj);
+            return true;
         }
+        //味方でかつキングが動く場合でかつTargetobjがRだった場合
+        else if(_selectedPiece._PieceName == "K" && targetObj.name.First().ToString() == "R")
+        {
+            // IsCastlingで分かっていること → キャスリング可能な状態が整っていた場合
+            if (_inGameManager.IsCastling.Any(del => del()))
+            {
+                DrawOutline(targetObj);
+                return true; //キャスリング可能であればtrue
+            }
+        }
+        return false;
     }
     void DrawOutline(GameObject obj)
     {
@@ -214,6 +225,7 @@ public class OpenSelectableArea : ColorPallet
     /// </summary>
     void RenderingOneLine()
     {
+        Debug.Log("Rend");
         if (_renderingAreas.Count == 0)
         {
             _inGameManager.StartSelectTileRelay();
@@ -243,9 +255,8 @@ public class OpenSelectableArea : ColorPallet
         //ここでもGameObjectの名前で検索している
         //描画する時は偽のポジション、攻撃対象のオブジェクトは真を取得しなければならない → 名前は偽のポジション名・敵のオブジェクトはParent設定で取得する
         Squere targetSquere = _inGameManager._SquereArrays[int.Parse(search[0])][int.Parse(search[1])];
-        GameObject targetObj = targetSquere._IsOnPieceObj;
         //地味に大事
         _turnDeside.enabled = true;
-        _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetObj, targetSquere);
+        _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetSquere);
     }
 }

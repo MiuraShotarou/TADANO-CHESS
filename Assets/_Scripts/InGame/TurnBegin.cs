@@ -69,7 +69,6 @@ public class TurnBegin : MonoBehaviour
         for (int i = 0; i < enemyPieceSqueres.Length; i++)
         {
             string search = enemyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
-            Debug.Log(enemyPieceSqueres[i]._IsOnPieceObj.name);
             Piece attackerPiece = Instantiate(_inGameManager._PieceDict[search]);
             Vector3Int[] attackAreas = Enumerable.Repeat(enemyPieceSqueres[i]._SquereTilePos, attackerPiece._AttackAreas().Length).ToArray();
             if (search == "P" && !_inGameManager.IsWhite)

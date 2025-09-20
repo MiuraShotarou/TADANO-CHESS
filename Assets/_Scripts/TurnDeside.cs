@@ -55,7 +55,7 @@ public class TurnDeside : ColorPallet
     /// <param name="selectedPiece"></param>
     /// <param name="selectedSquere"></param>
     /// <param name="targetSquere"></param>
-    public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, GameObject targetObj, Squere targetSquere)
+    public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
     {
         //引数をキャッシュ化
         _selectedTileSpriteRenderer = currentSpriteRenderer;
@@ -65,14 +65,17 @@ public class TurnDeside : ColorPallet
         _selectedPieceAnimatorController = _selectedPieceObj.GetComponent<Animator>();
         _selectedPieceRuntimeAnimator = _selectedPieceAnimatorController.runtimeAnimatorController;
         _targetSquere = targetSquere;
-        _targetObj = targetObj;
-        _targetPieceAnimatorController = targetObj.GetComponent<Animator>();
+        if (targetSquere._IsOnPieceObj)
+        {
+            _targetObj = targetSquere._IsOnPieceObj;
+            _targetPieceAnimatorController = _targetObj.GetComponent<Animator>();
+        }
         //移動に伴って_SelectedPieceObjやSquererなどをアップデート → ラムダ候補
         char[] updateName = _selectedPieceObj.name.ToCharArray();
         updateName[2] = (char)('0' + _targetSquere._SquereTilePos.y);
         updateName[4] = (char)('0' + _targetSquere._SquereTilePos.x);
         _selectedPieceObj.name = new string(updateName);
-        _selectedSquere._IsOnPieceObj = null;
+        _selectedSquere._IsOnPieceObj = null;//問題かも
         _Direction = _targetSquere._SquereTilePos.x - _selectedSquere._SquereTilePos.x;
         //初めて移動した駒であればrotation.zは 0 という勝手な仕様
         if (_selectedPieceObj.transform.rotation.z == 0)
