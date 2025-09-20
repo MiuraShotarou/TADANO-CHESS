@@ -31,8 +31,6 @@ public class UIManager : ColorPallet
     public Squere _TargetSquere {get;set;}
     public GameObject _TargetPieceObj {get;set;}
 
-    public GameObject FadePanel => _fadePanel;
-
     bool _isPromotion;
     void Awake()
     {
@@ -40,7 +38,7 @@ public class UIManager : ColorPallet
         _turnDeside = GetComponent<TurnDeside>();
         _DeathPieceObj = null;
         _isPromotion = false;
-        _isPromotion = true;//デバッグ
+        // _isPromotion = true;//デバッグ
         t_residuesDictW = t_residuesCountW.ToDictionary(t => t.name.Last().ToString(), t => t);
         t_residuesDictB = t_residuesCountB.ToDictionary(t => t.name.Last().ToString(), t => t);
         //(KeyGroupCollection(Key, Value[])) ← Valueが配列なのでToArrayが必要
@@ -94,7 +92,7 @@ public class UIManager : ColorPallet
             TextMeshProUGUI[] t_decreaseSquereIds = _inGameManager.IsWhite? t_squereIdsDictW[_DeathPieceObj.name.First().ToString()].ToArray() : t_squereIdsDictB[_DeathPieceObj.name.First().ToString()].ToArray();
             TextMeshProUGUI t_decreaseSquereId = t_decreaseSquereIds.FirstOrDefault(t => t.name.Contains(_DeathPieceObj.name.Last().ToString()));
             t_decreaseSquereId.gameObject.SetActive(false);
-            Destroy(_DeathPieceObj);
+            _DeathPieceObj = null;
         }
         if (_isPromotion)
         {
@@ -117,7 +115,7 @@ public class UIManager : ColorPallet
             }
             _isPromotion = false;
         }
-        else
+        else if(_inGameManager._TurnCount != 1)
         {
             //t_squereIdの更新
             string[] search = _TargetPieceObj.name.Split('_'); //Key[0] Index[4]

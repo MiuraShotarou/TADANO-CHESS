@@ -22,6 +22,7 @@ public class OpenSelectableArea : ColorPallet
     Vector3Int[] _attackAreas;
     Vector3Int[] _moveAreas;
     List<Vector3Int> _renderingAreas = new List<Vector3Int>(); //Propatiesにしておけ
+    List<Vector3Int> _memorizeRenderingAreas = new List<Vector3Int>();
     int _pieceMoveCount = 0;
     int _prefabCount = 0;
     GameObject _collider2DPrefab;
@@ -34,7 +35,6 @@ public class OpenSelectableArea : ColorPallet
         _addPieceFunction = GetComponent<AddPieceFunction>();
         _turnDeside = GetComponent<TurnDeside>();
         _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
-        _collider2DPrefab = _inGameManager._Collider2DPrefab;
     }
     /// <summary>
     /// 駒を選択してから一回だけ呼ばれる
@@ -101,10 +101,10 @@ public class OpenSelectableArea : ColorPallet
         color.a = alpha150;
         spriteRenderer.color = color;
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
-        for (int i = 0; i < _renderingAreas.Count; i++)
+        for (int i = 0; i < _memorizeRenderingAreas.Count; i++)
         {
-            _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].color = Color.clear;
-            _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = false;
+            _deceptionTileFieldArrays[_memorizeRenderingAreas[i].y][_memorizeRenderingAreas[i].x].color = Color.clear;
+            _deceptionTileFieldArrays[_memorizeRenderingAreas[i].y][_memorizeRenderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = false;
         }
     }
     /// <summary>
@@ -114,7 +114,8 @@ public class OpenSelectableArea : ColorPallet
     {
         _moveAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._MoveAreas().Length).ToArray();
         _attackAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._AttackAreas().Length).ToArray();
-        _renderingAreas = new List<Vector3Int>();
+        _renderingAreas.Clear();
+        _memorizeRenderingAreas.Clear();
     }
     /// <summary>
     /// Animationの再生一回につき一度だけ呼ばれる。複数回呼ばれる可能性あり。
@@ -167,13 +168,13 @@ public class OpenSelectableArea : ColorPallet
             }
             else if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
-                _attackAreas[i] = new Vector3Int(0, 0, -1);
                 if (!IsCanAttackTargetObject(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj))
                 {
                     _PrefabCount--;
                     continue;
                 }
                 _renderingAreas.Add(_attackAreas[i]);
+                _attackAreas[i] = new Vector3Int(0, 0, -1);
                 //z = -1で次回の検索を回避する
             }
             _PrefabCount--;
@@ -219,7 +220,7 @@ public class OpenSelectableArea : ColorPallet
     /// </summary>
     void RenderingOneLine()
     {
-        Debug.Log(_renderingAreas.Count);
+        _memorizeRenderingAreas = _memorizeRenderingAreas.Union(_renderingAreas).ToList();
         if (_renderingAreas.Count == 0)
         {
             _inGameManager.StartSelectTileRelay();
@@ -241,12 +242,12 @@ public class OpenSelectableArea : ColorPallet
             //Poneが二回行動可能な時、AttackAreaだけ二度目の描画を制限する
             Array.Fill(_attackAreas, new Vector3Int(0, 0, -1));
         }
-        // _renderingAreas.Clear();
+        _renderingAreas.Clear();
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
     }
     public void TurnDesideRelay(SpriteRenderer currentSpriteRenderer)
     {
-        string[] search = currentSpriteRenderer.gameObject.name.Split("_");
+        string[] search = currentSpriteRenderer.gameObject.name.Split('_');
         //ここでもGameObjectの名前で検索している
         //描画する時は偽のポジション、攻撃対象のオブジェクトは真を取得しなければならない → 名前は偽のポジション名・敵のオブジェクトはParent設定で取得する
         Squere targetSquere = _inGameManager._SquereArrays[int.Parse(search[0])][int.Parse(search[1])];

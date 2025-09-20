@@ -40,7 +40,6 @@ public class InGameManager : MonoBehaviour
     TurnDeside _turnDeside;
     Animator _animatorController;
     PlayableDirector _playableDirector;
-    GameObject _collider2DPrefab;
     bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     public bool IsWhite{ get => _isWhite;}
     public int _TurnCount { get; set; }
@@ -53,7 +52,6 @@ public class InGameManager : MonoBehaviour
     public Dictionary<string, AudioClip[]> _BGMAudioClipDict { get; set; }
     public Dictionary<string, AudioClip[]> _SEAudioClipDict { get; set; }
     public Animator _AnimatorController => _animatorController;
-    public GameObject _Collider2DPrefab => _collider2DPrefab; //s ro fs
     void Awake()
     {
         _pieceDict = _setPieces.ToDictionary(piece => piece._PieceName, piece => piece);
@@ -104,7 +102,6 @@ public class InGameManager : MonoBehaviour
         _turnBegin = GetComponent<TurnBegin>();
         _animatorController = GetComponent<Animator>();
         _playableDirector = GetComponent<PlayableDirector>();
-        _collider2DPrefab = Resources.Load<GameObject>("Objects/BoxCollider2DPrefab");
         _isWhiteShortCastlingSwitch = false;
         _isWhiteLongCastlingSwitch = false;
         _isBlackShortCastlingSwitch = false;
@@ -147,12 +144,30 @@ public class InGameManager : MonoBehaviour
     {
         _uiManager.StartMulti();
     }
-
-    public void StartInGame()
+    /// <summary>
+    /// 攻撃側のグループを変更させるメソッド。IsWhiteが変更されると"StartTurn".animが再生される
+    /// </summary>
+    public void TrunChange()
     {
-        _TurnCount++;
-        _playableDirector.enabled = false;
-        _AnimatorController.Play("StartInGame");
+        _IsWhite = !_IsWhite;
+    }
+    /// <summary>
+    /// public Bool _IsWihte から呼び出される → SatrtMultiあたりから呼び出したい
+    /// </summary>
+    void StartTurnRelay()
+    {
+        Initialize();
+        _turnBegin.StartTurn();
+        _uiManager.StartTurnUI();
+        if (_TurnCount == 1)
+        {
+            _playableDirector.enabled = false;
+            _AnimatorController.Play("StartInGame");
+        }
+        else
+        {
+            _animatorController.Play("StartTurn");
+        }
     }
 
     void UnLockSafety()
@@ -196,23 +211,7 @@ public class InGameManager : MonoBehaviour
     {
         _selectTileController.enabled = true;
     }
-    /// <summary>
-    /// 攻撃側のグループを変更させるメソッド。IsWhiteが変更されると"StartTurn".animが再生される
-    /// </summary>
-    public void TrunChange()
-    {
-        _IsWhite = !_IsWhite;
-    }
-    /// <summary>
-    /// public Bool _IsWihte から呼び出される → SatrtMultiあたりから呼び出したい
-    /// </summary>
-    void StartTurnRelay()
-    {
-        Initialize();
-        _turnBegin.StartTurn();
-        _uiManager.StartTurnUI();
-        _animatorController.Play("StartTurn");
-    }
+
     public void StartActivePromotionRelay()
     {
         _AnimatorController.Play("ActivePromotion");

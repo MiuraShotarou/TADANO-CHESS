@@ -1462,7 +1462,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.2}
-    oldSize: {x: 0.73142856, y: 0.73142856}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.5688889, y: 0.5688889}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -7576,7 +7576,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.2}
-    oldSize: {x: 0.73142856, y: 0.73142856}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.5688889, y: 0.5688889}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -21030,7 +21030,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218987132}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1f368934c32a08048898cdc28e432313, type: 3}
@@ -33811,7 +33811,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.2}
-    oldSize: {x: 0.73142856, y: 0.73142856}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.5688889, y: 0.5688889}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -35757,7 +35757,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.2}
-    oldSize: {x: 0.73142856, y: 0.73142856}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.5688889, y: 0.5688889}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -58,6 +58,7 @@ public class TurnDeside : ColorPallet
     public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
     {
         //引数をキャッシュ化
+        Debug.Log($"{_inGameManager.IsCastling[0]()}, {_inGameManager.IsCastling[1]()}");
         _selectedTileSpriteRenderer = currentSpriteRenderer;
         _selectedPieceObj = selectedPieceObj;
         _selectedPiece = selectedPiece;
@@ -351,9 +352,9 @@ public class TurnDeside : ColorPallet
     {
         _targetSquere._IsOnPieceObj = _selectedPieceObj; //_targetSquereに_selectedPieceObjが到着した
         _uiManager._TargetSquere = _targetSquere;
-        _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj; //ちょっと設計がよくない
+        _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj; //ちょっと設計がよくない → そもそもGameObjectを入れたくない
         if (_enpassantSquere) {_enpassantSquere._IsActiveEnpassant = false;}
-        Destroy(_enpassantObj);
+        _enpassantObj = null;
         _openSelectableArea.BeforeRendereringClear();
         //Poneが移動した後にアンパッサン・プロモーションの発生を判断する
         if (_selectedPiece._PieceName == "P")
@@ -390,9 +391,9 @@ public class TurnDeside : ColorPallet
             _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
             _enpassantSquere._IsActiveEnpassant = true; //ここの処理はあっても良さそう
             //enpassantObjの生成
-            _enpassantObj = Instantiate(_selectedPieceObj);
+            _enpassantObj = _selectedPieceObj;
             //ennpassantObjの名前をポジションと同一にする
-            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}");
+            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
             _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
         else
@@ -401,8 +402,8 @@ public class TurnDeside : ColorPallet
             enpassantNumber = 5;
             _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
             _enpassantSquere._IsActiveEnpassant = true;
-            _enpassantObj = Instantiate(_selectedPieceObj);
-            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}");
+            _enpassantObj = _selectedPieceObj;
+            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
             _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
     }
