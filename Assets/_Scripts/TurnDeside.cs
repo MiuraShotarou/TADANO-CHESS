@@ -87,7 +87,9 @@ public class TurnDeside : ColorPallet
             {
                 SquereID id = _selectedSquere._SquereID;
                 // キャスリング（targetObjが同じ陣営の駒だった場合）
-                if (_selectedPieceObj.CompareTag(_targetSquere._IsOnPieceObj.tag))
+                if (_targetObj
+                &&
+                    _selectedPieceObj.CompareTag(_targetSquere._IsOnPieceObj.tag))
                 {
                     //キャスリングが可能かどうかを判定した後、該当のAnimation(メソッド)を_castlingAnimationに登録している → ここに到達した時点でどちらかのキャスリングは可能なのだから、片方のboolだけを見て判断しているということだ
                     _castlingAnimation = _inGameManager.IsCastling[0]()? () => StartShortCastlingAnimation() : () => StartLongCastlingAnimation();

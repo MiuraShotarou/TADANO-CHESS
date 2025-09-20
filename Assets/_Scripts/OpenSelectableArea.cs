@@ -85,7 +85,6 @@ public class OpenSelectableArea : ColorPallet
         }
         _selectedSquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
         _pieceMoveCount = _selectedPiece._MoveCount();
-        Debug.Log(_pieceMoveCount);
         Initialize();
         DrawOutline(_selectedPieceObj);
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
@@ -141,15 +140,10 @@ public class OpenSelectableArea : ColorPallet
                 &&
                 !_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
-                Debug.Log($"{_inGameManager._SquereArrays[alphabet][number]._SquereID}");
                 _renderingAreas.Add(_moveAreas[i]);
             }
             else
             {
-                if (-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)
-                {
-                    Debug.Log($"{_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj.name}");
-                }
                 _moveAreas[i] = new Vector3Int(0, 0, -1);
             }
         }
@@ -177,7 +171,7 @@ public class OpenSelectableArea : ColorPallet
                 if (!IsCanAttackTargetObject(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj))
                 {
                     _PrefabCount--;
-                    return;
+                    continue;
                 }
                 _renderingAreas.Add(_attackAreas[i]);
                 //z = -1で次回の検索を回避する
@@ -225,7 +219,7 @@ public class OpenSelectableArea : ColorPallet
     /// </summary>
     void RenderingOneLine()
     {
-        Debug.Log("Rend");
+        Debug.Log(_renderingAreas.Count);
         if (_renderingAreas.Count == 0)
         {
             _inGameManager.StartSelectTileRelay();
@@ -247,6 +241,7 @@ public class OpenSelectableArea : ColorPallet
             //Poneが二回行動可能な時、AttackAreaだけ二度目の描画を制限する
             Array.Fill(_attackAreas, new Vector3Int(0, 0, -1));
         }
+        // _renderingAreas.Clear();
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
     }
     public void TurnDesideRelay(SpriteRenderer currentSpriteRenderer)
