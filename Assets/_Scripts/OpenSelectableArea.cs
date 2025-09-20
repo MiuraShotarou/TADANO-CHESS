@@ -137,10 +137,7 @@ public class OpenSelectableArea : ColorPallet
             int number = _moveAreas[i].x;
             if (-1 < alphabet && 8 > alphabet && -1 < number && 8 > number //盤内のマスであればtrue
                 &&
-                !_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj
-                &&
-                //enpassantでないなら通す
-                !(_selectedPiece._PieceName == "P" && _inGameManager._SquereArrays[alphabet][number]._IsActiveEnpassant))
+                !_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
                 _renderingAreas.Add(_moveAreas[i]);
             }
@@ -165,54 +162,42 @@ public class OpenSelectableArea : ColorPallet
             int number = _attackAreas[i].x;
             if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number))//盤外のマスであるならば
             {
-                _PrefabCount--;
                 _attackAreas[i] = new Vector3Int(0, 0, -1);
-                continue;
             }
-            if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj
-            &&
-                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj.GetComponent<SpriteRenderer>().flipX != _selectedPieceObj.GetComponent<SpriteRenderer>().flipX
-                ||
-                //enpassant可能であれば通過する
-                (_selectedPiece._PieceName == "P" && _inGameManager._SquereArrays[alphabet][number]._IsActiveEnpassant))
+            else if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
-                // Vector2 generatePos = _inGameManager._SquereArrays[alphabet][number]._SquerePiecePosition;
-                // Instantiate(_collider2DPrefab, new Vector3(generatePos.x, generatePos.y, 0), Quaternion.identity);
+                _attackAreas[i] = new Vector3Int(0, 0, -1);
+                if (!IsCanAttackTargetObject(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj))
+                {
+                    _PrefabCount--;
+                    return;
+                }
                 _renderingAreas.Add(_attackAreas[i]);
                 //z = -1で次回の検索を回避する
-                _attackAreas[i] = new Vector3Int(0, 0, -1);
             }
             _PrefabCount--;
-            // if (_PrefabCount > 0){Debug.Log(_PrefabCount);}
         }
     }
     // /// <summary>
     // /// 駒があることを検知して実体化されたColliderの衝突情報から呼ばれる → 衝突判定は取らず、Squereから直接取得する形にする
     // /// </summary>
     // /// <param name="collisionObj"></param>
-    // void JudgmentGroup(GameObject collisionObj)
-    // {
-    //     SpriteRenderer spriteRenderer = collisionObj.GetComponent<SpriteRenderer>();
-    //     if (!spriteRenderer)
-    //     {
-    //         spriteRenderer = collisionObj.transform.parent.gameObject.GetComponent<SpriteRenderer>(); //enpassantの時、親のオブジェクトを取得する → データとしてだけobjを代入しておく
-    //     }
-    //     //enpassantを取得したら → Pone以外の駒の場合はColliderを出現させないようにしているのでOK
-    //     if (_selectedPieceObj.GetComponent<SpriteRenderer>().flipX != spriteRenderer.flipX)
-    //     {
-    //         string[] search = collisionObj.name.Split("_");
-    //         Vector3Int enemyTilePos = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])]._SquereTilePos;
-    //         _renderingAreas.Add(enemyTilePos);
-    //         DrawOutline(collisionObj);
-    //     }
-    //     //K だった場合はキャスリングで生成されたcolliderであることが確定する
-    //     else if(_selectedPieceObj.name.First().ToString().Contains("K"))
-    //     {
-    //         //キャスリング移動のフラグを立てる → なにもしない設計に変更
-    //         //collisionObj == turnDesideにいくまで消してはならない
-    //     }
-    //     _PrefabCount--;
-    // }
+    bool IsCanAttackTargetObject(GameObject currentTargetobj)
+    {
+        //キャスリング可能な相手だった場合 → K && R という他の条件も必要では? → そもそもキャスリングをして良いのかどうか → K && R だった場合でもキャスリング不可能なのに当たってしまうことはある → IsCastlingで判断すべき
+        if (_selectedPieceObj.name.First().ToString().Contains("K")) //
+        {
+            
+            DrawOutline(currentTargetobj); //上に置いても良いよね
+            return true; //キャスリング可能であればtrue
+        }
+        //敵だった場合
+        else if(!_selectedPieceObj.CompareTag(currentTargetobj.tag))
+        {
+            //キャスリング移動のフラグを立てる → なにもしない設計に変更
+            //collisionObj == turnDesideにいくまで消してはならない
+        }
+    }
     void DrawOutline(GameObject obj)
     {
         SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
@@ -258,8 +243,9 @@ public class OpenSelectableArea : ColorPallet
         //ここでもGameObjectの名前で検索している
         //描画する時は偽のポジション、攻撃対象のオブジェクトは真を取得しなければならない → 名前は偽のポジション名・敵のオブジェクトはParent設定で取得する
         Squere targetSquere = _inGameManager._SquereArrays[int.Parse(search[0])][int.Parse(search[1])];
+        GameObject targetObj = targetSquere._IsOnPieceObj;
         //地味に大事
         _turnDeside.enabled = true;
-        _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetSquere);
+        _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetObj, targetSquere);
     }
 }

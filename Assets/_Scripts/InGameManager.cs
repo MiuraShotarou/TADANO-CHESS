@@ -131,6 +131,7 @@ public class InGameManager : MonoBehaviour
             _playableDirector.Play();
             //審査会用の処理 → 20秒後に音楽が良い感じになる
             //1s start 7sb 11s 17sb 20s
+            Time.timeScale = 5;
         }
     }
     /// <summary>
@@ -138,6 +139,7 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     void StartTitle()
     {
+        Time.timeScale = 1;
         _AnimatorController.Play("Title");
     }
 

@@ -55,16 +55,18 @@ public class TurnDeside : ColorPallet
     /// <param name="selectedPiece"></param>
     /// <param name="selectedSquere"></param>
     /// <param name="targetSquere"></param>
-    public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
+    public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, GameObject targetObj, Squere targetSquere)
     {
         //引数をキャッシュ化
         _selectedTileSpriteRenderer = currentSpriteRenderer;
         _selectedPieceObj = selectedPieceObj;
         _selectedPiece = selectedPiece;
         _selectedSquere = selectedSquere;
-        _targetSquere = targetSquere;
         _selectedPieceAnimatorController = _selectedPieceObj.GetComponent<Animator>();
         _selectedPieceRuntimeAnimator = _selectedPieceAnimatorController.runtimeAnimatorController;
+        _targetSquere = targetSquere;
+        _targetObj = targetObj;
+        _targetPieceAnimatorController = targetObj.GetComponent<Animator>();
         //移動に伴って_SelectedPieceObjやSquererなどをアップデート → ラムダ候補
         char[] updateName = _selectedPieceObj.name.ToCharArray();
         updateName[2] = (char)('0' + _targetSquere._SquereTilePos.y);
@@ -78,12 +80,13 @@ public class TurnDeside : ColorPallet
             //OpenSelectableAreaで利用する
             _selectedPieceObj.transform.rotation = Quaternion.Euler(0, 0, 360);
             //ルーク・キングが動いた瞬間に、一部のキャスリングが二度と使用できなくなる
-            if (updateName[0] == 'R' || updateName[0] == 'K') //stringにしたい
+            if (updateName[0] == 'R' || updateName[0] == 'K') //R 若しくは K だった場合
             {
                 SquereID id = _selectedSquere._SquereID;
-                // キャスリング
+                // キャスリング（targetObjが同じ陣営の駒だった場合）
                 if (_selectedPieceObj.CompareTag(_targetSquere._IsOnPieceObj.tag))
                 {
+                    //キャスリングが可能かどうかを判定した後、該当のAnimation(メソッド)を_castlingAnimationに登録している → ここに到達した時点でどちらかのキャスリングは可能なのだから、片方のboolだけを見て判断しているということだ
                     _castlingAnimation = _inGameManager.IsCastling[0]()? () => StartShortCastlingAnimation() : () => StartLongCastlingAnimation();
                 }
                 switch (id)
@@ -110,30 +113,6 @@ public class TurnDeside : ColorPallet
         StartRunAnimation();
         //移動 → 攻撃 → 移動 → Idle
         //移動 → 攻撃 → Idle の２パターンにこの後枝分かれをする
-    }
-    /// <summary>
-    /// CollisionEvent.csからの衝突情報で移動先にあるtargetObjを取得する
-    /// </summary>
-    void RegisterTarget(GameObject collisionObj)
-    {
-        _targetObj = collisionObj;
-        _targetPieceAnimatorController = _targetObj.GetComponent<Animator>();
-    }
-    /// <summary>
-    /// CollisionEvent.csからの衝突情報で移動先にあるオブジェクトから親に指定されているtargetObjを取得する
-    /// </summary>
-    /// <param name="collisionObj"></param>
-    void RegisterEnpassantTarget(GameObject collisionObj)
-    {
-        if (collisionObj.name.First() == 'U')
-        {
-            _targetObj = collisionObj.transform.parent.gameObject;
-            _targetPieceAnimatorController = _targetObj.GetComponent<Animator>();
-            string[] search = _targetObj.name.Split("_");
-            Squere onEnemySquere = _inGameManager._SquereArrays[int.Parse(search[1])][int.Parse(search[2])];
-            //unpassantにより倒される敵の下にあるSuereの_IsOnPieceを更新する
-            onEnemySquere._IsOnPieceObj = null;
-        }
     }
     /// <summary>
     /// "Run"アニメーションを作成し、PlayableGraphで再生する。動作が独立している。
