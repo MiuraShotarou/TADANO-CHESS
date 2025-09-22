@@ -58,7 +58,7 @@ public class TurnDeside : ColorPallet
     public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
     {
         //引数をキャッシュ化
-        Debug.Log($"{_inGameManager.IsCastling[0]()}, {_inGameManager.IsCastling[1]()}");
+        // Debug.Log($"{_inGameManager.IsCastling[0]()}, {_inGameManager.IsCastling[1]()}");
         _selectedTileSpriteRenderer = currentSpriteRenderer;
         _selectedPieceObj = selectedPieceObj;
         _selectedPiece = selectedPiece;
@@ -93,7 +93,7 @@ public class TurnDeside : ColorPallet
                     _selectedPieceObj.CompareTag(_targetSquere._IsOnPieceObj.tag))
                 {
                     //キャスリングが可能かどうかを判定した後、該当のAnimation(メソッド)を_castlingAnimationに登録している → ここに到達した時点でどちらかのキャスリングは可能なのだから、片方のboolだけを見て判断しているということだ
-                    _castlingAnimation = _inGameManager.IsCastling[0]()? () => StartShortCastlingAnimation() : () => StartLongCastlingAnimation();
+                    _castlingAnimation = _inGameManager.IsCastling[0]()? () => StartShortCastlingAnimation() : () => StartLongCastlingAnimation();//両方にキャスリングできる可能性があるのでこの式は間違っている
                 }
                 switch (id)
                 {
@@ -353,7 +353,11 @@ public class TurnDeside : ColorPallet
         _targetSquere._IsOnPieceObj = _selectedPieceObj; //_targetSquereに_selectedPieceObjが到着した
         _uiManager._TargetSquere = _targetSquere;
         _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj; //ちょっと設計がよくない → そもそもGameObjectを入れたくない
-        if (_enpassantSquere) {_enpassantSquere._IsActiveEnpassant = false;}
+        if (_enpassantSquere)
+        {
+            _enpassantSquere._IsActiveEnpassant = false;
+            _enpassantSquere._IsOnPieceObj = null;
+        }
         _enpassantObj = null;
         _openSelectableArea.BeforeRendereringClear();
         //Poneが移動した後にアンパッサン・プロモーションの発生を判断する

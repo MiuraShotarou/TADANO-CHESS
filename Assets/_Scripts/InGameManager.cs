@@ -11,15 +11,16 @@ public class InGameManager : MonoBehaviour
     bool _IsCheckedWhiteKing { get; set; }
     bool _IsCheckedBlackKing { get; set; }
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
-    bool _isWhiteShortCastlingSwitch;
-    bool _isWhiteLongCastlingSwitch; 
-    bool _isBlackShortCastlingSwitch;
-    bool _isBlackLongCastlingSwitch;
-    public bool[] IsCastlingSwitch;
-    Func<bool> _isWhiteShortCastling; 
+    public bool _isWhiteShortCastlingSwitch;
+    public bool _isWhiteLongCastlingSwitch;
+    public bool _isBlackShortCastlingSwitch;
+    public bool _isBlackLongCastlingSwitch;
+    //以下のFunc変数は読み取り専用のプロパティとして利用する
+    Func<bool> _isWhiteShortCastling;
     Func<bool> _isWhiteLongCastling;
     Func<bool> _isBlackShortCastling;
     Func<bool> _isBlackLongCastling;
+    //読み取り専用のプロパティをひとまとめにしている変数
     public Func<bool>[] IsCastling;
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
@@ -107,9 +108,9 @@ public class InGameManager : MonoBehaviour
         _isBlackShortCastlingSwitch = false;
         _isBlackLongCastlingSwitch = false;
         _isWhiteShortCastling = () => _isWhiteShortCastlingSwitch;
-        _isWhiteLongCastling = () => _isWhiteShortCastlingSwitch;
+        _isWhiteLongCastling = () => _isWhiteLongCastlingSwitch;
         _isBlackShortCastling = () => _isBlackShortCastlingSwitch;
-        _isBlackLongCastling = () => _isBlackShortCastlingSwitch;
+        _isBlackLongCastling = () => _isBlackLongCastlingSwitch;
     }
 
     void Start()
@@ -128,7 +129,7 @@ public class InGameManager : MonoBehaviour
             _playableDirector.Play();
             //審査会用の処理 → 20秒後に音楽が良い感じになる
             //1s start 7sb 11s 17sb 20s
-            Time.timeScale = 5;
+            Time.timeScale = 10;
         }
     }
     /// <summary>
@@ -136,7 +137,7 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     void StartTitle()
     {
-        Time.timeScale = 1;
+        // Time.timeScale = 10;
         _AnimatorController.Play("Title");
     }
 
@@ -168,6 +169,10 @@ public class InGameManager : MonoBehaviour
         {
             _animatorController.Play("StartTurn");
         }
+        // Debug.Log(_isWhiteShortCastling());
+        // Debug.Log(_isWhiteLongCastling());
+        // Debug.Log(_isWhiteShortCastlingSwitch);
+        // Debug.Log(_isWhiteLongCastlingSwitch);
     }
 
     void UnLockSafety()
@@ -230,8 +235,8 @@ public class InGameManager : MonoBehaviour
     {
         IsCastling = _IsWhite? new[] { _isWhiteShortCastling, _isWhiteLongCastling }:
                                 new []{ _isBlackShortCastling, _isBlackLongCastling};
-        IsCastlingSwitch = _IsWhite? new []{_isWhiteShortCastlingSwitch, _isWhiteLongCastlingSwitch}:
-                                        new []{_isBlackShortCastlingSwitch, _isBlackLongCastlingSwitch};
+        // IsCastlingSwitch = _IsWhite? new []{_isWhiteShortCastlingSwitch, _isWhiteLongCastlingSwitch}:
+        //                                 new []{_isBlackShortCastlingSwitch, _isBlackLongCastlingSwitch};
     }
 }
 public enum SquereID //8 * 8 の配列OnPieceだったら該当のbitを1にする 

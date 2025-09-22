@@ -13,12 +13,10 @@ public class TurnBegin : MonoBehaviour
     Squere[][] _squereArrays;
     HashSet<SquereID> _enemyAttackRange;
     SquereID[] _shortDistanceIDs;
-    SquereID[] _longDistanceID;
+    SquereID[] _longDistanceIDs;
     Squere _checkedKingSquere;
     List<Squere> _checkAttackerSqueres;
     bool _isCheck;
-    bool _isShortCastlingPossible;
-    bool _isLongCastlingPossible;
     private void Start()
     {
         _inGameManager = GetComponent<InGameManager>();
@@ -46,10 +44,10 @@ public class TurnBegin : MonoBehaviour
         _isCheck = false;
         _checkedKingSquere = null;
         _checkAttackerSqueres = new List<Squere>();
-        _shortDistanceIDs = _inGameManager.IsWhite? new[] { SquereID.b1, SquereID.c1 }: //w_s_c
-                                                    new[] { SquereID.b8, SquereID.c8 };//b_s_c
-        _longDistanceID = _inGameManager.IsWhite? new [] { SquereID.e1, SquereID.f1, SquereID.g1}://w_l_c 
-                                                    new []{ SquereID.e8, SquereID.f8, SquereID.g8};//b_l_c
+        _shortDistanceIDs = _inGameManager.IsWhite? new [] { SquereID.b1, SquereID.c1 }: //w_s_c
+                                                    new [] { SquereID.b8, SquereID.c8 };//b_s_c
+        _longDistanceIDs = _inGameManager.IsWhite?  new [] { SquereID.e1, SquereID.f1}://w_l_c 
+                                                    new []{ SquereID.e8, SquereID.f8};//b_l_c
     }
     /// <summary>
     /// 
@@ -59,7 +57,7 @@ public class TurnBegin : MonoBehaviour
     {
         _inGameManager._TurnCount++;
     }
-    HashSet<SquereID> CreateEnemyAtackRange()
+    void CreateEnemyAtackRange()
     {
         string allyTag = _inGameManager.IsWhite ? "White" : "Black";
         string enemyTag = _inGameManager.IsWhite ? "Black" : "White";
@@ -120,7 +118,6 @@ public class TurnBegin : MonoBehaviour
                 }
             }
         }
-        return _enemyAttackRange;
     }
     /// <summary>
     /// キャスリングができるか、出来ないかを判断するメソッド
@@ -131,33 +128,37 @@ public class TurnBegin : MonoBehaviour
         //条件① チェック（チェックメイト）だった場合
         if (_isCheck){return;}
         //条件② 両キャスリング時の移動経路になにかしらの駒がある場合、攻撃範囲の検索を中断する
-        if (!MinimalFilter()) //isCheck
-        {
-            return;
-        }
+        bool isShortCastling = MinimalFilter(_shortDistanceIDs);
+        bool isLongCastling = MinimalFilter(_shortDistanceIDs);
         //条件③ 両キャスリング時の移動経路が敵の攻撃範囲外ならキャスリングの使用を可能にする
-        _inGameManager.IsCastlingSwitch[0] = _shortDistanceIDs.All(condition => !_enemyAttackRange.Contains(condition));
-        _inGameManager.IsCastlingSwitch[1] = _longDistanceID.All(condition => !_enemyAttackRange.Contains(condition));
+        if (isShortCastling)
+        {
+            isShortCastling = _shortDistanceIDs.All(condition => !_enemyAttackRange.Contains(condition));
+        }
+        else if (isLongCastling)
+        {
+            isLongCastling = _longDistanceIDs.All(condition => !_enemyAttackRange.Contains(condition));
+        }
+        if (_inGameManager.IsWhite)
+        {
+            _inGameManager._isWhiteShortCastlingSwitch = isShortCastling;
+            _inGameManager._isWhiteLongCastlingSwitch = isLongCastling;
+        }
+        else
+        {
+            _inGameManager._isBlackShortCastlingSwitch = isShortCastling;
+            _inGameManager._isBlackLongCastlingSwitch = isLongCastling;
+        }
     }
     /// <summary>
     /// 条件② 両キャスリング時の移動経路になにかしらの駒がある場合、攻撃範囲の検索を中断する
     /// 補足：b1, c1, / f1, g1, h1 / b8, c8, / f8, g8, h8 のどこかに駒がある場合は該当のキャスリングができない
     /// </summary>
     /// <returns></returns>
-    bool MinimalFilter()
+    bool MinimalFilter(SquereID[] distanceIDs)
     {
-        _isShortCastlingPossible = _shortDistanceIDs.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
-        _isLongCastlingPossible = _longDistanceID.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
-        _longDistanceID = _inGameManager.IsWhite? new [] { SquereID.e1, SquereID.f1}://w_l_c 
-                                                     new []{ SquereID.e8, SquereID.f8};//b_l_c
-        if (!_isShortCastlingPossible && !_isLongCastlingPossible)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-        
+        bool isCastlingPossible;
+        isCastlingPossible = distanceIDs.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
+        return isCastlingPossible;
     }
 }

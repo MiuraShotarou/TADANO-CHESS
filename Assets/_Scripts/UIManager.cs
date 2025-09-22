@@ -119,9 +119,11 @@ public class UIManager : ColorPallet
         {
             //t_squereIdの更新
             string[] search = _TargetPieceObj.name.Split('_'); //Key[0] Index[4]
-            List<TextMeshProUGUI> t_squereIds = _inGameManager.IsWhite? t_squereIdsDictW[search[0]] : t_squereIdsDictB[search[0]];
+            List<TextMeshProUGUI> t_squereIds = _inGameManager.IsWhite? t_squereIdsDictB[search[0]] : t_squereIdsDictW[search[0]];
             TextMeshProUGUI t_squereId = t_squereIds[int.Parse(search[4])];
             t_squereId.text = _TargetSquere._SquereID.ToString();
+            Time.timeScale = 1;//
+            Debug.Log("");
         }
     }
     /// <summary>
