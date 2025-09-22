@@ -169,10 +169,6 @@ public class InGameManager : MonoBehaviour
         {
             _animatorController.Play("StartTurn");
         }
-        // Debug.Log(_isWhiteShortCastling());
-        // Debug.Log(_isWhiteLongCastling());
-        // Debug.Log(_isWhiteShortCastlingSwitch);
-        // Debug.Log(_isWhiteLongCastlingSwitch);
     }
 
     void UnLockSafety()

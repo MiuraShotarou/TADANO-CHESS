@@ -58,7 +58,6 @@ public class TurnDeside : ColorPallet
     public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
     {
         //引数をキャッシュ化
-        // Debug.Log($"{_inGameManager.IsCastling[0]()}, {_inGameManager.IsCastling[1]()}");
         _selectedTileSpriteRenderer = currentSpriteRenderer;
         _selectedPieceObj = selectedPieceObj;
         _selectedPiece = selectedPiece;
@@ -84,16 +83,24 @@ public class TurnDeside : ColorPallet
             //OpenSelectableAreaで利用する
             _selectedPieceObj.transform.rotation = Quaternion.Euler(0, 0, 360);
             //ルーク・キングが動いた瞬間に、一部のキャスリングが二度と使用できなくなる
-            if (updateName[0] == 'R' || updateName[0] == 'K') //R 若しくは K だった場合
+            if ("R,K".Contains(updateName[0].ToString())) //R 若しくは K だった場合
             {
                 SquereID id = _selectedSquere._SquereID;
                 // キャスリング（targetObjが同じ陣営の駒だった場合）
                 if (_targetObj
                 &&
-                    _selectedPieceObj.CompareTag(_targetSquere._IsOnPieceObj.tag))
+                    _selectedPieceObj.CompareTag(_targetObj.tag))
                 {
+                    SquereID targetID = _targetSquere._SquereID;
                     //キャスリングが可能かどうかを判定した後、該当のAnimation(メソッド)を_castlingAnimationに登録している → ここに到達した時点でどちらかのキャスリングは可能なのだから、片方のboolだけを見て判断しているということだ
-                    _castlingAnimation = _inGameManager.IsCastling[0]()? () => StartShortCastlingAnimation() : () => StartLongCastlingAnimation();//両方にキャスリングできる可能性があるのでこの式は間違っている
+                    if ("a1, a8".Contains(targetID.ToString()))// && _inGameManager.IsCastling[0]() 
+                    {
+                        _castlingAnimation += StartShortCastlingAnimation;
+                    }
+                    else if ("h1, h8".Contains(targetID.ToString()))
+                    {
+                        _castlingAnimation += StartLongCastlingAnimation;
+                    }
                 }
                 switch (id)
                 {
@@ -205,6 +212,11 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartTakeHitAnimation()
     {
+        if (_playableGraph.IsValid())//
+        {
+            _playableGraph.Stop();
+            _playableGraph.Destroy();
+        }
         string search = new string($"{_targetObj.name.First()}_TakeHit");
         _targetPieceAnimatorController.Play(search);
     }
@@ -213,7 +225,6 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartDeathAnimation()
     {
-        // _hitStopObj.SetActive(true);
         _targetObj.GetComponent<SpriteRenderer>().flipX = !_selectedPieceObj.GetComponent<SpriteRenderer>().flipX;
         string search = new string($"{_targetObj.name.First()}_Death"); //_targetobjがnull
         _targetPieceAnimatorController.Play(search);
@@ -223,8 +234,8 @@ public class TurnDeside : ColorPallet
     {
         _targetObj.GetComponent<Collider2D>().enabled = false;
         Rigidbody2D rigidbody2D = _targetObj.GetComponent<Rigidbody2D>();
-        rigidbody2D.velocity = Vector2.zero;
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        rigidbody2D.velocity = Vector2.zero;
         Vector2 duration = _selectedPieceObj.GetComponent<SpriteRenderer>().flipX ? new Vector2(-100, 100): new Vector2(100, 100);
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
@@ -246,11 +257,21 @@ public class TurnDeside : ColorPallet
     {
         if (_inGameManager.IsWhite)
         {
+            if (_playableGraph.IsValid())
+            {
+                _playableGraph.Stop();
+                _playableGraph.Destroy();
+            }
             _selectedPieceAnimatorController.Play("K_ShortCastling_W");
             _targetPieceAnimatorController.Play("R_ShortCastling_W");
         }
         else
         {
+            if (_playableGraph.IsValid())
+            {
+                _playableGraph.Stop();
+                _playableGraph.Destroy();
+            }
             _selectedPieceAnimatorController.Play("K_ShortCastling_B");
             _targetPieceAnimatorController.Play("R_ShortCastling_B");
         }
@@ -261,11 +282,21 @@ public class TurnDeside : ColorPallet
         //long King f1 Rook e1
         if (_inGameManager.IsWhite)
         {
+            if (_playableGraph.IsValid())
+            {
+                _playableGraph.Stop();
+                _playableGraph.Destroy();
+            }
             _selectedPieceAnimatorController.Play("K_LongCastling_W");
             _targetPieceAnimatorController.Play("R_LongCastling_W");
         }
         else
         {
+            if (_playableGraph.IsValid())
+            {
+                _playableGraph.Stop();
+                _playableGraph.Destroy();
+            }
             _selectedPieceAnimatorController.Play("K_LongCastling_B");
             _targetPieceAnimatorController.Play("R_LongCastling_B");
         }

@@ -40,6 +40,10 @@ public class SelectTileController : ColorPallet
         {
             mousePosZ = 6;
         }
+        if (mousePos.x >= 200)
+        {
+            
+        }
         Vector3 mouseWorldPos = _camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, mousePosZ));//7 ~ 9
         RaycastHit2D hit2D = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 15, _maskID);
         if (!hit2D)
@@ -52,7 +56,6 @@ public class SelectTileController : ColorPallet
         }
         else
         {
-            // Debug.Log("Hit");
             if (hit2D.transform.gameObject.name.Length == 3)
             {
                 _currentSpriteRenderer = hit2D.transform.gameObject.GetComponent<SpriteRenderer>();

@@ -129,7 +129,7 @@ public class TurnBegin : MonoBehaviour
         if (_isCheck){return;}
         //条件② 両キャスリング時の移動経路になにかしらの駒がある場合、攻撃範囲の検索を中断する
         bool isShortCastling = MinimalFilter(_shortDistanceIDs);
-        bool isLongCastling = MinimalFilter(_shortDistanceIDs);
+        bool isLongCastling = MinimalFilter(_longDistanceIDs);
         //条件③ 両キャスリング時の移動経路が敵の攻撃範囲外ならキャスリングの使用を可能にする
         if (isShortCastling)
         {

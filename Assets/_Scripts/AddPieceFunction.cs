@@ -21,12 +21,12 @@ public class AddPieceFunction : MonoBehaviour
 
     public Piece AddShortCastlingArea(Piece piece)
     {
-        piece._AttackAreas = () => piece._AttackAreas().Concat(new Vector3Int[] { new Vector3Int(0, -3, 0)}).ToArray();
+        piece._AttackAreas += () => new Vector3Int[] { new Vector3Int(0, -3, 0)};
         return piece;
     }
     public Piece AddLongCastlingArea(Piece piece)
     {
-        piece._AttackAreas = () => piece._AttackAreas().Concat(new Vector3Int[] { new Vector3Int(0, 4, 0)}).ToArray();
+        piece._AttackAreas += () => new Vector3Int[] { new Vector3Int(0, 4, 0)};
         return piece;
     }
     // public GameObject Promotion()
