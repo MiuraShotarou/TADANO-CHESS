@@ -239,13 +239,18 @@ public class TurnDeside : ColorPallet
         Vector2 duration = _selectedPieceObj.GetComponent<SpriteRenderer>().flipX ? new Vector2(-100, 100): new Vector2(100, 100);
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
-        if (_targetObj.tag.Contains(_selectedPieceObj.tag)){ return; }
+        if (_targetObj.tag.Contains(_selectedPieceObj.tag))
+        {
+            return;
+        }
         int destroyTimer = 2;
         Destroy(_targetObj, destroyTimer);
     }
 
     public void StartAdjustRigidbody()
     {
+        Debug.Log("velocity.zero");
+        _targetObj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         _targetObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
 
@@ -255,6 +260,7 @@ public class TurnDeside : ColorPallet
     }
     void StartShortCastlingAnimation()
     {
+        Time.timeScale = 1;
         if (_inGameManager.IsWhite)
         {
             if (_playableGraph.IsValid())
@@ -262,6 +268,7 @@ public class TurnDeside : ColorPallet
                 _playableGraph.Stop();
                 _playableGraph.Destroy();
             }
+            Debug.Log("short_anim_W");
             _selectedPieceAnimatorController.Play("K_ShortCastling_W");
             _targetPieceAnimatorController.Play("R_ShortCastling_W");
         }
@@ -272,6 +279,7 @@ public class TurnDeside : ColorPallet
                 _playableGraph.Stop();
                 _playableGraph.Destroy();
             }
+            Debug.Log("short_anim_B");
             _selectedPieceAnimatorController.Play("K_ShortCastling_B");
             _targetPieceAnimatorController.Play("R_ShortCastling_B");
         }
@@ -319,6 +327,11 @@ public class TurnDeside : ColorPallet
             updatePos.x += _isDirectionRight? 1.5f : -1.5f;
             _selectedPieceObj.transform.position = updatePos;
         }
+    }
+
+    public void StartAdjustRookPosition()
+    {
+        _targetObj.transform.position = new Vector3(-4.75f, 0.1f, 0);
     }
     /// <summary>
     /// RotateRockを指定したポジションにセットし、SetActiveをtrueにする
