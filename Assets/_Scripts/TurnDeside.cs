@@ -144,6 +144,9 @@ public class TurnDeside : ColorPallet
         //新しく作成・編集したAnimationCurveをAnimationClipに代入する
         animationClip.SetCurve("", typeof(Transform), "localPosition.x", animationCurveX);
         animationClip.SetCurve("", typeof(Transform), "localPosition.y", animationCurveY);
+        animationClip.SetCurve("", typeof(Transform), "localScale.x", animationCurveSX);
+        animationClip.SetCurve("", typeof(Transform), "localScale.y", animationCurveSY);
+        animationClip.SetCurve("", typeof(Transform), "localScale.z", animationCurveSZ);
         //PlayableGraphを作成
         _playableGraph = PlayableGraph.Create();
         //AnimationClipPlayableを作成
@@ -200,12 +203,6 @@ public class TurnDeside : ColorPallet
         _selectedPieceAnimatorController.Play(search);
         //ターンを終えた後の処理
         EndTurn();
-        // _miniBoard.UpdateMiniBorad();
-        //TurnDeside側から通知できること
-        //_selectedPieceがどこに動いたのか
-        //_誰が倒されたのか（重要）
-        //Promotionが起きたかどうか（重要）
-        //MiniBoradに通知することで両者の攻撃範囲が自動で取得できる、という構造を創る
     }
     /// <summary>
     /// 敵のTakeHitAnimationを再生する。動作が独立している。
@@ -246,18 +243,17 @@ public class TurnDeside : ColorPallet
         int destroyTimer = 2;
         Destroy(_targetObj, destroyTimer);
     }
-
-    public void StartAdjustRigidbody()
-    {
-        Debug.Log("velocity.zero");
-        _targetObj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        _targetObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-    }
-
+    
     public void StartCastlingAnimation()
     {
         _castlingAnimation?.Invoke();
     }
+    /// <summary>
+    /// S_W 
+    /// S_L
+    /// S_B
+    /// S_B
+    /// </summary>
     void StartShortCastlingAnimation()
     {
         Time.timeScale = 1;
@@ -268,9 +264,43 @@ public class TurnDeside : ColorPallet
                 _playableGraph.Stop();
                 _playableGraph.Destroy();
             }
-            Debug.Log("short_anim_W");
             _selectedPieceAnimatorController.Play("K_ShortCastling_W");
-            _targetPieceAnimatorController.Play("R_ShortCastling_W");
+            ///
+            //knightの時は攻撃の移動に合わせて始点と終点を指定したい
+            AnimationCurve curveX_PhaseOne = AnimationCurve.Linear(4.6f, -5.6f, 6.92f, -15.6f);
+            AnimationCurve curveY_PhaseOne = AnimationCurve.Linear(4.6f, -2.7f, 6.92f, -2.7f);
+            AnimationCurve curveX_PhaseTwo = AnimationCurve.Linear(10f, -14.75f, 12.25f, -4.75f);
+            AnimationCurve curveY_PhaseTwo = AnimationCurve.Linear(10f, 0.1f, 12.25f, 0.1f);
+            AnimationCurve curveSX_PhaseOne = AnimationCurve.Linear(4.6f, 3.501f, 6.92f, 3.501f);
+            AnimationCurve curveSY_PhaseOne = AnimationCurve.Linear(4.6f, 3.501f, 6.92f, 3.501f);
+            AnimationCurve curveSZ_PhaseOne = AnimationCurve.Linear(4.6f, 3.501f, 6.92f, 3.501f);
+            AnimationCurve curveSX_PhaseTwo = AnimationCurve.Linear(10f, 3.215f, 12.25f, 3.215f);
+            AnimationCurve curveSY_PhaseTwo = AnimationCurve.Linear(10f, 3.215f, 12.25f, 3.215f);
+            AnimationCurve curveSZ_PhaseTwo = AnimationCurve.Linear(10f, 3.215f, 12.25f, 3.215f);
+            //"Run"という名前のついたanimationClipからコピーを新規作成
+            AnimationClip animationClip = _targetPieceAnimatorController.runtimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name.Contains("R_ShortCastling_W"));
+            //新しく作成・編集したAnimationCurveをAnimationClipに代入する
+            animationClip.SetCurve("", typeof(Transform), "localPosition.x", curveX_PhaseOne);
+            animationClip.SetCurve("", typeof(Transform), "localPosition.y", curveY_PhaseOne);
+            animationClip.SetCurve("", typeof(Transform), "localPosition.x", curveX_PhaseTwo);
+            animationClip.SetCurve("", typeof(Transform), "localPosition.y", curveY_PhaseTwo);
+            animationClip.SetCurve("", typeof(Transform), "localScale.x", curveSX_PhaseOne);
+            animationClip.SetCurve("", typeof(Transform), "localScale.y", curveSY_PhaseOne);
+            animationClip.SetCurve("", typeof(Transform), "localScale.z", curveSZ_PhaseOne);
+            animationClip.SetCurve("", typeof(Transform), "localScale.x", curveSX_PhaseTwo);
+            animationClip.SetCurve("", typeof(Transform), "localScale.y", curveSY_PhaseTwo);
+            animationClip.SetCurve("", typeof(Transform), "localScale.z", curveSZ_PhaseTwo);
+            //PlayableGraphを作成
+            _playableGraph = PlayableGraph.Create();
+            //AnimationClipPlayableを作成
+            AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_playableGraph, animationClip);
+            //AnimationPlayableOutputを作成してAnimatorと連結
+            _animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _targetPieceAnimatorController);
+            _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
+            //再生
+            _playableGraph.Play();
+            ///
+            // _targetPieceAnimatorController.Play("R_ShortCastling_W");
         }
         else
         {
@@ -319,20 +349,6 @@ public class TurnDeside : ColorPallet
         _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
     }
 
-    public void StartAdjustPosition()
-    {
-        if (_selectedPiece._PieceName == "N")
-        {
-            Vector3 updatePos = _selectedPieceObj.transform.position;
-            updatePos.x += _isDirectionRight? 1.5f : -1.5f;
-            _selectedPieceObj.transform.position = updatePos;
-        }
-    }
-
-    public void StartAdjustRookPosition()
-    {
-        _targetObj.transform.position = new Vector3(-4.75f, 0.1f, 0);
-    }
     /// <summary>
     /// RotateRockを指定したポジションにセットし、SetActiveをtrueにする
     /// </summary>

@@ -44,10 +44,6 @@ public class AnimationRelay : MonoBehaviour
         _turnDeside.StartStageOutAddForce();
     }
 
-    void StartStartAdjustRookPositionRelay()
-    {
-        _turnDeside.StartAdjustRookPosition();
-    }
     /// <summary>
     /// 両キャスリングを実行するためのAnimationを再生する。K_Run.animからしか呼ばれない
     /// </summary>
@@ -61,10 +57,6 @@ public class AnimationRelay : MonoBehaviour
         _turnDeside.StartAdjustFlipX();
     }
 
-    void StartAdjustPositionRelay()
-    {
-        _turnDeside.StartAdjustPosition();
-    }
     /// <summary>
     /// ルークの投石オブジェクトをアクティブにするメソッド。R_AttackEffect内のAnimationEventからしか呼ばれない
     /// </summary>
