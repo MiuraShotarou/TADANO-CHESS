@@ -57,6 +57,11 @@ public class AnimationRelay : MonoBehaviour
         _turnDeside.StartAdjustFlipX();
     }
 
+    void StartInactiveTargetPlayableRelay()
+    {
+        _turnDeside.StartInactiveTargetPlayable();
+    }
+
     /// <summary>
     /// ルークの投石オブジェクトをアクティブにするメソッド。R_AttackEffect内のAnimationEventからしか呼ばれない
     /// </summary>

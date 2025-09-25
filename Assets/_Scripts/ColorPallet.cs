@@ -8,4 +8,5 @@ public class ColorPallet : MonoBehaviour
     Color _selectedTileColor = Color.yellow;
     protected Color _CanSelectedTileColor => _canSelectedTileColor;
     protected Color _SelectedTileColor => _selectedTileColor;
+    protected Color ChangeAlpha(Color color, int alpha) => new (color.r, color.g, color.b, (float)alpha / 255);
 }

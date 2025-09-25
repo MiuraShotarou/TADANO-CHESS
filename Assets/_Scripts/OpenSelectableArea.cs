@@ -95,11 +95,7 @@ public class OpenSelectableArea : ColorPallet
     }
     public void BeforeRendereringClear()
     {
-        SpriteRenderer spriteRenderer = _selectedPieceObj.GetComponent<SpriteRenderer>();
-        Color color = spriteRenderer.color;
-        float alpha150 = 0.5882352941176471f;
-        color.a = alpha150;
-        spriteRenderer.color = color;
+        _selectedPieceObj.GetComponent<SpriteRenderer>().color = ChangeAlpha(_selectedPieceObj.GetComponent<SpriteRenderer>().color, 150);
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
         for (int i = 0; i < _memorizeRenderingAreas.Count; i++)
         {

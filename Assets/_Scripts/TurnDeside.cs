@@ -96,19 +96,6 @@ public class TurnDeside : ColorPallet
                     _selectedPieceObj.CompareTag(_targetObj.tag))
                 {
                     _isCastling = true;
-                    // SquereID targetID = _targetSquere._SquereID;
-                    // switch (targetID)
-                    // {
-                    //     
-                    // }
-                    // if ("a1, a8".Contains(targetID.ToString()))// && _inGameManager.IsCastling[0]() 
-                    // {
-                    //     _castlingAnimation += StartShortCastlingAnimation;
-                    // }
-                    // else if ("h1, h8".Contains(targetID.ToString()))
-                    // {
-                    //     _castlingAnimation += StartLongCastlingAnimation;
-                    // }
                 }
                 switch (id)
                 {
@@ -263,9 +250,10 @@ public class TurnDeside : ColorPallet
                 _selectedPlayableGraph.Destroy();
             }
             SquereID id = _targetSquere._SquereID;
+            Debug.Log(id.ToString());
             StartKCastlingAnimation(id);
             StartRCastlingAnimation(id);
-            _isCastling = true;
+            _isCastling = false;
         }
     }
 
@@ -292,20 +280,21 @@ public class TurnDeside : ColorPallet
                 search = "K_ShortCastling_W";
                 break;
             case SquereID.a8:
-                phaseOneCurveXStart = -4.42f;
-                phaseOneCurveXEnd = -4.75f;
-                phaseOneScalePoint = 3.215f;
-                phaseTwoCurveYStart = 10.1f;
-                phaseTwoCurveYEnd = 0.1f;
-                search = "K_LongCastling_W";
-                break;
-            case SquereID.h1:
                 phaseOneCurveXStart = 4.33f;
                 phaseOneCurveXEnd = 5.05f;
                 phaseOneScalePoint = 3.358f;
                 phaseTwoCurveYStart = 8.8f;
                 phaseTwoCurveYEnd = -1.2f;
                 search = "K_ShortCastling_B";
+                Debug.Log("");
+                break;
+            case SquereID.h1:
+                phaseOneCurveXStart = -4.42f;
+                phaseOneCurveXEnd = -4.75f;
+                phaseOneScalePoint = 3.215f;
+                phaseTwoCurveYStart = 10.1f;
+                phaseTwoCurveYEnd = 0.1f;
+                search = "K_LongCastling_W";
                 break;
             case SquereID.h8:
                 phaseOneCurveXStart = 4.33f;
@@ -373,17 +362,6 @@ public class TurnDeside : ColorPallet
                 search = "R_ShortCastling_W";
                 break;
             case SquereID.a8:
-                phaseOneCurveXStart = -3.5f;
-                phaseOneCurveXEnd = -13.5f;
-                phaseOneAllCurveY = 4.35f;
-                phaseOneAllScale = 2.5f;
-                phaseTwoCurveXStart = -14.1f;
-                phaseTwoCurveXEnd = -4.1f;
-                phaseTwoAllCurveY = 2.1f;
-                phaseTwoAllScale = 2.929f;
-                search = "R_LongCastling_W";
-                break;
-            case SquereID.h1:
                 phaseOneCurveXStart = 5.5f;
                 phaseOneCurveXEnd = 15.5f;
                 phaseOneAllCurveY = -2.7f;
@@ -393,6 +371,17 @@ public class TurnDeside : ColorPallet
                 phaseTwoAllCurveY = 0.1f;
                 phaseTwoAllScale = 3.215f;
                 search = "R_ShortCastling_B";
+                break;
+            case SquereID.h1:
+                phaseOneCurveXStart = -3.5f;
+                phaseOneCurveXEnd = -13.5f;
+                phaseOneAllCurveY = 4.35f;
+                phaseOneAllScale = 2.5f;
+                phaseTwoCurveXStart = -14.1f;
+                phaseTwoCurveXEnd = -4.1f;
+                phaseTwoAllCurveY = 2.1f;
+                phaseTwoAllScale = 2.929f;
+                search = "R_LongCastling_W";
                 break;
             case SquereID.h8:
                 phaseOneCurveXStart = 3.42f;
@@ -446,6 +435,20 @@ public class TurnDeside : ColorPallet
     {
         //向かっていく方向によって決まる → Directionを取得すれば良い → ここの set をして、AnimationEventに割り当てる
         _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
+    }
+
+    public void StartInactiveTargetPlayable()
+    {
+        if (_targetPlayableGraph.IsValid())
+        {
+            _targetPlayableGraph.Stop();
+            _targetPlayableGraph.Destroy();
+        }
+    }
+
+    public void StartInactiveTargetOutline()
+    {
+        _targetObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
     }
 
     /// <summary>
@@ -512,6 +515,7 @@ public class TurnDeside : ColorPallet
         _targetSquere._IsOnPieceObj = _selectedPieceObj; //_targetSquereに_selectedPieceObjが到着した
         _uiManager._TargetSquere = _targetSquere;
         _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj; //ちょっと設計がよくない → そもそもGameObjectを入れたくない
+        _targetSquere._IsOnPieceObj.GetComponent<SpriteRenderer>().color = ChangeAlpha(_targetSquere._IsOnPieceObj.GetComponent<SpriteRenderer>().color, 50);
         if (_enpassantSquere)
         {
             _enpassantSquere._IsActiveEnpassant = false;
