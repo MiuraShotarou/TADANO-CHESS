@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro.EditorUtilities;
 using UnityEngine;
@@ -29,9 +30,11 @@ public class TurnDeside : ColorPallet
     GameObject _targetObj;
     GameObject _enpassantObj;
     SpriteRenderer _selectedTileSpriteRenderer;
-    Action _castlingAnimation;
+    // Action _castlingAnimation;
+    bool _isCastling;
     // GameObject _hitStopObj;
-    PlayableGraph _playableGraph;
+    PlayableGraph _selectedPlayableGraph;
+    PlayableGraph _targetPlayableGraph;
     AnimationPlayableOutput _animationPlayableOutput;
     bool _isDirectionRight;
     float _direction;
@@ -45,6 +48,7 @@ public class TurnDeside : ColorPallet
         _RAttackEffectObj = transform.GetChild(0).gameObject;
         _BAttackEffectObj = transform.GetChild(1).gameObject;
         _QAttckEffectObj = transform.GetChild(2).gameObject;
+        _isCastling = false;
         // _hitStopObj = transform.GetChild(2?).gameObject;
     }
     /// <summary>
@@ -91,16 +95,20 @@ public class TurnDeside : ColorPallet
                 &&
                     _selectedPieceObj.CompareTag(_targetObj.tag))
                 {
-                    SquereID targetID = _targetSquere._SquereID;
-                    //キャスリングが可能かどうかを判定した後、該当のAnimation(メソッド)を_castlingAnimationに登録している → ここに到達した時点でどちらかのキャスリングは可能なのだから、片方のboolだけを見て判断しているということだ
-                    if ("a1, a8".Contains(targetID.ToString()))// && _inGameManager.IsCastling[0]() 
-                    {
-                        _castlingAnimation += StartShortCastlingAnimation;
-                    }
-                    else if ("h1, h8".Contains(targetID.ToString()))
-                    {
-                        _castlingAnimation += StartLongCastlingAnimation;
-                    }
+                    _isCastling = true;
+                    // SquereID targetID = _targetSquere._SquereID;
+                    // switch (targetID)
+                    // {
+                    //     
+                    // }
+                    // if ("a1, a8".Contains(targetID.ToString()))// && _inGameManager.IsCastling[0]() 
+                    // {
+                    //     _castlingAnimation += StartShortCastlingAnimation;
+                    // }
+                    // else if ("h1, h8".Contains(targetID.ToString()))
+                    // {
+                    //     _castlingAnimation += StartLongCastlingAnimation;
+                    // }
                 }
                 switch (id)
                 {
@@ -135,7 +143,7 @@ public class TurnDeside : ColorPallet
         //knightの時は攻撃の移動に合わせて始点と終点を指定したい
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
-        float adjustScale = _selectedPieceObj.transform.localScale.y + ((_targetSquere._SquereTilePos.y - _selectedSquere._SquereTilePos.y) * 0.143f);
+        float adjustScale = _selectedPieceObj.transform.localScale.y + (_selectedSquere._SquereTilePos.y - _targetSquere._SquereTilePos.y) * 0.143f;
         AnimationCurve animationCurveSX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.x, 1f, adjustScale);
         AnimationCurve animationCurveSY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.y, 1f, adjustScale);
         AnimationCurve animationCurveSZ = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.z, 1f, adjustScale);
@@ -148,14 +156,14 @@ public class TurnDeside : ColorPallet
         animationClip.SetCurve("", typeof(Transform), "localScale.y", animationCurveSY);
         animationClip.SetCurve("", typeof(Transform), "localScale.z", animationCurveSZ);
         //PlayableGraphを作成
-        _playableGraph = PlayableGraph.Create();
+        _selectedPlayableGraph = PlayableGraph.Create();
         //AnimationClipPlayableを作成
-        AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_playableGraph, animationClip);
+        AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_selectedPlayableGraph, animationClip);
         //AnimationPlayableOutputを作成してAnimatorと連結
-        _animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _selectedPieceAnimatorController);
+        _animationPlayableOutput = AnimationPlayableOutput.Create(_selectedPlayableGraph, "AnimOutput", _selectedPieceAnimatorController);
         _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
         //再生
-        _playableGraph.Play();
+        _selectedPlayableGraph.Play();
     }
     /// <summary>
     /// MoveAnimationの再生後にAnimationEventで１回呼ばれる。動作が独立している。
@@ -167,10 +175,10 @@ public class TurnDeside : ColorPallet
             &&
             _targetSquere._IsActiveEnpassant)
         {
-            if (_playableGraph.IsValid())
+            if (_selectedPlayableGraph.IsValid())
             {
-                _playableGraph.Stop();
-                _playableGraph.Destroy();
+                _selectedPlayableGraph.Stop();
+                _selectedPlayableGraph.Destroy();
             }
             _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_selectedPieceObj.GetComponent<SpriteRenderer>().flipX; //攻撃するPieceの向いている方向を反転する
             _selectedPieceAnimatorController.Play("P_Attack");
@@ -178,10 +186,10 @@ public class TurnDeside : ColorPallet
         }
         else if (_targetSquere._IsOnPieceObj)
         {
-            if (_playableGraph.IsValid())
+            if (_selectedPlayableGraph.IsValid())
             {
-                _playableGraph.Stop();
-                _playableGraph.Destroy();
+                _selectedPlayableGraph.Stop();
+                _selectedPlayableGraph.Destroy();
             }
             string search = $"{_selectedPiece._PieceName}_Attack";
             _selectedPieceAnimatorController.Play(search);
@@ -193,10 +201,10 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartIdleAnimation()
     {
-        if (_playableGraph.IsValid())
+        if (_selectedPlayableGraph.IsValid())
         {
-            _playableGraph.Stop();
-            _playableGraph.Destroy();
+            _selectedPlayableGraph.Stop();
+            _selectedPlayableGraph.Destroy();
         }
         _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_inGameManager.IsWhite;
         string search = new string($"{_selectedPiece._PieceName}_Idle");
@@ -209,10 +217,10 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartTakeHitAnimation()
     {
-        if (_playableGraph.IsValid())//
+        if (_selectedPlayableGraph.IsValid())//
         {
-            _playableGraph.Stop();
-            _playableGraph.Destroy();
+            _selectedPlayableGraph.Stop();
+            _selectedPlayableGraph.Destroy();
         }
         string search = new string($"{_targetObj.name.First()}_TakeHit");
         _targetPieceAnimatorController.Play(search);
@@ -246,99 +254,190 @@ public class TurnDeside : ColorPallet
     
     public void StartCastlingAnimation()
     {
-        _castlingAnimation?.Invoke();
+        if (_isCastling)
+        {
+            Time.timeScale = 1;
+            if (_selectedPlayableGraph.IsValid())
+            {
+                _selectedPlayableGraph.Stop();
+                _selectedPlayableGraph.Destroy();
+            }
+            SquereID id = _targetSquere._SquereID;
+            StartKCastlingAnimation(id);
+            StartRCastlingAnimation(id);
+            _isCastling = true;
+        }
     }
-    /// <summary>
-    /// S_W 
-    /// S_L
-    /// S_B
-    /// S_B
-    /// </summary>
-    void StartShortCastlingAnimation()
+
+    void StartKCastlingAnimation(SquereID id)
     {
-        Time.timeScale = 1;
-        if (_inGameManager.IsWhite)
+        float phaseOneCurveXStart = 0;
+        float phaseOneCurveXEnd = 0;
+        float phaseOneCurveYStart = 1.17f;
+        float phaseOneCurveYEnd = 11.17f;
+        float phaseOneCurveRXStart = 0f;
+        float phaseOneCurveRXEnd = -0.066f;
+        float phaseTwoCurveYStart = 0;
+        float phaseTwoCurveYEnd = 0;
+        float phaseOneScalePoint = 0;
+        string search = "";
+        switch (id)
         {
-            if (_playableGraph.IsValid())
-            {
-                _playableGraph.Stop();
-                _playableGraph.Destroy();
-            }
-            _selectedPieceAnimatorController.Play("K_ShortCastling_W");
-            ///
-            //knightの時は攻撃の移動に合わせて始点と終点を指定したい
-            AnimationCurve curveX_PhaseOne = AnimationCurve.Linear(4.6f, -5.6f, 6.92f, -15.6f);
-            AnimationCurve curveY_PhaseOne = AnimationCurve.Linear(4.6f, -2.7f, 6.92f, -2.7f);
-            AnimationCurve curveX_PhaseTwo = AnimationCurve.Linear(10f, -14.75f, 12.25f, -4.75f);
-            AnimationCurve curveY_PhaseTwo = AnimationCurve.Linear(10f, 0.1f, 12.25f, 0.1f);
-            AnimationCurve curveSX_PhaseOne = AnimationCurve.Linear(4.6f, 3.501f, 6.92f, 3.501f);
-            AnimationCurve curveSY_PhaseOne = AnimationCurve.Linear(4.6f, 3.501f, 6.92f, 3.501f);
-            AnimationCurve curveSZ_PhaseOne = AnimationCurve.Linear(4.6f, 3.501f, 6.92f, 3.501f);
-            AnimationCurve curveSX_PhaseTwo = AnimationCurve.Linear(10f, 3.215f, 12.25f, 3.215f);
-            AnimationCurve curveSY_PhaseTwo = AnimationCurve.Linear(10f, 3.215f, 12.25f, 3.215f);
-            AnimationCurve curveSZ_PhaseTwo = AnimationCurve.Linear(10f, 3.215f, 12.25f, 3.215f);
-            //"Run"という名前のついたanimationClipからコピーを新規作成
-            AnimationClip animationClip = _targetPieceAnimatorController.runtimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name.Contains("R_ShortCastling_W"));
-            //新しく作成・編集したAnimationCurveをAnimationClipに代入する
-            animationClip.SetCurve("", typeof(Transform), "localPosition.x", curveX_PhaseOne);
-            animationClip.SetCurve("", typeof(Transform), "localPosition.y", curveY_PhaseOne);
-            animationClip.SetCurve("", typeof(Transform), "localPosition.x", curveX_PhaseTwo);
-            animationClip.SetCurve("", typeof(Transform), "localPosition.y", curveY_PhaseTwo);
-            animationClip.SetCurve("", typeof(Transform), "localScale.x", curveSX_PhaseOne);
-            animationClip.SetCurve("", typeof(Transform), "localScale.y", curveSY_PhaseOne);
-            animationClip.SetCurve("", typeof(Transform), "localScale.z", curveSZ_PhaseOne);
-            animationClip.SetCurve("", typeof(Transform), "localScale.x", curveSX_PhaseTwo);
-            animationClip.SetCurve("", typeof(Transform), "localScale.y", curveSY_PhaseTwo);
-            animationClip.SetCurve("", typeof(Transform), "localScale.z", curveSZ_PhaseTwo);
-            //PlayableGraphを作成
-            _playableGraph = PlayableGraph.Create();
-            //AnimationClipPlayableを作成
-            AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_playableGraph, animationClip);
-            //AnimationPlayableOutputを作成してAnimatorと連結
-            _animationPlayableOutput = AnimationPlayableOutput.Create(_playableGraph, "AnimOutput", _targetPieceAnimatorController);
-            _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
-            //再生
-            _playableGraph.Play();
-            ///
-            // _targetPieceAnimatorController.Play("R_ShortCastling_W");
+            case SquereID.a1:
+                phaseOneCurveXStart = -4.42f;
+                phaseOneCurveXEnd = -5.15f;
+                phaseOneScalePoint = 3.358f;
+                phaseTwoCurveYStart = 8.8f;
+                phaseTwoCurveYEnd = -1.2f;
+                search = "K_ShortCastling_W";
+                break;
+            case SquereID.a8:
+                phaseOneCurveXStart = -4.42f;
+                phaseOneCurveXEnd = -4.75f;
+                phaseOneScalePoint = 3.215f;
+                phaseTwoCurveYStart = 10.1f;
+                phaseTwoCurveYEnd = 0.1f;
+                search = "K_LongCastling_W";
+                break;
+            case SquereID.h1:
+                phaseOneCurveXStart = 4.33f;
+                phaseOneCurveXEnd = 5.05f;
+                phaseOneScalePoint = 3.358f;
+                phaseTwoCurveYStart = 8.8f;
+                phaseTwoCurveYEnd = -1.2f;
+                search = "K_ShortCastling_B";
+                break;
+            case SquereID.h8:
+                phaseOneCurveXStart = 4.33f;
+                phaseOneCurveXEnd = 3.76f;
+                phaseOneScalePoint = 2.929f;
+                phaseTwoCurveYStart = 13.07f;
+                phaseTwoCurveYEnd = 3.07f;
+                search = "K_LongCastling_B";
+                break;
         }
-        else
-        {
-            if (_playableGraph.IsValid())
-            {
-                _playableGraph.Stop();
-                _playableGraph.Destroy();
-            }
-            Debug.Log("short_anim_B");
-            _selectedPieceAnimatorController.Play("K_ShortCastling_B");
-            _targetPieceAnimatorController.Play("R_ShortCastling_B");
-        }
-        _castlingAnimation = null;
+        float phaseOneStartTime = 2f;
+        float phaseOneEndTime = 2.25f;
+        float phaseTwoStartTime = 6.83f;
+        float phaseTwoEndTime = 7f;
+        AnimationCurve curveY = AnimationCurve.Linear(phaseOneStartTime, phaseOneCurveYStart, phaseOneEndTime, phaseOneCurveYEnd);
+        AnimationCurve curveRX = AnimationCurve.Constant(phaseOneStartTime, phaseOneStartTime, phaseOneCurveRXStart);
+        AnimationCurve curveX = AnimationCurve.Linear(0f, phaseOneCurveXStart, phaseOneStartTime, phaseOneCurveXStart);
+        AnimationCurve curveSX = AnimationCurve.Constant(phaseTwoStartTime, phaseTwoStartTime, phaseOneScalePoint);
+        AnimationCurve curveSY = AnimationCurve.Constant(phaseTwoStartTime, phaseTwoStartTime, phaseOneScalePoint);
+        AnimationCurve curveSZ = AnimationCurve.Constant(phaseTwoStartTime, phaseTwoStartTime, phaseOneScalePoint);
+        curveY.AddKey(phaseTwoStartTime, phaseTwoCurveYStart);
+        curveY.AddKey(phaseTwoEndTime, phaseTwoCurveYEnd);
+        curveX.AddKey(phaseTwoStartTime, phaseOneCurveXEnd);
+        //"Run"という名前のついたanimationClipからコピーを新規作成
+        AnimationClip animationClip = _selectedPieceAnimatorController.runtimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name.Contains(search));
+        //新しく作成・編集したAnimationCurveをAnimationClipに代入する
+        animationClip.SetCurve("", typeof(Transform), "localPosition.x", curveX);
+        animationClip.SetCurve("", typeof(Transform), "localPosition.y", curveY);
+        animationClip.SetCurve("", typeof(Transform), "localScale.x", curveSX);
+        animationClip.SetCurve("", typeof(Transform), "localScale.y", curveSY);
+        animationClip.SetCurve("", typeof(Transform), "localScale.z", curveSZ);
+        animationClip.SetCurve("", typeof(Transform), "localEulerAnglesRaw.x", curveRX);
+        //PlayableGraphを作成
+        _selectedPlayableGraph = PlayableGraph.Create();
+        //AnimationClipPlayableを作成
+        AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_selectedPlayableGraph, animationClip);
+        //AnimationPlayableOutputを作成してAnimatorと連結
+        _animationPlayableOutput = AnimationPlayableOutput.Create(_selectedPlayableGraph, "AnimOutput", _selectedPieceAnimatorController);
+        _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
+        //再生
+        _selectedPlayableGraph.Play();
     }
-    void StartLongCastlingAnimation()
+    void StartRCastlingAnimation(SquereID id)
     {
-        //long King f1 Rook e1
-        if (_inGameManager.IsWhite)
+        float phaseOneCurveXStart = 0;
+        float phaseOneCurveXEnd = 0;
+        float phaseOneAllCurveY = 0;
+        float phaseOneAllScale = 0;
+        float phaseTwoCurveXStart = 0;
+        float phaseTwoCurveXEnd = 0;
+        float phaseTwoAllCurveY = 0;
+        float phaseTwoAllScale = 0;
+        string search = "";
+        switch (id)
         {
-            if (_playableGraph.IsValid())
-            {
-                _playableGraph.Stop();
-                _playableGraph.Destroy();
-            }
-            _selectedPieceAnimatorController.Play("K_LongCastling_W");
-            _targetPieceAnimatorController.Play("R_LongCastling_W");
+            case SquereID.a1:
+                phaseOneCurveXStart = -5.6f;
+                phaseOneCurveXEnd = -15.6f;
+                phaseOneAllCurveY = -2.7f;
+                phaseOneAllScale = 3.501f;
+                phaseTwoCurveXStart = -14.75f;
+                phaseTwoCurveXEnd = -4.75f;
+                phaseTwoAllCurveY = 0.1f;
+                phaseTwoAllScale = 3.215f;
+                search = "R_ShortCastling_W";
+                break;
+            case SquereID.a8:
+                phaseOneCurveXStart = -3.5f;
+                phaseOneCurveXEnd = -13.5f;
+                phaseOneAllCurveY = 4.35f;
+                phaseOneAllScale = 2.5f;
+                phaseTwoCurveXStart = -14.1f;
+                phaseTwoCurveXEnd = -4.1f;
+                phaseTwoAllCurveY = 2.1f;
+                phaseTwoAllScale = 2.929f;
+                search = "R_LongCastling_W";
+                break;
+            case SquereID.h1:
+                phaseOneCurveXStart = 5.5f;
+                phaseOneCurveXEnd = 15.5f;
+                phaseOneAllCurveY = -2.7f;
+                phaseOneAllScale = 3.501f;
+                phaseTwoCurveXStart = 14.65f;
+                phaseTwoCurveXEnd = 4.65f;
+                phaseTwoAllCurveY = 0.1f;
+                phaseTwoAllScale = 3.215f;
+                search = "R_ShortCastling_B";
+                break;
+            case SquereID.h8:
+                phaseOneCurveXStart = 3.42f;
+                phaseOneCurveXEnd = 13.42f;
+                phaseOneAllCurveY = 4.35f;
+                phaseOneAllScale = 2.5f;
+                phaseTwoCurveXStart = 14.06f;
+                phaseTwoCurveXEnd = 4.06f;
+                phaseTwoAllCurveY = 2.1f;
+                phaseTwoAllScale = 2.929f;
+                search = "R_LongCastling_B";
+                break;
         }
-        else
-        {
-            if (_playableGraph.IsValid())
-            {
-                _playableGraph.Stop();
-                _playableGraph.Destroy();
-            }
-            _selectedPieceAnimatorController.Play("K_LongCastling_B");
-            _targetPieceAnimatorController.Play("R_LongCastling_B");
-        }
-        _castlingAnimation = null;//
+        float phaseOneStartTime = 4.6f;
+        float phaseOneEndTime = 6.92f;
+        float phaseTwoStartTime = 10f;
+        float phaseTwoEndTime = 12.5f;
+        AnimationCurve curveX = AnimationCurve.Linear(phaseOneStartTime, phaseOneCurveXStart, phaseOneEndTime, phaseOneCurveXEnd);
+        AnimationCurve curveY = AnimationCurve.Linear(phaseOneStartTime, phaseOneAllCurveY, phaseOneEndTime, phaseOneAllCurveY);
+        AnimationCurve curveSX = AnimationCurve.Linear(phaseOneStartTime, phaseOneAllScale, phaseOneEndTime, phaseOneAllScale);
+        AnimationCurve curveSY = AnimationCurve.Linear(phaseOneStartTime, phaseOneAllScale, phaseOneEndTime, phaseOneAllScale);
+        AnimationCurve curveSZ = AnimationCurve.Linear(phaseOneStartTime, phaseOneAllScale, phaseOneEndTime, phaseOneAllScale);
+        curveX.AddKey(phaseTwoStartTime, phaseTwoCurveXStart);
+        curveX.AddKey(phaseTwoEndTime, phaseTwoCurveXEnd);
+        curveY.AddKey(phaseTwoStartTime, phaseTwoAllCurveY);
+        curveSX.AddKey(phaseTwoStartTime, phaseTwoAllScale);
+        curveSY.AddKey(phaseTwoStartTime, phaseTwoAllScale);
+        curveSZ.AddKey(phaseTwoStartTime, phaseTwoAllScale);
+        //"Run"という名前のついたanimationClipからコピーを新規作成
+        AnimationClip animationClip = _targetPieceAnimatorController.runtimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name.Contains(search));
+        //新しく作成・編集したAnimationCurveをAnimationClipに代入する
+        animationClip.SetCurve("", typeof(Transform), "localPosition.x", curveX);
+        animationClip.SetCurve("", typeof(Transform), "localPosition.y", curveY);
+        animationClip.SetCurve("", typeof(Transform), "localScale.x", curveSX);
+        animationClip.SetCurve("", typeof(Transform), "localScale.y", curveSY);
+        animationClip.SetCurve("", typeof(Transform), "localScale.z", curveSZ);
+        //PlayableGraphを作成
+        _targetPlayableGraph = PlayableGraph.Create();
+        //AnimationClipPlayableを作成
+        AnimationClipPlayable animationClipPlayable = AnimationClipPlayable.Create(_targetPlayableGraph, animationClip);
+        //AnimationPlayableOutputを作成してAnimatorと連結
+        _animationPlayableOutput = AnimationPlayableOutput.Create(_targetPlayableGraph, "AnimOutput", _targetPieceAnimatorController);
+        _animationPlayableOutput.SetSourcePlayable(animationClipPlayable);
+        //再生
+        _targetPlayableGraph.Play();
     }
     /// <summary>
     /// 適宜、flipXを反転させるAnimation。ほとんどのAnimationClipで再生時にEventとして呼ばれる
