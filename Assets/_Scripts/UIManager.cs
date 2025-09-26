@@ -143,6 +143,7 @@ public class UIManager : ColorPallet
         _isPromotion = true;
         GameObject promotionObj = Instantiate(Resources.Load<GameObject>($"Objects/{promotionName}"), _TargetPieceObj.transform.position, _TargetPieceObj.transform.rotation);
         promotionObj.transform.localScale = _TargetPieceObj.transform.localScale;
+        Debug.Log(promotionObj.transform.localScale);
         promotionObj.GetComponent<SpriteRenderer>().flipX = !_inGameManager.IsWhite;
         promotionObj.name = promotionName + _TargetPieceObj.name.Substring(1);
         EventTrigger.Entry entry = new EventTrigger.Entry{eventID = EventTriggerType.PointerClick};

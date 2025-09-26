@@ -88,7 +88,7 @@ public class AnimationRelay : MonoBehaviour
     /// </summary>
     void OnDestroy()
     {
-        _uiManager._DeathPieceObj = this.gameObject;
+
     }
     // void PauseAnimator()
     // {

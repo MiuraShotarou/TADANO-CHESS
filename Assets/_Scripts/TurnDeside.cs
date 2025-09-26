@@ -248,6 +248,8 @@ public class TurnDeside : ColorPallet
         {
             return;
         }
+        GameObject copyObj = new GameObject(_targetObj.name);
+        _uiManager._DeathPieceObj = copyObj;
         int destroyTimer = 2;
         Destroy(_targetObj, destroyTimer);
     }
@@ -575,7 +577,7 @@ public class TurnDeside : ColorPallet
         }
         _openSelectableArea.BeforeRendereringClear();
         //Poneが移動した後にアンパッサン・プロモーションの発生を判断する
-        if (_selectedPiece._PieceName == "P")
+        if ("P".Contains(_selectedPiece._PieceName))
         {
             //被アンパッサン（状況作成側）の処理
             if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
@@ -584,8 +586,9 @@ public class TurnDeside : ColorPallet
                 //enpassantObj == true
             }
             //プロモーションの処理
-            else if ("1, 8".Contains(_targetSquere._SquereID.ToString()))
+            else if ("1, 8".Contains(_targetSquere._SquereID.ToString()[1]))
             {
+                Debug.Log("");
                 _inGameManager.StartActivePromotionRelay();
                 return;
                 //プロモーション先の駒をUIで選択したら_inGameManager._IsWhiteを切り替える
