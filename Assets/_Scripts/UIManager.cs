@@ -84,14 +84,14 @@ public class UIManager : ColorPallet
             t_truthMoveCount.color = Color.black;
             t_truthMoveCount.fontStyle = FontStyles.Bold;
         }
-        Debug.Log(_DeathPieceObj);
         //t_residues の更新
         if (_DeathPieceObj)
         {
-            TextMeshProUGUI t_decreaseResiduesCount = _inGameManager.IsWhite? t_residuesDictW[_DeathPieceObj.name.First().ToString()] : t_residuesDictB[_DeathPieceObj.name.First().ToString()];
+            //DeatPieceObjなのでIsWhiteが逆になる
+            TextMeshProUGUI t_decreaseResiduesCount = _inGameManager.IsWhite? t_residuesDictB[_DeathPieceObj.name.First().ToString()] : t_residuesDictW[_DeathPieceObj.name.First().ToString()];
             t_decreaseResiduesCount.text = (int.Parse(t_decreaseResiduesCount.text) - 1).ToString();
             //t_residues の更新にともなってt_squereIdを削除する
-            TextMeshProUGUI[] t_decreaseSquereIds = _inGameManager.IsWhite? t_squereIdsDictW[_DeathPieceObj.name.First().ToString()].ToArray() : t_squereIdsDictB[_DeathPieceObj.name.First().ToString()].ToArray();
+            TextMeshProUGUI[] t_decreaseSquereIds = _inGameManager.IsWhite? t_squereIdsDictB[_DeathPieceObj.name.First().ToString()].ToArray() : t_squereIdsDictW[_DeathPieceObj.name.First().ToString()].ToArray();
             TextMeshProUGUI t_decreaseSquereId = t_decreaseSquereIds.FirstOrDefault(t => t.name.Contains(_DeathPieceObj.name.Last().ToString()));
             t_decreaseSquereId.gameObject.SetActive(false);
             _DeathPieceObj = null;

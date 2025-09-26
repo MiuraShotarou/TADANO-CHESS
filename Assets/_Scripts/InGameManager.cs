@@ -153,7 +153,7 @@ public class InGameManager : MonoBehaviour
         _IsWhite = !_IsWhite;
     }
     /// <summary>
-    /// public Bool _IsWihte から呼び出される → SatrtMultiあたりから呼び出したい
+    /// public Bool _IsWihte から呼び出される
     /// </summary>
     void StartTurnRelay()
     {
