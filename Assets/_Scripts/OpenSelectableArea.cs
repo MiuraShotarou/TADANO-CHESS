@@ -23,6 +23,7 @@ public class OpenSelectableArea : ColorPallet
     Vector3Int[] _moveAreas;
     List<Vector3Int> _renderingAreas = new List<Vector3Int>(); //Propatiesにしておけ
     List<Vector3Int> _memorizeRenderingAreas = new List<Vector3Int>();
+    private List<GameObject> _memorizeRenderingPieceObjects = new List<GameObject>();
     int _pieceMoveCount = 0;
     int _prefabCount = 0;
     GameObject _collider2DPrefab;
@@ -88,20 +89,17 @@ public class OpenSelectableArea : ColorPallet
         Initialize();
         DrawOutline(_selectedPieceObj);
         _inGameManager._AnimatorController.Play("AddOneLine", 0, 0);
-        //pieceObjの移動可能領域を検索 → 移動可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
-        //pieceObjの攻撃可能領域を検索 → 攻撃可能な範囲だけを検索し、そこのbool型がfalseだったら描画する。
-        //移動可能領域に_selectedTileを描画する
-        //Animatoinの再生（描画が出来れば良い）
     }
     public void BeforeRendereringClear()
     {
-        _selectedPieceObj.GetComponent<SpriteRenderer>().color = ChangeAlpha(_selectedPieceObj.GetComponent<SpriteRenderer>().color, 150);
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
+        Array.ForEach(_memorizeRenderingPieceObjects.ToArray(), obj => obj.GetComponent<SpriteRenderer>().color = ChangeAlpha(obj.GetComponent<SpriteRenderer>().color, 150));
         for (int i = 0; i < _memorizeRenderingAreas.Count; i++)
         {
             _deceptionTileFieldArrays[_memorizeRenderingAreas[i].y][_memorizeRenderingAreas[i].x].color = Color.clear;
             _deceptionTileFieldArrays[_memorizeRenderingAreas[i].y][_memorizeRenderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = false;
         }
+        _memorizeRenderingPieceObjects.Clear();
     }
     /// <summary>
     /// fieldにあるコレクションをすべて初期化する
@@ -167,6 +165,7 @@ public class OpenSelectableArea : ColorPallet
                 if (!IsCanAttackTargetObject(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj))
                 {
                     _PrefabCount--;
+                    _attackAreas[i] = new Vector3Int(0, 0, -1);
                     continue;
                 }
                 _renderingAreas.Add(_attackAreas[i]);
@@ -185,6 +184,14 @@ public class OpenSelectableArea : ColorPallet
         //敵だった場合
         if (!_selectedPieceObj.CompareTag(targetObj.tag))
         {
+            //_enpassantObjだった場合
+            if ("P".Contains(_selectedPieceObj.name.First().ToString())
+                &&
+                targetObj.transform.parent)
+            {
+                DrawOutline(targetObj.transform.parent.gameObject);
+                return true;
+            }
             DrawOutline(targetObj);
             return true;
         }
@@ -202,6 +209,8 @@ public class OpenSelectableArea : ColorPallet
     }
     void DrawOutline(GameObject obj)
     {
+        //_enpassantObjならreturnする
+        if (!obj.GetComponent<SpriteRenderer>()) return;
         SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
         if (spriteRenderer)
         {
@@ -209,6 +218,7 @@ public class OpenSelectableArea : ColorPallet
             color.a = 1;
             spriteRenderer.color = color;
         }
+        _memorizeRenderingPieceObjects.Add(obj);
         // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
     }
     /// <summary>
@@ -222,6 +232,7 @@ public class OpenSelectableArea : ColorPallet
             _inGameManager.StartSelectTileRelay();
             return;
         }
+        // Debug.Log(_renderingAreas[0]);
         for (int i = 0; i < _renderingAreas.Count; i++)
         {
             _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].color = _CanSelectedTileColor;
@@ -247,6 +258,14 @@ public class OpenSelectableArea : ColorPallet
         //ここでもGameObjectの名前で検索している
         //描画する時は偽のポジション、攻撃対象のオブジェクトは真を取得しなければならない → 名前は偽のポジション名・敵のオブジェクトはParent設定で取得する
         Squere targetSquere = _inGameManager._SquereArrays[int.Parse(search[0])][int.Parse(search[1])];
+        if (targetSquere._IsOnPieceObj)
+        {
+            if (targetSquere._IsOnPieceObj.transform.parent)
+            {
+                _memorizeRenderingPieceObjects.Remove(targetSquere._IsOnPieceObj.transform.parent.gameObject);
+            }
+            _memorizeRenderingPieceObjects.Remove(targetSquere._IsOnPieceObj);
+        }
         //地味に大事
         _turnDeside.enabled = true;
         _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetSquere);

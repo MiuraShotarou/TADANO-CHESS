@@ -20,6 +20,7 @@ public class TurnDeside : ColorPallet
     Squere _selectedSquere;
     Squere _targetSquere;
     Squere _enpassantSquere;
+    Squere _castlingRookSquere;
     Animator _selectedPieceAnimatorController;
     Animator _targetPieceAnimatorController;
     RuntimeAnimatorController _selectedPieceRuntimeAnimator;
@@ -28,7 +29,6 @@ public class TurnDeside : ColorPallet
     GameObject _BAttackEffectObj;
     GameObject _QAttckEffectObj;
     GameObject _targetObj;
-    GameObject _enpassantObj;
     SpriteRenderer _selectedTileSpriteRenderer;
     // Action _castlingAnimation;
     bool _isCastling;
@@ -71,7 +71,17 @@ public class TurnDeside : ColorPallet
         _targetSquere = targetSquere;
         if (targetSquere._IsOnPieceObj)
         {
-            _targetObj = targetSquere._IsOnPieceObj;
+            //enpassantObj を検知したならそのオブジェクトの親オブジェクトを取得する
+            if (targetSquere._IsActiveEnpassant
+                &&
+                "P".Contains(_selectedPieceObj.name.First().ToString()))
+            {
+                _targetObj = targetSquere._IsOnPieceObj.transform.parent.gameObject;
+            }
+            else
+            {
+                _targetObj = targetSquere._IsOnPieceObj;
+            }
             _targetPieceAnimatorController = _targetObj.GetComponent<Animator>();
         }
         //移動に伴って_SelectedPieceObjやSquererなどをアップデート → ラムダ候補
@@ -79,7 +89,7 @@ public class TurnDeside : ColorPallet
         updateName[2] = (char)('0' + _targetSquere._SquereTilePos.y);
         updateName[4] = (char)('0' + _targetSquere._SquereTilePos.x);
         _selectedPieceObj.name = new string(updateName);
-        _selectedSquere._IsOnPieceObj = null;//問題かも
+        _selectedSquere._IsOnPieceObj = null;
         _Direction = _targetSquere._SquereTilePos.x - _selectedSquere._SquereTilePos.x;
         //初めて移動した駒であればrotation.zは 0 という勝手な仕様
         if (_selectedPieceObj.transform.rotation.z == 0)
@@ -170,6 +180,7 @@ public class TurnDeside : ColorPallet
             _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_selectedPieceObj.GetComponent<SpriteRenderer>().flipX; //攻撃するPieceの向いている方向を反転する
             _selectedPieceAnimatorController.Play("P_Attack");
             _targetSquere._IsActiveEnpassant = false;
+            _enpassantSquere = null;
         }
         else if (_targetSquere._IsOnPieceObj)
         {
@@ -231,6 +242,7 @@ public class TurnDeside : ColorPallet
         Vector2 duration = _selectedPieceObj.GetComponent<SpriteRenderer>().flipX ? new Vector2(-100, 100): new Vector2(100, 100);
         _targetPieceAnimatorController.enabled = false;
         rigidbody2D.velocity = duration;
+        //Castlingのルークがターゲットであれば
         if (_targetObj.tag.Contains(_selectedPieceObj.tag))
         {
             return;
@@ -250,10 +262,8 @@ public class TurnDeside : ColorPallet
                 _selectedPlayableGraph.Destroy();
             }
             SquereID id = _targetSquere._SquereID;
-            Debug.Log(id.ToString());
             StartKCastlingAnimation(id);
             StartRCastlingAnimation(id);
-            _isCastling = false;
         }
     }
 
@@ -512,16 +522,63 @@ public class TurnDeside : ColorPallet
     }
     void EndTurn()
     {
-        _targetSquere._IsOnPieceObj = _selectedPieceObj; //_targetSquereに_selectedPieceObjが到着した
+        if (_isCastling)  //falseの上書き忘れない
+        {
+            _targetSquere._IsOnPieceObj = null;
+            SquereID kingPosID = SquereID.a1;
+            SquereID rookPosID = SquereID.a1;
+            SquereID id = _targetSquere._SquereID;
+            switch (id)
+            {
+                case SquereID.a1:
+                    kingPosID = SquereID.b1;
+                    rookPosID = SquereID.c1;
+                    break;
+                case SquereID.a8:
+                    kingPosID = SquereID.b8;
+                    rookPosID = SquereID.c8;
+                    break;
+                case SquereID.h1:
+                    kingPosID = SquereID.f1;
+                    rookPosID = SquereID.e1;
+                    break;
+                case SquereID.h8:
+                    kingPosID = SquereID.f8;
+                    rookPosID = SquereID.e8;
+                    break;
+            }
+            _targetSquere = _inGameManager._SquereArrays[(int)kingPosID / 8][(int)kingPosID % 8];
+            _castlingRookSquere = _inGameManager._SquereArrays[(int)rookPosID / 8][(int)rookPosID % 8];
+            _targetSquere._IsOnPieceObj = _selectedPieceObj;
+            _castlingRookSquere._IsOnPieceObj = _targetObj;
+            char[] updateKingName = _selectedPieceObj.name.ToCharArray();
+            updateKingName[2] = (char)('0' + (int)kingPosID / 8);
+            updateKingName[4] = (char)('0' + (int)kingPosID % 8);
+            _selectedPieceObj.name = new string(updateKingName);
+            char[] updateRookName = _targetObj.name.ToCharArray();
+            updateRookName[2] = (char)('0' + (int)rookPosID / 8);
+            updateRookName[4] = (char)('0' + (int)rookPosID % 8);
+            _targetObj.name = new string(updateRookName);
+            _targetObj.GetComponent<SpriteRenderer>().color = ChangeAlpha(_targetObj.GetComponent<SpriteRenderer>().color, 150);
+            _isCastling = false;
+        }
+        else
+        {
+            _targetSquere._IsOnPieceObj = _selectedPieceObj; //_targetSquereに_selectedPieceObjが到着した
+        }
         _uiManager._TargetSquere = _targetSquere;
         _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj; //ちょっと設計がよくない → そもそもGameObjectを入れたくない
-        _targetSquere._IsOnPieceObj.GetComponent<SpriteRenderer>().color = ChangeAlpha(_targetSquere._IsOnPieceObj.GetComponent<SpriteRenderer>().color, 50);
-        if (_enpassantSquere)
+        if (_castlingRookSquere != null)
+        {
+            _uiManager._CastlingRookSquere = _castlingRookSquere;
+            _castlingRookSquere = null;
+        }
+        if (_enpassantSquere._IsOnPieceObj) //enpassantSquareにPoneが動かなかった時を想定
         {
             _enpassantSquere._IsActiveEnpassant = false;
+            Destroy(_enpassantSquere._IsOnPieceObj);
             _enpassantSquere._IsOnPieceObj = null;
         }
-        _enpassantObj = null;
         _openSelectableArea.BeforeRendereringClear();
         //Poneが移動した後にアンパッサン・プロモーションの発生を判断する
         if (_selectedPiece._PieceName == "P")
@@ -530,8 +587,9 @@ public class TurnDeside : ColorPallet
             if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
             {
                 CreateEnpassant();
-                //_enpassantObj == true
+                //enpassantSquere._IsOnPieceObj == true
             }
+            //プロモーションの処理
             else if (_targetSquere._SquereID.ToString().Contains("1, 8"))
             {
                 _inGameManager.StartActivePromotionRelay();
@@ -539,6 +597,7 @@ public class TurnDeside : ColorPallet
                 //プロモーション先の駒をUIで選択したら_inGameManager._IsWhiteを切り替える
             }
         }
+        Debug.Log(_inGameManager._SquereArrays[5][6]._IsOnPieceObj);
         _inGameManager.TrunChange(); //攻守交代
         //次のターンへ
     }
@@ -555,23 +614,22 @@ public class TurnDeside : ColorPallet
         {
             //WhitePieceのenpassant座標Xは必然的に[2]である
             enpassantNumber = 2;
-            _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
-            _enpassantSquere._IsActiveEnpassant = true; //ここの処理はあっても良さそう
-            //enpassantObjの生成
-            _enpassantObj = _selectedPieceObj;
-            //ennpassantObjの名前をポジションと同一にする
-            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
-            _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
         else
         {
             //WhitePieceのenpassant座標Xは必然的に[5]である
             enpassantNumber = 5;
-            _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
-            _enpassantSquere._IsActiveEnpassant = true;
-            _enpassantObj = _selectedPieceObj;
-            _enpassantObj.name = new string($"{search[0]}_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
-            _enpassantSquere._IsOnPieceObj = _enpassantObj;//
         }
+        _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
+        _enpassantSquere._IsActiveEnpassant = true;
+        //enpassantObjの生成
+        GameObject enpassantObj = Instantiate(_selectedPieceObj);// EmptyObj
+        //enpassantObjを見えない化
+        enpassantObj.GetComponent<SpriteRenderer>().enabled = false;
+        enpassantObj.GetComponent<BoxCollider2D>().enabled = false;
+        //ennpassantObjの名前をポジションと同一にする
+        enpassantObj.name = new string($"P_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
+        enpassantObj.transform.SetParent(_selectedPieceObj.transform);
+        _enpassantSquere._IsOnPieceObj = enpassantObj;//
     }
 }

@@ -30,7 +30,8 @@ public class UIManager : ColorPallet
     public GameObject _DeathPieceObj {get;set;}
     public Squere _TargetSquere {get;set;}
     public GameObject _TargetPieceObj {get;set;}
-
+    public Squere _CastlingRookSquere {get;set;}
+    public GameObject _CastlingRookPieceObj {get;set;}
     bool _isPromotion;
     void Awake()
     {
@@ -122,6 +123,14 @@ public class UIManager : ColorPallet
             List<TextMeshProUGUI> t_squereIds = _inGameManager.IsWhite? t_squereIdsDictB[search[0]] : t_squereIdsDictW[search[0]];
             TextMeshProUGUI t_squereId = t_squereIds[int.Parse(search[4])];
             t_squereId.text = _TargetSquere._SquereID.ToString();
+            if (_CastlingRookSquere != null)
+            {
+                search = _CastlingRookSquere._IsOnPieceObj.name.Split('_'); //Key[0] Index[4]
+                t_squereIds = _inGameManager.IsWhite? t_squereIdsDictB[search[0]] : t_squereIdsDictW[search[0]];
+                t_squereId = t_squereIds[int.Parse(search[4])];
+                t_squereId.text = _CastlingRookSquere._SquereID.ToString();
+                _CastlingRookSquere = null;
+            }
         }
     }
     /// <summary>

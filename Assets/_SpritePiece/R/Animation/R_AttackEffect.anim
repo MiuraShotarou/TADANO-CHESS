@@ -21,15 +21,15 @@ AnimationClip:
         time: 0
         value: {x: 0, y: 0, z: -0}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 1080}
+        outSlope: {x: 0, y: 0, z: -1080}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0}
       - serializedVersion: 3
         time: 1
-        value: {x: 0, y: 0, z: 1080}
-        inSlope: {x: 0, y: 0, z: 1080}
+        value: {x: 0, y: 0, z: -1080}
+        inSlope: {x: 0, y: 0, z: -1080}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
@@ -45,26 +45,26 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -5.252684, y: -0.9000001, z: 0}
-        inSlope: {x: 0, y: 1.125, z: 0}
-        outSlope: {x: 4.402684, y: 1.125, z: 0}
+        value: {x: 3.7689621, y: 3.8999999, z: 0}
+        inSlope: {x: 0, y: 1.1249998, z: 0}
+        outSlope: {x: -4.3089623, y: 1.1249998, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0, y: 0, z: 0.33333334}
         outWeight: {x: 0, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.8
-        value: {x: -1.730537, y: -0.00000011920929, z: 0}
-        inSlope: {x: 4.4026847, y: -6.1875, z: 0}
-        outSlope: {x: 4.4026847, y: -6.1875, z: 0}
+        value: {x: 0.32179266, y: 4.7999997, z: 0}
+        inSlope: {x: -4.308963, y: -6.1875, z: 0}
+        outSlope: {x: -4.308963, y: -6.1875, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: -0.85, y: -2.7, z: 0}
-        inSlope: {x: 4.402684, y: -13.5, z: 0}
+        value: {x: -0.54, y: 2.1, z: 0}
+        inSlope: {x: -4.3089623, y: -13.5, z: 0}
         outSlope: {x: 0, y: -13.5, z: 0}
         tangentMode: 0
         weightedMode: 0

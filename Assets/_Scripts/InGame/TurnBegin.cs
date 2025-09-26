@@ -10,7 +10,6 @@ public class TurnBegin : MonoBehaviour
 {
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
-    Squere[][] _squereArrays;
     HashSet<SquereID> _enemyAttackRange;
     SquereID[] _shortDistanceIDs;
     SquereID[] _longDistanceIDs;
@@ -21,7 +20,6 @@ public class TurnBegin : MonoBehaviour
     {
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
-        _squereArrays = _inGameManager._SquereArrays;
     }
     /// <summary>
     /// ターンが切り替わった時、InGameManagerから一度だけ呼び出される
@@ -61,7 +59,7 @@ public class TurnBegin : MonoBehaviour
     {
         string allyTag = _inGameManager.IsWhite ? "White" : "Black";
         string enemyTag = _inGameManager.IsWhite ? "Black" : "White";
-        Squere[] enemyPieceSqueres = _squereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(enemyTag))).ToArray();
+        Squere[] enemyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(enemyTag))).ToArray();
         _enemyAttackRange = new HashSet<SquereID>();
         //for すべての駒で
         for (int i = 0; i < enemyPieceSqueres.Length; i++)
@@ -101,6 +99,14 @@ public class TurnBegin : MonoBehaviour
                         //敵から見て敵の駒(ally)が見つかった場合の条件
                         if (difendSquere._IsOnPieceObj && difendSquere._IsOnPieceObj.CompareTag(allyTag))
                         {
+                            //enpassantObjを検知したとき
+                            if (difendSquere._IsActiveEnpassant && "P".Contains(attackerPiece._PieceName.First().ToString()))
+                            {
+                                //parentのObjが乗っているSquareIDを登録する
+                                string[] parentObjName = difendSquere._IsOnPieceObj.transform.parent.name.Split('_');
+                                _enemyAttackRange.Add(_inGameManager._SquereArrays[int.Parse(parentObjName[1])][int.Parse(parentObjName[1])]._SquereID);
+                                continue;
+                            }
                             _enemyAttackRange.Add(difendSquere._SquereID);
                             if (difendSquere._IsOnPieceObj.name.First().ToString().Contains("K"))
                             {
@@ -108,6 +114,7 @@ public class TurnBegin : MonoBehaviour
                                 _isCheck = true;
                                 _checkedKingSquere = difendSquere;
                                 _checkAttackerSqueres.Add(enemyPieceSqueres[i]);
+                                // Debug.Log(enemyPieceSqueres[i]._IsOnPieceObj.name);
                             }
                         }
                     }
@@ -158,7 +165,7 @@ public class TurnBegin : MonoBehaviour
     bool MinimalFilter(SquereID[] distanceIDs)
     {
         bool isCastlingPossible;
-        isCastlingPossible = distanceIDs.Select(id => (int)id).ToArray().All(id => _squereArrays[id / 8][id % 8]._IsOnPieceObj == null);
+        isCastlingPossible = distanceIDs.Select(id => (int)id).ToArray().All(id => _inGameManager._SquereArrays[id / 8][id % 8]._IsOnPieceObj == null);
         return isCastlingPossible;
     }
 }
