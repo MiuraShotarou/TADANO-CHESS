@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -13,6 +14,7 @@ public class SelectTileController : ColorPallet
     SpriteRenderer _beforeSpriteRenderer;
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;
+    UIManager _uiManager;
     Camera _camera;
     int _maskID;
     RaycastHit2D _memoraizedHit;
@@ -20,6 +22,7 @@ public class SelectTileController : ColorPallet
     {
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _inGameManager = GetComponent<InGameManager>();
+        _uiManager = GetComponent<UIManager>();
         _camera = Camera.main;
         _maskID = LayerMask.GetMask("DeceptionTileField");
     }

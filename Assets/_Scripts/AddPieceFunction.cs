@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,20 +22,14 @@ public class AddPieceFunction : MonoBehaviour
 
     public Piece AddShortCastlingArea(Piece piece)
     {
-        piece._AttackAreas += () => new Vector3Int[] { new Vector3Int(0, -3, 0)};
+        Vector3Int[] memorize = piece._AttackAreas();
+        piece._AttackAreas = () => new Vector3Int[] { new Vector3Int(0, -3, 0)}.Concat(memorize).ToArray();
         return piece;
     }
     public Piece AddLongCastlingArea(Piece piece)
     {
-        piece._AttackAreas += () => new Vector3Int[] { new Vector3Int(0, 4, 0)};
+        Vector3Int[] memorize = piece._AttackAreas();
+        piece._AttackAreas = () => new Vector3Int[] { new Vector3Int(0, 4, 0)}.Concat(memorize).ToArray();
         return piece;
     }
-    // public GameObject Promotion()
-    // {
-    //     string promotionPieceName = ActivePromotionPanel();
-    //     //文字列を頼りにResources.Loadで変更後のGameObjectをreturnしていく仕様に
-    //     //正直、後回しでも良いような気がしてきた
-    //     
-    // }
 }
-

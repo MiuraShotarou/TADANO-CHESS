@@ -97,24 +97,24 @@ public class TurnBegin : MonoBehaviour
                     {
                         attackAreas[d].z = -1;
                         //敵から見て敵の駒(ally)が見つかった場合の条件
-                        if (difendSquere._IsOnPieceObj && difendSquere._IsOnPieceObj.CompareTag(allyTag))
+                        if (difendSquere._IsOnPieceObj.CompareTag(allyTag))
                         {
-                            //enpassantObjを検知したとき
-                            if (difendSquere._IsActiveEnpassant && "P".Contains(attackerPiece._PieceName.First().ToString()))
-                            {
-                                //parentのObjが乗っているSquareIDを登録する
-                                string[] parentObjName = difendSquere._IsOnPieceObj.transform.parent.name.Split('_');
-                                _enemyAttackRange.Add(_inGameManager._SquereArrays[int.Parse(parentObjName[1])][int.Parse(parentObjName[1])]._SquereID);
-                                continue;
-                            }
+                            // //enpassantObjを検知したとき
+                            // if (difendSquere._IsActiveEnpassant && "P".Contains(attackerPiece._PieceName.First().ToString()))
+                            // {
+                            //     //parentのObjが乗っているSquareIDを登録する
+                            //     string[] parentObjName = difendSquere._IsOnPieceObj.transform.parent.name.Split('_');
+                            //     _enemyAttackRange.Add(_inGameManager._SquereArrays[int.Parse(parentObjName[1])][int.Parse(parentObjName[1])]._SquereID);
+                            //     continue;
+                            // }
                             _enemyAttackRange.Add(difendSquere._SquereID);
-                            if (difendSquere._IsOnPieceObj.name.First().ToString().Contains("K"))
+                            //しかもチェックだった
+                            if ("K".Contains(difendSquere._IsOnPieceObj.name.First().ToString()))
                             {
-                                //しかもチェックだった
                                 _isCheck = true;
+                                //用途不明
                                 _checkedKingSquere = difendSquere;
                                 _checkAttackerSqueres.Add(enemyPieceSqueres[i]);
-                                // Debug.Log(enemyPieceSqueres[i]._IsOnPieceObj.name);
                             }
                         }
                     }
@@ -164,8 +164,7 @@ public class TurnBegin : MonoBehaviour
     /// <returns></returns>
     bool MinimalFilter(SquereID[] distanceIDs)
     {
-        bool isCastlingPossible;
-        isCastlingPossible = distanceIDs.Select(id => (int)id).ToArray().All(id => _inGameManager._SquereArrays[id / 8][id % 8]._IsOnPieceObj == null);
-        return isCastlingPossible;
+        bool isCanCastling = distanceIDs.Select(id => (int)id).ToArray().All(id => _inGameManager._SquereArrays[id / 8][id % 8]._IsOnPieceObj == null);
+        return isCanCastling;
     }
 }

@@ -84,8 +84,9 @@ public class UIManager : ColorPallet
             t_truthMoveCount.color = Color.black;
             t_truthMoveCount.fontStyle = FontStyles.Bold;
         }
+        Debug.Log(_DeathPieceObj);
         //t_residues の更新
-        if (_DeathPieceObj != null)
+        if (_DeathPieceObj)
         {
             TextMeshProUGUI t_decreaseResiduesCount = _inGameManager.IsWhite? t_residuesDictW[_DeathPieceObj.name.First().ToString()] : t_residuesDictB[_DeathPieceObj.name.First().ToString()];
             t_decreaseResiduesCount.text = (int.Parse(t_decreaseResiduesCount.text) - 1).ToString();

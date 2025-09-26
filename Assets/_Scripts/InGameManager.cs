@@ -210,6 +210,7 @@ public class InGameManager : MonoBehaviour
     }
     public void StartSelectTileRelay()
     {
+        UnLockSafety();
         _selectTileController.enabled = true;
     }
 

@@ -29,6 +29,7 @@ public class TurnDeside : ColorPallet
     GameObject _BAttackEffectObj;
     GameObject _QAttckEffectObj;
     GameObject _targetObj;
+    GameObject _enpassantObj;
     SpriteRenderer _selectedTileSpriteRenderer;
     // Action _castlingAnimation;
     bool _isCastling;
@@ -296,14 +297,13 @@ public class TurnDeside : ColorPallet
                 phaseTwoCurveYStart = 8.8f;
                 phaseTwoCurveYEnd = -1.2f;
                 search = "K_ShortCastling_B";
-                Debug.Log("");
                 break;
             case SquereID.h1:
                 phaseOneCurveXStart = -4.42f;
-                phaseOneCurveXEnd = -4.75f;
-                phaseOneScalePoint = 3.215f;
-                phaseTwoCurveYStart = 10.1f;
-                phaseTwoCurveYEnd = 0.1f;
+                phaseOneCurveXEnd = -3.9f;
+                phaseOneScalePoint = 2.786f;
+                phaseTwoCurveYStart = 13.07f;
+                phaseTwoCurveYEnd = 3.07f;
                 search = "K_LongCastling_W";
                 break;
             case SquereID.h8:
@@ -455,12 +455,6 @@ public class TurnDeside : ColorPallet
             _targetPlayableGraph.Destroy();
         }
     }
-
-    public void StartInactiveTargetOutline()
-    {
-        _targetObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
-    }
-
     /// <summary>
     /// RotateRockを指定したポジションにセットし、SetActiveをtrueにする
     /// </summary>
@@ -522,6 +516,12 @@ public class TurnDeside : ColorPallet
     }
     void EndTurn()
     {
+        if (_enpassantSquere) //nullチェックしたくないからこの条件で判断している
+        {
+            _enpassantSquere._IsActiveEnpassant = false;
+            Destroy(_enpassantSquere._IsOnPieceObj);
+            _enpassantSquere = null;
+        }
         if (_isCastling)  //falseの上書き忘れない
         {
             _targetSquere._IsOnPieceObj = null;
@@ -568,16 +568,10 @@ public class TurnDeside : ColorPallet
         }
         _uiManager._TargetSquere = _targetSquere;
         _uiManager._TargetPieceObj = _targetSquere._IsOnPieceObj; //ちょっと設計がよくない → そもそもGameObjectを入れたくない
-        if (_castlingRookSquere != null)
+        if (_castlingRookSquere)
         {
             _uiManager._CastlingRookSquere = _castlingRookSquere;
             _castlingRookSquere = null;
-        }
-        if (_enpassantSquere._IsOnPieceObj) //enpassantSquareにPoneが動かなかった時を想定
-        {
-            _enpassantSquere._IsActiveEnpassant = false;
-            Destroy(_enpassantSquere._IsOnPieceObj);
-            _enpassantSquere._IsOnPieceObj = null;
         }
         _openSelectableArea.BeforeRendereringClear();
         //Poneが移動した後にアンパッサン・プロモーションの発生を判断する
@@ -587,17 +581,16 @@ public class TurnDeside : ColorPallet
             if (Math.Abs(_selectedSquere._SquereTilePos.x - _targetSquere._SquereTilePos.x) == 2)
             {
                 CreateEnpassant();
-                //enpassantSquere._IsOnPieceObj == true
+                //enpassantObj == true
             }
             //プロモーションの処理
-            else if (_targetSquere._SquereID.ToString().Contains("1, 8"))
+            else if ("1, 8".Contains(_targetSquere._SquereID.ToString()))
             {
                 _inGameManager.StartActivePromotionRelay();
                 return;
                 //プロモーション先の駒をUIで選択したら_inGameManager._IsWhiteを切り替える
             }
         }
-        Debug.Log(_inGameManager._SquereArrays[5][6]._IsOnPieceObj);
         _inGameManager.TrunChange(); //攻守交代
         //次のターンへ
     }
@@ -623,10 +616,7 @@ public class TurnDeside : ColorPallet
         _enpassantSquere = _inGameManager._SquereArrays[alphabet][enpassantNumber];
         _enpassantSquere._IsActiveEnpassant = true;
         //enpassantObjの生成
-        GameObject enpassantObj = Instantiate(_selectedPieceObj);// EmptyObj
-        //enpassantObjを見えない化
-        enpassantObj.GetComponent<SpriteRenderer>().enabled = false;
-        enpassantObj.GetComponent<BoxCollider2D>().enabled = false;
+        GameObject enpassantObj = new GameObject();// EmptyObj
         //ennpassantObjの名前をポジションと同一にする
         enpassantObj.name = new string($"P_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
         enpassantObj.transform.SetParent(_selectedPieceObj.transform);

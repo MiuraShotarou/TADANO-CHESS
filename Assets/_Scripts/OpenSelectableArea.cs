@@ -15,6 +15,7 @@ public class OpenSelectableArea : ColorPallet
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
     TurnDeside _turnDeside;
+    UIManager _uiManager;
     GameObject _selectedPieceObj;
     SpriteRenderer[][] _deceptionTileFieldArrays;
     Piece _selectedPiece;
@@ -23,18 +24,19 @@ public class OpenSelectableArea : ColorPallet
     Vector3Int[] _moveAreas;
     List<Vector3Int> _renderingAreas = new List<Vector3Int>(); //Propatiesにしておけ
     List<Vector3Int> _memorizeRenderingAreas = new List<Vector3Int>();
-    private List<GameObject> _memorizeRenderingPieceObjects = new List<GameObject>();
+    List<GameObject> _memorizeRenderingPieceObjects = new List<GameObject>();
     int _pieceMoveCount = 0;
     int _prefabCount = 0;
     GameObject _collider2DPrefab;
-    int _PrefabCount {get {return _prefabCount;} set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();};}}
-    private bool _isShortCasting;
-    private bool _isLongCasting; //試験的
+    int _PrefabCount {get {return _prefabCount;} set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();}}}
+    bool _isShortCasting;
+    bool _isLongCasting; //試験的
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
         _turnDeside = GetComponent<TurnDeside>();
+        _uiManager = GetComponent<UIManager>();
         _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
     }
     /// <summary>
@@ -46,6 +48,8 @@ public class OpenSelectableArea : ColorPallet
         if (pieceObj == _selectedPieceObj
             || 
             (_inGameManager.IsWhite && pieceObj.CompareTag("Black")) || (!_inGameManager.IsWhite && pieceObj.CompareTag("White"))){ return; } //RayCastで拒否したい
+        //ユーザーの入力を遮る
+        _uiManager.ActiveFadePanel();
         if (_selectedPieceObj)
         {
             BeforeRendereringClear();
@@ -187,7 +191,7 @@ public class OpenSelectableArea : ColorPallet
             //_enpassantObjだった場合
             if ("P".Contains(_selectedPieceObj.name.First().ToString())
                 &&
-                targetObj.transform.parent)
+                targetObj.transform.parent) //E
             {
                 DrawOutline(targetObj.transform.parent.gameObject);
                 return true;
@@ -199,7 +203,7 @@ public class OpenSelectableArea : ColorPallet
         else if(_selectedPiece._PieceName == "K" && targetObj.name.First().ToString() == "R")
         {
             // IsCastlingで分かっていること → キャスリング可能な状態が整っていた場合
-            if (_inGameManager.IsCastling.Any(del => del()))
+            if (_inGameManager.IsCastling.Any(del => del()) && _selectedPieceObj.transform.rotation.z == 0)
             {
                 DrawOutline(targetObj);
                 return true; //キャスリング可能であればtrue
