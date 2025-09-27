@@ -51,12 +51,6 @@ public class AnimationRelay : MonoBehaviour
     {
         _turnDeside.StartCastlingAnimation();
     }
-
-    void StartAdjustFlipXRelay()
-    {
-        _turnDeside.StartAdjustFlipX();
-    }
-
     void StartInactiveTargetPlayableRelay()
     {
         _turnDeside.StartInactiveTargetPlayable();
@@ -82,13 +76,6 @@ public class AnimationRelay : MonoBehaviour
     void StartQAttackEffectRelay()
     {
         _turnDeside.StartQAttackEffect();
-    }
-    /// <summary>
-    /// 駒にアタッチされているためStageOutAddForceAnimationの再生後に呼ばれる
-    /// </summary>
-    void OnDestroy()
-    {
-
     }
     // void PauseAnimator()
     // {

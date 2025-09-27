@@ -272,6 +272,6 @@ public class OpenSelectableArea : ColorPallet
         }
         //地味に大事
         _turnDeside.enabled = true;
-        _turnDeside.StartTurnDeside(currentSpriteRenderer, _selectedPieceObj, _selectedPiece, _selectedSquere, targetSquere);
+        _turnDeside.StartTurnDeside(_selectedPieceObj, _selectedPiece, _selectedSquere, targetSquere);
     }
 }

@@ -20,17 +20,17 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 2.9280639, y: 2.1079247, z: 0}
+        value: {x: 1.74, y: 2.1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: -2.4280639, y: 1.6120753, z: 0}
+        outSlope: {x: 2.91, y: -1.9999999, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0, y: 0, z: 0.33333334}
         outWeight: {x: 0, y: 0, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: 0.5, y: 3.72, z: 0}
-        inSlope: {x: -2.4280639, y: 1.6120753, z: 0}
+        value: {x: 4.65, y: 0.1, z: 0}
+        inSlope: {x: 2.91, y: -1.9999999, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
@@ -46,17 +46,17 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 2.928215, y: 2.928215, z: 2.928215}
+        value: {x: 2.929, y: 2.929, z: 2.929}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: -0.286, y: -0.286, z: -0.286}
+        outSlope: {x: 0.286, y: 0.286, z: 0.286}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0, y: 0, z: 0}
         outWeight: {x: 0, y: 0, z: 0}
       - serializedVersion: 3
         time: 1
-        value: {x: 2.642215, y: 2.642215, z: 2.642215}
-        inSlope: {x: -0.286, y: -0.286, z: -0.286}
+        value: {x: 3.215, y: 3.215, z: 3.215}
+        inSlope: {x: 0.286, y: 0.286, z: 0.286}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
@@ -161,13 +161,6 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: StartAttackAnimationRelay
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: StartAdjustFlipXRelay
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

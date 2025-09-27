@@ -30,7 +30,6 @@ public class TurnDeside : ColorPallet
     GameObject _QAttackEffectObj;
     GameObject _targetObj;
     GameObject _enpassantObj;
-    SpriteRenderer _selectedTileSpriteRenderer;
     // Action _castlingAnimation;
     bool _isCastling;
     // GameObject _hitStopObj;
@@ -38,9 +37,6 @@ public class TurnDeside : ColorPallet
     PlayableGraph _targetPlayableGraph;
     AnimationPlayableOutput _animationPlayableOutput;
     bool _isDirectionRight;
-    float _direction;
-    float _Direction { get {return _direction ;} set { _direction = value; if (_direction < 0){ _isDirectionRight = false; } else {_isDirectionRight = true;}}}//リファクタ
-    
     private void Start()
     {
         _inGameManager = GetComponent<InGameManager>();
@@ -60,10 +56,9 @@ public class TurnDeside : ColorPallet
     /// <param name="selectedPiece"></param>
     /// <param name="selectedSquere"></param>
     /// <param name="targetSquere"></param>
-    public void StartTurnDeside(SpriteRenderer currentSpriteRenderer, GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
+    public void StartTurnDeside(GameObject selectedPieceObj, Piece selectedPiece, Squere selectedSquere, Squere targetSquere)
     {
         //引数をキャッシュ化
-        _selectedTileSpriteRenderer = currentSpriteRenderer;
         _selectedPieceObj = selectedPieceObj;
         _selectedPiece = selectedPiece;
         _selectedSquere = selectedSquere;
@@ -91,7 +86,7 @@ public class TurnDeside : ColorPallet
         updateName[4] = (char)('0' + _targetSquere._SquereTilePos.x);
         _selectedPieceObj.name = new string(updateName);
         _selectedSquere._IsOnPieceObj = null;
-        _Direction = _targetSquere._SquereTilePos.x - _selectedSquere._SquereTilePos.x;
+        _isDirectionRight = _selectedSquere._SquereTilePos.x < _targetSquere._SquereTilePos.x;
         //初めて移動した駒であればrotation.zは 0 という勝手な仕様
         if (_selectedPieceObj.transform.rotation.z == 0)
         {
@@ -138,6 +133,7 @@ public class TurnDeside : ColorPallet
     /// </summary>
     public void StartRunAnimation()
     {
+        _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
         //knightの時は攻撃の移動に合わせて始点と終点を指定したい
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
@@ -440,15 +436,6 @@ public class TurnDeside : ColorPallet
         //再生
         _targetPlayableGraph.Play();
     }
-    /// <summary>
-    /// 適宜、flipXを反転させるAnimation。ほとんどのAnimationClipで再生時にEventとして呼ばれる
-    /// /// </summary>
-    public void StartAdjustFlipX()
-    {
-        //向かっていく方向によって決まる → Directionを取得すれば良い → ここの set をして、AnimationEventに割り当てる
-        _selectedPieceObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
-    }
-
     public void StartInactiveTargetPlayable()
     {
         if (_targetPlayableGraph.IsValid())
