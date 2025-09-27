@@ -25,6 +25,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] Piece[] _setPieces;
     [SerializeField] Squere[] _setSqueres;
     [SerializeField] GameObject[] _setPieceObjects;
+    [SerializeField] GameObject[] _setPromotionObjects;
     [SerializeField] SpriteRenderer[] _setDeceptionTileFields;
     [SerializeField] RuntimeAnimatorController[] _setPeiceRuntimeAnims;
     [SerializeField] AudioSource _bgmAudioSource;
@@ -32,6 +33,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] AudioClip[] _bgmAudioClips;
     [SerializeField] AudioClip[] _seAudioClips;
     Dictionary<string, Piece> _pieceDict;
+    Dictionary<string, GameObject> _promotionDict;
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
     TurnBegin _turnBegin;
@@ -46,6 +48,7 @@ public class InGameManager : MonoBehaviour
     public int _TurnCount { get; set; }
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
+    public Dictionary<string, GameObject> _PromotionDict => _promotionDict;
     public Squere[][] _SquereArrays => _squereArrays; //s
     public SpriteRenderer[][] _DeceptionTileFieldArrays => _deceptionTileFieldArrays; //fs
     public AudioSource _BGMAudioSource => _bgmAudioSource;
@@ -59,6 +62,7 @@ public class InGameManager : MonoBehaviour
         //配列が番号順になっている保証はないので注意
         _BGMAudioClipDict = _bgmAudioClips.GroupBy(bc => bc.name.First().ToString()).ToDictionary(gc => gc.Key, g => g.ToArray());
         _SEAudioClipDict = _seAudioClips.GroupBy(sc => sc.name.First().ToString()).ToDictionary(gc => gc.Key, g => g.ToArray());
+        _promotionDict = _setPromotionObjects.ToDictionary(obj => obj.name.First().ToString(), obj => obj);
         int arraySize = 8;
         _deceptionTileFieldArrays = new SpriteRenderer[arraySize][];
         _squereArrays = new Squere[arraySize][];
@@ -82,6 +86,7 @@ public class InGameManager : MonoBehaviour
                 {
                     _SquereArrays[i][j]._IsOnPieceObj = null;
                 }
+                // _SquereArrays[i][j].name.Replace(_SquereArrays[i][j].name.First().ToString(), i.ToString());
                 // _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
             }
         }
@@ -159,7 +164,7 @@ public class InGameManager : MonoBehaviour
     {
         Initialize();
         _turnBegin.StartTurn();
-        _uiManager.StartTurnUI();
+        _uiManager.StartUpdateTurnUI();
         if (_TurnCount == 1)
         {
             _playableDirector.enabled = false;
@@ -222,11 +227,6 @@ public class InGameManager : MonoBehaviour
     public void StartInactivePromotionRelay()
     {
         _AnimatorController.Play("InactivePromotion");
-    }
-
-    void InactiveAnimator()
-    {
-        
     }
     void Initialize()
     {

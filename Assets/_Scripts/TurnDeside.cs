@@ -27,7 +27,7 @@ public class TurnDeside : ColorPallet
     AnimationCurve _endPositionCurve;
     GameObject _RAttackEffectObj;
     GameObject _BAttackEffectObj;
-    GameObject _QAttckEffectObj;
+    GameObject _QAttackEffectObj;
     GameObject _targetObj;
     GameObject _enpassantObj;
     SpriteRenderer _selectedTileSpriteRenderer;
@@ -48,7 +48,7 @@ public class TurnDeside : ColorPallet
         _uiManager = GetComponent<UIManager>();
         _RAttackEffectObj = transform.GetChild(0).gameObject;
         _BAttackEffectObj = transform.GetChild(1).gameObject;
-        _QAttckEffectObj = transform.GetChild(2).gameObject;
+        _QAttackEffectObj = transform.GetChild(2).gameObject;
         _isCastling = false;
         // _hitStopObj = transform.GetChild(2?).gameObject;
     }
@@ -477,6 +477,7 @@ public class TurnDeside : ColorPallet
         adjustPos += basePos;
         _RAttackEffectObj.transform.position = adjustPos;
         _RAttackEffectObj.GetComponent<R_AttackEffect>()._targetPos = _targetObj.transform.position;
+        _RAttackEffectObj.GetComponent<SpriteRenderer>().color = _inGameManager.IsWhite? Color.white : Color.black;
         _RAttackEffectObj.SetActive(true);
         //SetActiveがtrueになると岩が回転するAnimationが再生される
     }
@@ -484,6 +485,7 @@ public class TurnDeside : ColorPallet
     public void StartBAttackEffect()
     {
         _BAttackEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
+        _BAttackEffectObj.GetComponent<SpriteRenderer>().color = _inGameManager.IsWhite? ChangeAlpha(Color.white, 0) : ChangeAlpha(Color.black, 0);
         Vector3 basePos = _targetObj.transform.position;
         if (_BAttackEffectObj.GetComponent<SpriteRenderer>().flipX)
         {
@@ -501,9 +503,10 @@ public class TurnDeside : ColorPallet
 
     public void StartQAttackEffect()
     {
-        _QAttckEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
+        _QAttackEffectObj.GetComponent<SpriteRenderer>().flipX = !_isDirectionRight;
+        _QAttackEffectObj.GetComponent<SpriteRenderer>().color = _inGameManager.IsWhite? ChangeAlpha(Color.white, 0) : ChangeAlpha(Color.black, 0);
         Vector3 basePos = _targetObj.transform.position;
-        if (_QAttckEffectObj.GetComponent<SpriteRenderer>().flipX)
+        if (_QAttackEffectObj.GetComponent<SpriteRenderer>().flipX)
         {
             basePos.x += 0.5f;
         }
@@ -512,9 +515,9 @@ public class TurnDeside : ColorPallet
             basePos.x -= 0.5f;
         }
         basePos.y += 0.25f;
-        _QAttckEffectObj.transform.position = basePos;
-        _QAttckEffectObj.transform.localScale = _targetObj.transform.localScale;
-        _QAttckEffectObj.SetActive(true);
+        _QAttackEffectObj.transform.position = basePos;
+        _QAttackEffectObj.transform.localScale = _targetObj.transform.localScale;
+        _QAttackEffectObj.SetActive(true);
     }
     void EndTurn()
     {
