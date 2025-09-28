@@ -6,6 +6,7 @@ public class TurnBegin : MonoBehaviour
 {
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
+    HashSet<SquereID> _allyCanMoveRange;
     HashSet<SquereID> _enemyAttackRange;
     SquereID[] _shortDistanceIDs;
     SquereID[] _longDistanceIDs;
@@ -25,6 +26,7 @@ public class TurnBegin : MonoBehaviour
         //判定基準 → K が動いているかいないか R が動いているかいないか 間に駒があるかないか 間が敵の攻撃範囲に該当するか（ここをなるべく調べたくない）
         Initialize();
         AddTurnCount();
+        CreateAllyCanMoveRange();
         CreateEnemyAtackRange(); //戻り値にして、ローカルに保存することを検討
         _inGameManager.Check(_isCheck ,_checkedKingSquere, _checkAttackerSqueres);
         //Checkの場合はキャスリング出来ないようにだけ書くこと
@@ -38,18 +40,85 @@ public class TurnBegin : MonoBehaviour
         _isCheck = false;
         _checkedKingSquere = null;
         _checkAttackerSqueres = new List<Squere>();
-        _shortDistanceIDs = _inGameManager.IsWhite? new [] { SquereID.b1, SquereID.c1 }: //w_s_c
-                                                    new [] { SquereID.b8, SquereID.c8 };//b_s_c
-        _longDistanceIDs = _inGameManager.IsWhite?  new [] { SquereID.e1, SquereID.f1}://w_l_c 
-                                                    new []{ SquereID.e8, SquereID.f8};//b_l_c
+        _shortDistanceIDs = _inGameManager.IsWhite? new [] { SquereID.g1, SquereID.f1 }: //w_s_c
+                                                    new [] { SquereID.g8, SquereID.f8 };//b_s_c
+        _longDistanceIDs = _inGameManager.IsWhite?  new [] { SquereID.d1, SquereID.c1}://w_l_c 
+                                                    new []{ SquereID.d8, SquereID.c8};//b_l_c
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     void AddTurnCount()
     {
         _inGameManager._TurnCount++;
+    }
+    void CreateAllyCanMoveRange()
+    {
+        string allyTag = _inGameManager.IsWhite ? "White" : "Black";
+        string enemyTag = _inGameManager.IsWhite ? "Black" : "White";
+        Squere[] allyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(allyTag))).ToArray();
+        _allyCanMoveRange = new HashSet<SquereID>();
+        //for すべての駒で
+        for (int i = 0; i < allyPieceSqueres.Length; i++)
+        {
+            string search = allyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
+            Piece moverPiece = Instantiate(_inGameManager._PieceDict[search]);
+            Vector3Int[] canMoveAreas = Enumerable.Repeat(allyPieceSqueres[i]._SquereTilePos, moverPiece._MoveAreas().Length).ToArray();
+            if ("P".Contains(search) && !_inGameManager.IsWhite)
+            {
+                //ポーンの攻撃方向を修正している → 移動回数の変更にしなければならない
+                moverPiece = _addPieceFunction.UpdatePoneGroup(moverPiece);
+            }
+            //駒が攻撃できる範囲を検索する回数。ここから先の処理はPieceが固定されている
+            for (int c = 0; c < moverPiece._MoveCount(); c++)
+            {
+                //for 駒が攻撃できる全方位のSquereを検索。何かの駒にぶつかったら検索しなくて良い
+                for (int d = 0; d < canMoveAreas.Length; d++)
+                {
+                    if (canMoveAreas[d].z == -1)
+                    {
+                        continue;
+                    }
+                    canMoveAreas[d] += moverPiece._MoveAreas()[d]; //d == 方角
+                    int alphabet = canMoveAreas[d].y;
+                    int number = canMoveAreas[d].x;
+                    //盤外である　は二度と検索しなくて良い条件 
+                    if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
+                    {
+                        canMoveAreas[d].z = -1;
+                        continue;
+                    }
+                    Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
+                    // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
+                    if (difendSquere._IsOnPieceObj)
+                    {
+                        canMoveAreas[d].z = -1;
+                        //敵から見て敵の駒(ally)が見つかった場合の条件
+                        if (difendSquere._IsOnPieceObj.CompareTag(allyTag))
+                        {
+                            // //enpassantObjを検知したとき
+                            // if (difendSquere._IsActiveEnpassant && "P".Contains(attackerPiece._PieceName.First().ToString()))
+                            // {
+                            //     //parentのObjが乗っているSquareIDを登録する
+                            //     string[] parentObjName = difendSquere._IsOnPieceObj.transform.parent.name.Split('_');
+                            //     _enemyAttackRange.Add(_inGameManager._SquereArrays[int.Parse(parentObjName[1])][int.Parse(parentObjName[1])]._SquereID);
+                            //     continue;
+                            // }
+                            _enemyAttackRange.Add(difendSquere._SquereID);
+                            //しかもチェックだった
+                            if ("K".Contains(difendSquere._IsOnPieceObj.name.First().ToString()))
+                            {
+                                _isCheck = true;
+                                //用途不明
+                                _checkedKingSquere = difendSquere;
+                                _checkAttackerSqueres.Add(allyPieceSqueres[i]);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _enemyAttackRange.Add(difendSquere._SquereID);
+                    }
+                }
+            }
+        }
     }
     void CreateEnemyAtackRange()
     {
@@ -63,7 +132,7 @@ public class TurnBegin : MonoBehaviour
             string search = enemyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
             Piece attackerPiece = Instantiate(_inGameManager._PieceDict[search]);
             Vector3Int[] attackAreas = Enumerable.Repeat(enemyPieceSqueres[i]._SquereTilePos, attackerPiece._AttackAreas().Length).ToArray();
-            if (search == "P" && !_inGameManager.IsWhite)
+            if ("P".Contains(search) && !_inGameManager.IsWhite)
             {
                 //ポーンの攻撃方向を修正している
                 attackerPiece = _addPieceFunction.UpdatePoneGroup(attackerPiece);
@@ -155,7 +224,6 @@ public class TurnBegin : MonoBehaviour
     }
     /// <summary>
     /// 条件② 両キャスリング時の移動経路になにかしらの駒がある場合、攻撃範囲の検索を中断する
-    /// 補足：b1, c1, / f1, g1, h1 / b8, c8, / f8, g8, h8 のどこかに駒がある場合は該当のキャスリングができない
     /// </summary>
     /// <returns></returns>
     bool MinimalFilter(SquereID[] distanceIDs)

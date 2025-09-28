@@ -24,7 +24,7 @@ public class UIManager : ColorPallet
     [SerializeField] TextMeshProUGUI[] t_squereIdsW;
     [SerializeField] TextMeshProUGUI[] t_squereIdsB;
     Dictionary<string, TextMeshProUGUI> t_residuesDictW;
-    Dictionary<string, TextMeshProUGUI> t_residuesDictB;    
+    Dictionary<string, TextMeshProUGUI> t_residuesDictB;
     Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictW;
     Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictB;
     public GameObject _DeathPieceObj {get;set;}

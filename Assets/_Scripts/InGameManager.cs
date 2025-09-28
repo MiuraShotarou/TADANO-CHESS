@@ -3,7 +3,14 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-
+/// <summary>
+/// 
+/// <ドロー条件/>
+/// チェックがかかってない（キングが直接的に攻撃されていない）状態でキング以外の駒がなく該当者のターンを迎えてしまった時（ステイルメイト）
+/// ３回同一局面
+/// 50回Poneが動かず、その間どの駒も取られていなかった場合。
+/// 合意によるもの
+/// </summary>
 //変換処理・コレクション処理を探せ
 public class InGameManager : MonoBehaviour
 {
@@ -86,7 +93,6 @@ public class InGameManager : MonoBehaviour
                 {
                     _SquereArrays[i][j]._IsOnPieceObj = null;
                 }
-                // _SquereArrays[i][j].name.Replace(_SquereArrays[i][j].name.First().ToString(), i.ToString());
                 // _SquereArrays[i][j].UpdateMiniBorad = MiniBoard.UpdateMiniBoard;
             }
         }
@@ -120,32 +126,11 @@ public class InGameManager : MonoBehaviour
 
     void Start()
     {
-        // if (_uiManager.FadePanel.activeSelf)
-        // {
-        //     _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("0")); //本番用
-        //     _BGMAudioSource.Play();
-        //     Debug.Log("");
-        //     _AnimatorController.Play("StartInGame"); 460 750 810
-        // }
-        // else
-        {
-            _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
-            _BGMAudioSource.Play();
-            _playableDirector.Play();
-            //審査会用の処理 → 20秒後に音楽が良い感じになる
-            //1s start 7sb 11s 17sb 20s
-            Time.timeScale = 10;
-        }
+        _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
+        _BGMAudioSource.Play();
+        _playableDirector.Play();
+        Time.timeScale = 10;
     }
-    /// <summary>
-    /// void Start → playableDirct → の再生後に一度だけ呼び出される
-    /// </summary>
-    void StartTitle()
-    {
-        // Time.timeScale = 10;
-        _AnimatorController.Play("Title");
-    }
-
     public void StartMultiRelay()
     {
         _uiManager.StartMulti();
@@ -232,8 +217,6 @@ public class InGameManager : MonoBehaviour
     {
         IsCastling = _IsWhite? new[] { _isWhiteShortCastling, _isWhiteLongCastling }:
                                 new []{ _isBlackShortCastling, _isBlackLongCastling};
-        // IsCastlingSwitch = _IsWhite? new []{_isWhiteShortCastlingSwitch, _isWhiteLongCastlingSwitch}:
-        //                                 new []{_isBlackShortCastlingSwitch, _isBlackLongCastlingSwitch};
     }
 }
 public enum SquereID //8 * 8 の配列OnPieceだったら該当のbitを1にする 

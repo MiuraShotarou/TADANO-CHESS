@@ -108,16 +108,16 @@ public class TurnDeside : ColorPallet
                     //short && R
                     case SquereID.a1:
                     case SquereID.a8:
-                        _inGameManager.IsCastling[0] = () => false;
+                        _inGameManager.IsCastling[1] = () => false;
                         break;
                     //long && R
                     case SquereID.h1:
                     case SquereID.h8:
-                        _inGameManager.IsCastling[1] = () => false;
+                        _inGameManager.IsCastling[0] = () => false;
                         break;
                     //K
-                    case SquereID.d1:
-                    case SquereID.d8:
+                    case SquereID.e1:
+                    case SquereID.e8:
                         _inGameManager.IsCastling[0] = () => false;
                         _inGameManager.IsCastling[1] = () => false;
                         break;
@@ -280,7 +280,7 @@ public class TurnDeside : ColorPallet
         string search = "";
         switch (id)
         {
-            case SquereID.a1:
+            case SquereID.h1:
                 phaseOneCurveXStart = -4.42f;
                 phaseOneCurveXEnd = -5.15f;
                 phaseOneScalePoint = 3.358f;
@@ -288,7 +288,7 @@ public class TurnDeside : ColorPallet
                 phaseTwoCurveYEnd = -1.2f;
                 search = "K_ShortCastling_W";
                 break;
-            case SquereID.a8:
+            case SquereID.h8:
                 phaseOneCurveXStart = 4.33f;
                 phaseOneCurveXEnd = 5.05f;
                 phaseOneScalePoint = 3.358f;
@@ -296,7 +296,7 @@ public class TurnDeside : ColorPallet
                 phaseTwoCurveYEnd = -1.2f;
                 search = "K_ShortCastling_B";
                 break;
-            case SquereID.h1:
+            case SquereID.a1:
                 phaseOneCurveXStart = -4.42f;
                 phaseOneCurveXEnd = -3.9f;
                 phaseOneScalePoint = 2.786f;
@@ -304,7 +304,7 @@ public class TurnDeside : ColorPallet
                 phaseTwoCurveYEnd = 3.07f;
                 search = "K_LongCastling_W";
                 break;
-            case SquereID.h8:
+            case SquereID.a8:
                 phaseOneCurveXStart = 4.33f;
                 phaseOneCurveXEnd = 3.76f;
                 phaseOneScalePoint = 2.929f;
@@ -358,7 +358,7 @@ public class TurnDeside : ColorPallet
         string search = "";
         switch (id)
         {
-            case SquereID.a1:
+            case SquereID.h1:
                 phaseOneCurveXStart = -5.6f;
                 phaseOneCurveXEnd = -15.6f;
                 phaseOneAllCurveY = -2.7f;
@@ -369,7 +369,7 @@ public class TurnDeside : ColorPallet
                 phaseTwoAllScale = 3.215f;
                 search = "R_ShortCastling_W";
                 break;
-            case SquereID.a8:
+            case SquereID.h8:
                 phaseOneCurveXStart = 5.5f;
                 phaseOneCurveXEnd = 15.5f;
                 phaseOneAllCurveY = -2.7f;
@@ -380,7 +380,7 @@ public class TurnDeside : ColorPallet
                 phaseTwoAllScale = 3.215f;
                 search = "R_ShortCastling_B";
                 break;
-            case SquereID.h1:
+            case SquereID.a1:
                 phaseOneCurveXStart = -3.5f;
                 phaseOneCurveXEnd = -13.5f;
                 phaseOneAllCurveY = 4.35f;
@@ -391,7 +391,7 @@ public class TurnDeside : ColorPallet
                 phaseTwoAllScale = 2.929f;
                 search = "R_LongCastling_W";
                 break;
-            case SquereID.h8:
+            case SquereID.a8:
                 phaseOneCurveXStart = 3.42f;
                 phaseOneCurveXEnd = 13.42f;
                 phaseOneAllCurveY = 4.35f;
@@ -522,21 +522,21 @@ public class TurnDeside : ColorPallet
             SquereID id = _targetSquere._SquereID;
             switch (id)
             {
-                case SquereID.a1:
-                    kingPosID = SquereID.b1;
-                    rookPosID = SquereID.c1;
-                    break;
-                case SquereID.a8:
-                    kingPosID = SquereID.b8;
-                    rookPosID = SquereID.c8;
-                    break;
                 case SquereID.h1:
-                    kingPosID = SquereID.f1;
-                    rookPosID = SquereID.e1;
+                    kingPosID = SquereID.g1;
+                    rookPosID = SquereID.f1;
                     break;
                 case SquereID.h8:
-                    kingPosID = SquereID.f8;
-                    rookPosID = SquereID.e8;
+                    kingPosID = SquereID.g8;
+                    rookPosID = SquereID.f8;
+                    break;
+                case SquereID.a1:
+                    kingPosID = SquereID.c1;
+                    rookPosID = SquereID.d1;
+                    break;
+                case SquereID.a8:
+                    kingPosID = SquereID.c8;
+                    rookPosID = SquereID.d8;
                     break;
             }
             _targetSquere = _inGameManager._SquereArrays[(int)kingPosID / 8][(int)kingPosID % 8];
@@ -578,7 +578,6 @@ public class TurnDeside : ColorPallet
             //プロモーションの処理
             else if ("1, 8".Contains(_targetSquere._SquereID.ToString()[1]))
             {
-                Debug.Log("");
                 _inGameManager.StartActivePromotionRelay();
                 return;
                 //プロモーション先の駒をUIで選択したら_inGameManager._IsWhiteを切り替える

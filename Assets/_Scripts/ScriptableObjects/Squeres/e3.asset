@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4016f1da03c7bb449b505a1efa13c29, type: 3}
   m_Name: e3
   m_EditorClassIdentifier: 
-  _squerePosition: {x: -1.72, y: 2.1}
-  _squereTilePos: {x: 2, y: 4, z: 0}
-  _squereID: e3
+  _squerePosition: {x: -1.9, y: 1.17}
+  _squereTilePos: {x: 2, y: 3, z: 0}
+  _squereID: d3
