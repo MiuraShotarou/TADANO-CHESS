@@ -42,7 +42,7 @@ public class TurnBegin : MonoBehaviour
         _checkAttackerSqueres = new List<Squere>();
         _shortDistanceIDs = _inGameManager.IsWhite? new [] { SquereID.g1, SquereID.f1 }: //w_s_c
                                                     new [] { SquereID.g8, SquereID.f8 };//b_s_c
-        _longDistanceIDs = _inGameManager.IsWhite?  new [] { SquereID.d1, SquereID.c1}://w_l_c 
+        _longDistanceIDs = _inGameManager.IsWhite?  new [] { SquereID.d1, SquereID.c1}://w_l_c
                                                     new []{ SquereID.d8, SquereID.c8};//b_l_c
     }
     void AddTurnCount()

@@ -10,10 +10,13 @@ using UnityEngine.Playables;
 /// ３回同一局面
 /// 50回Poneが動かず、その間どの駒も取られていなかった場合。
 /// 合意によるもの
+/// <プレイスキル/>
+/// 
 /// </summary>
 //変換処理・コレクション処理を探せ
 public class InGameManager : MonoBehaviour
 {
+    public GameMode GameMode;
     bool _isWhite = true;
     bool _IsCheckedWhiteKing { get; set; }
     bool _IsCheckedBlackKing { get; set; }
@@ -131,9 +134,34 @@ public class InGameManager : MonoBehaviour
         _playableDirector.Play();
         Time.timeScale = 10;
     }
-    public void StartMultiRelay()
+
+    public void StartComputer()
     {
-        _uiManager.StartMulti();
+        GameMode = GameMode.Computer;
+        _AnimatorController.Play("StartComputer");
+    }
+    /// <summary>
+    /// StartComputer.animの再生後にEventから一度だけ呼び出される
+    /// </summary>
+    void StartSelectComputerStrength()
+    {
+        _AnimatorController.Play("StartSelectComputerStrength");
+    }
+    /// <summary>
+    /// MultiPlayButtonを押した時に一度だけ呼び出される。シーン遷移の演出用アニメーションを再生しているだけ
+    /// </summary>
+    public void StartMulti()
+    {
+        GameMode = GameMode.Multi;
+        _AnimatorController.Play("StartMulti");
+    }
+    /// <summary>
+    /// StartComputer.animの再生後にEventから一度だけ呼び出される
+    /// </summary>
+    void StartDesideMultiPlayerGroup()
+    {
+        _uiManager.UpdateMultiPlayerGroupUI();
+        _animatorController.Play("StartDesideMultiPlayerGroup");
     }
     /// <summary>
     /// 攻撃側のグループを変更させるメソッド。IsWhiteが変更されると"StartTurn".animが再生される
@@ -218,6 +246,13 @@ public class InGameManager : MonoBehaviour
         IsCastling = _IsWhite? new[] { _isWhiteShortCastling, _isWhiteLongCastling }:
                                 new []{ _isBlackShortCastling, _isBlackLongCastling};
     }
+}
+
+public enum GameMode
+{
+    Online,
+    Computer,
+    Multi,
 }
 public enum SquereID //8 * 8 の配列OnPieceだったら該当のbitを1にする 
 {

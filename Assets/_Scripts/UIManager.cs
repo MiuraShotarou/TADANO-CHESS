@@ -48,13 +48,6 @@ public class UIManager : ColorPallet
         //すべてのDicのKeyは同一にしてあるが、コードが悪いのでそれがわかりずらい
     }
     /// <summary>
-    /// MultiPlayButtonを押した時に一度だけ呼び出される
-    /// </summary>
-    public void StartMulti()
-    {
-        _inGameManager._AnimatorController.Play("StartMulti");
-    }
-    /// <summary>
     /// ターンが切り替わった時、InGameManagerから一度だけ呼び出される。TurnBegin.csの後に呼び出される
     /// </summary>
     public void StartUpdateTurnUI()
