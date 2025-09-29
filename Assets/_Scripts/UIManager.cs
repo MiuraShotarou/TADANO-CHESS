@@ -176,6 +176,14 @@ public class UIManager : ColorPallet
         UpdatePromotionUI(promotionName);
         _inGameManager.StartInactivePromotionRelay();
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UpdateMultiPlayerGroupUI()
+    {
+        
+    }
+    
     public void ActiveFadePanel()
     {
         _fadePanel.SetActive(true);

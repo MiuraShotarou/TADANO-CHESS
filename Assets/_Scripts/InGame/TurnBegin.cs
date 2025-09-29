@@ -26,7 +26,7 @@ public class TurnBegin : MonoBehaviour
         //判定基準 → K が動いているかいないか R が動いているかいないか 間に駒があるかないか 間が敵の攻撃範囲に該当するか（ここをなるべく調べたくない）
         Initialize();
         AddTurnCount();
-        CreateAllyCanMoveRange();
+        // CreateAllyCanMoveRange();
         CreateEnemyAtackRange(); //戻り値にして、ローカルに保存することを検討
         _inGameManager.Check(_isCheck ,_checkedKingSquere, _checkAttackerSqueres);
         //Checkの場合はキャスリング出来ないようにだけ書くこと
@@ -49,6 +49,9 @@ public class TurnBegin : MonoBehaviour
     {
         _inGameManager._TurnCount++;
     }
+    /// <summary>
+    /// 自身の駒が移動可能な範囲をすべて取得する // 中途半端
+    /// </summary>
     void CreateAllyCanMoveRange()
     {
         string allyTag = _inGameManager.IsWhite ? "White" : "Black";

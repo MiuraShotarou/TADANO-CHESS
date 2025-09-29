@@ -129,10 +129,16 @@ public class InGameManager : MonoBehaviour
 
     void Start()
     {
+        GameMode = GameMode.None;
         _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
         _BGMAudioSource.Play();
         _playableDirector.Play();
         Time.timeScale = 10;
+    }
+
+    void StartTitle()
+    {
+        _AnimatorController.Play("Title");
     }
 
     public void StartComputer()
@@ -250,6 +256,7 @@ public class InGameManager : MonoBehaviour
 
 public enum GameMode
 {
+    None,
     Online,
     Computer,
     Multi,
