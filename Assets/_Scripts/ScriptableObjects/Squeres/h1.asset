@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: h1
   m_EditorClassIdentifier: 
   _squerePiecePosition: {x: -5.6, y: -2.7}
-  _squereTileWorldPosition: {x: 0.5, y: 0.48, z: 0}
-  _squereTilePos: {x: 0, y: 0, z: 0}
-  _squereID: a1
+  _squereTilePos: {x: 0, y: 7, z: 0}
+  _miniBordPos: {x: 0, y: 0}

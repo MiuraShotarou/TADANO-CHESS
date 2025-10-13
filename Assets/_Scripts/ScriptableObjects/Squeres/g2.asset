@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: g2
   m_EditorClassIdentifier: 
   _squerePiecePosition: {x: -3.69, y: -1.2}
-  _squereTilePos: {x: 1, y: 1, z: 0}
+  _squereTilePos: {x: 1, y: 6, z: 0}
   _miniBordPos: {x: 0, y: 0}

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4016f1da03c7bb449b505a1efa13c29, type: 3}
   m_Name: h4
   m_EditorClassIdentifier: 
-  _squerePosition: {x: -0.85, y: -2.7}
-  _squereTilePos: {x: 3, y: 0, z: 0}
-  _squereID: a4
+  _squerePiecePosition: {x: -0.85, y: -2.7}
+  _squereTilePos: {x: 3, y: 7, z: 0}
+  _miniBordPos: {x: 0, y: 0}

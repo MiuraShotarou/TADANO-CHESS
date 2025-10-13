@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+
 /// <summary>
 /// _canSelectedTileBaseを描画するためのクラス
 /// </summary>
@@ -128,6 +125,7 @@ public class OpenSelectableArea : ColorPallet
     /// </summary>
     void Initialize()
     {
+        Debug.Log(_selectedSquere._SquereTilePos);
         _moveAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._MoveAreas().Length).ToArray();
         _attackAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._AttackAreas().Length).ToArray();
         _renderingAreas.Clear();
@@ -254,7 +252,6 @@ public class OpenSelectableArea : ColorPallet
             _inGameManager.StartSelectTileRelay();
             return;
         }
-        // Debug.Log(_renderingAreas[0]);
         for (int i = 0; i < _renderingAreas.Count; i++)
         {
             _deceptionTileFieldArrays[_renderingAreas[i].y][_renderingAreas[i].x].color = _CanSelectedTileColor;
@@ -289,7 +286,6 @@ public class OpenSelectableArea : ColorPallet
             _memorizeRenderingPieceObjects.Remove(_targetSquere._IsOnPieceObj);
         }
         //ActiveになったSquereをListから削除
-        Debug.Log(_selectedSquere._SquereTilePos);
         Array.ForEach(_memorizeRenderingAreas.ToArray(), a => Debug.Log(a));
         _memorizeRenderingAreas.Remove(VectorIntConverter(_selectedSquere._SquereTilePos));
         _memorizeRenderingAreas.Remove(VectorIntConverter(_targetSquere._SquereTilePos));
