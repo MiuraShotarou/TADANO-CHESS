@@ -17,6 +17,7 @@ using UnityEngine.Playables;
 public class InGameManager : MonoBehaviour
 {
     public GameMode GameMode;
+    public int ComputerLevel;
     bool _isWhite = true;
     bool _IsCheckedWhiteKing { get; set; }
     bool _IsCheckedBlackKing { get; set; }
@@ -144,6 +145,7 @@ public class InGameManager : MonoBehaviour
     public void StartComputer()
     {
         GameMode = GameMode.Computer;
+        ComputerLevel = 1;
         _AnimatorController.Play("StartComputer");
     }
     /// <summary>

@@ -21449,6 +21449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameMode: 0
+  ComputerLevel: 0
   _isWhiteShortCastlingSwitch: 0
   _isWhiteLongCastlingSwitch: 0
   _isBlackShortCastlingSwitch: 0
@@ -42694,7 +42695,6 @@ GameObject:
   - component: {fileID: 8523242916348136343}
   - component: {fileID: 2891490470025776146}
   - component: {fileID: 8839980932034523777}
-  - component: {fileID: 8839980932034523778}
   m_Layer: 6
   m_Name: K_4_0_W_0
   m_TagString: White
@@ -43208,24 +43208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inGameManager: {fileID: 1218987139}
---- !u!114 &8839980932034523778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6865536933113320284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 8c56748dcf14dce4a858705fe022f9f7, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls: []
 --- !u!1 &8844249457675116030
 GameObject:
   m_ObjectHideFlags: 0
