@@ -258,13 +258,13 @@ public class InGameManager : MonoBehaviour
     {
         _AnimatorController.Play("InactivePromotion");
     }
-    public void ComputerMoveRelay()
+    public void MoveComputerRelay()
     {
         if (GameMode == GameMode.Computer ||  GameMode == GameMode.Multi //テスト用マルチプレイ
             &&
             !IsPlayerTurn)
         {
-            _artificialIntelligence.ComputerMove();
+            _artificialIntelligence.MoveComputer();
         }
     }
     void Initialize()

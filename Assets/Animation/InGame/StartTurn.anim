@@ -617,7 +617,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 7
-    functionName: ComputerMoveRelay
+    functionName: MoveComputerRelay
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

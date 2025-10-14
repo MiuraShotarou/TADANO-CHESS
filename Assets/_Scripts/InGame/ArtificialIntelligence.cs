@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-
+using DG.Tweening;
 public class ArtificialIntelligence : MonoBehaviour
 {
     InGameManager _inGameManager;
+    OpenSelectableArea _openSelectableArea;
     AddPieceFunction _addPieceFunction;
     ArtificialIntelligence _artificialIntelligence;
     HashSet<SquereID> _allyCanMoveRange;
@@ -21,6 +22,7 @@ public class ArtificialIntelligence : MonoBehaviour
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
         _artificialIntelligence = GetComponent<ArtificialIntelligence>();
+        _openSelectableArea = GetComponent<OpenSelectableArea>();
     }
     
     public void StartArtificialIntelligence()
@@ -234,7 +236,7 @@ public class ArtificialIntelligence : MonoBehaviour
         return isCanCastling;
     }
 
-    public void ComputerMove()
+    public void MoveComputer()
     {
         HashSet<SquereID> moveRange = _allyCanMoveRange.Union(_enemyAttackRange).ToHashSet();
         Squere[] allyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(_inGameManager.IsWhite ? "White" : "Black"))).ToArray();
@@ -245,5 +247,14 @@ public class ArtificialIntelligence : MonoBehaviour
         Debug.Log(selectedPieceObj.name);
         // PointerEventData ポインター入力に関する情報を保持しているクラス
         // EventTrigger 
+        DOVirtual.DelayedCall(3, DecideComputer);
+    }
+    void DecideComputer()
+    {
+        SpriteRenderer[] pieceCanMoveRange = _inGameManager._DeceptionTileFieldArrays.SelectMany(array => array.Where(field => field.gameObject.GetComponent<BoxCollider2D>().enabled)).ToArray();
+        var hoge = pieceCanMoveRange[Random.Range(0, pieceCanMoveRange.Length)];
+        Debug.Log(hoge.gameObject.name);
+        _openSelectableArea.TurnDesideRelay(hoge);
+        // _openSelectableArea.TurnDesideRelay(pieceCanMoveRange[Random.Range(0, pieceCanMoveRange.Length)]);
     }
 }
