@@ -583,7 +583,7 @@ public class TurnDeside : ColorPallet
                 //プロモーション先の駒をUIで選択したら_inGameManager._IsWhiteを切り替える
             }
         }
-        _inGameManager.TrunChange(); //攻守交代
+        _inGameManager.TurnChange(); //攻守交代
         //次のターンへ
     }
     /// <summary>

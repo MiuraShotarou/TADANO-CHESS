@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using Random = UnityEngine.Random;
+
 /// <summary>
 /// 
 /// <ドロー条件/>
@@ -18,7 +20,7 @@ public class InGameManager : MonoBehaviour
 {
     public GameMode GameMode;
     public int ComputerLevel;
-    bool _isWhite = true;
+    bool _isWhite;
     bool _IsCheckedWhiteKing { get; set; }
     bool _IsCheckedBlackKing { get; set; }
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
@@ -52,10 +54,12 @@ public class InGameManager : MonoBehaviour
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
     TurnDeside _turnDeside;
+    ArtificialIntelligence _artificialIntelligence;
     Animator _animatorController;
     PlayableDirector _playableDirector;
     bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     public bool IsWhite{ get => _isWhite;}
+    public bool IsPlayerTurn { get; set; }
     public int _TurnCount { get; set; }
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
@@ -118,6 +122,7 @@ public class InGameManager : MonoBehaviour
         _turnBegin = GetComponent<TurnBegin>();
         _animatorController = GetComponent<Animator>();
         _playableDirector = GetComponent<PlayableDirector>();
+        _artificialIntelligence = GetComponent<ArtificialIntelligence>();
         _isWhiteShortCastlingSwitch = false;
         _isWhiteLongCastlingSwitch = false;
         _isBlackShortCastlingSwitch = false;
@@ -130,6 +135,7 @@ public class InGameManager : MonoBehaviour
 
     void Start()
     {
+        _isWhite = true;
         GameMode = GameMode.None;
         _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
         _BGMAudioSource.Play();
@@ -174,7 +180,7 @@ public class InGameManager : MonoBehaviour
     /// <summary>
     /// 攻撃側のグループを変更させるメソッド。IsWhiteが変更されると"StartTurn".animが再生される
     /// </summary>
-    public void TrunChange()
+    public void TurnChange()
     {
         _IsWhite = !_IsWhite;
     }
@@ -185,15 +191,18 @@ public class InGameManager : MonoBehaviour
     {
         Initialize();
         _turnBegin.StartTurn();
+        _artificialIntelligence.StartArtificialIntelligence();
         _uiManager.StartUpdateTurnUI();
         if (_TurnCount == 1)
         {
             _playableDirector.enabled = false;
+            IsPlayerTurn = true;
+            // IsPlayerTurn = Random.Range(0, 2) == 1; 実機で使用する場合
             _AnimatorController.Play("StartInGame");
         }
         else
         {
-            _animatorController.Play("StartTurn");
+            _AnimatorController.Play("StartTurn");
         }
     }
 
@@ -248,6 +257,15 @@ public class InGameManager : MonoBehaviour
     public void StartInactivePromotionRelay()
     {
         _AnimatorController.Play("InactivePromotion");
+    }
+    public void ComputerMoveRelay()
+    {
+        if (GameMode == GameMode.Computer ||  GameMode == GameMode.Multi //テスト用マルチプレイ
+            &&
+            !IsPlayerTurn)
+        {
+            _artificialIntelligence.ComputerMove();
+        }
     }
     void Initialize()
     {

@@ -21407,6 +21407,7 @@ GameObject:
   - component: {fileID: 1218987145}
   - component: {fileID: 1218987135}
   - component: {fileID: 1218987151}
+  - component: {fileID: 1218987153}
   - component: {fileID: 1218987152}
   m_Layer: 0
   m_Name: InGameManager
@@ -22117,6 +22118,18 @@ PlayableDirector:
   m_ExposedReferences:
     m_References:
     - e9c0566673aaa7543b88e11b2ee8d06d: {fileID: 6865536933113320284}
+--- !u!114 &1218987153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218987132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dbfbbe6a07fedb468bed5109ac87855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1219547210
 GameObject:
   m_ObjectHideFlags: 0

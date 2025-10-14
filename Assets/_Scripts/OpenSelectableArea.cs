@@ -46,7 +46,7 @@ public class OpenSelectableArea : ColorPallet
     {
         if (pieceObj == _selectedPieceObj
             || 
-            (_inGameManager.IsWhite && pieceObj.CompareTag("Black")) || (!_inGameManager.IsWhite && pieceObj.CompareTag("White"))){ return; } //RayCastで拒否したい
+            (_inGameManager.IsWhite && pieceObj.CompareTag("Black")) || (!_inGameManager.IsWhite && pieceObj.CompareTag("White"))){ return; }
         //ユーザーの入力を遮る
         _uiManager.ActiveFadePanel();
         if (_selectedPieceObj)
