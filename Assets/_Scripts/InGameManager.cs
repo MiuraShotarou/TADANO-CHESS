@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// 
@@ -94,6 +93,7 @@ public class InGameManager : MonoBehaviour
                 _SquereArrays[i][j] = _setSqueres[index];
                 if ("0,1,6,7".Contains(j.ToString()))
                 {
+                    Debug.Log(_SquereArrays[i][j].name);
                     _SquereArrays[i][j]._IsOnPieceObj = _setPieceObjects[count];
                     count++;
                 }

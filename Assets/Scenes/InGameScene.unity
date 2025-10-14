@@ -21528,38 +21528,38 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a14d723baa314d9408208f4ec104ac6f, type: 2}
   - {fileID: 11400000, guid: da565d994cc045446bb4b726330158c8, type: 2}
   _setPieceObjects:
-  - {fileID: 1906882876}
-  - {fileID: 669127261}
-  - {fileID: 733407933}
-  - {fileID: 76338902}
-  - {fileID: 1143464739}
-  - {fileID: 2107785043}
-  - {fileID: 1606238197}
-  - {fileID: 780661973}
-  - {fileID: 780438267}
-  - {fileID: 133879111}
-  - {fileID: 1301552876}
-  - {fileID: 865202206}
-  - {fileID: 6865536933113320284}
-  - {fileID: 1505631218}
-  - {fileID: 671965040}
-  - {fileID: 1345505755}
-  - {fileID: 1637118412}
-  - {fileID: 889909041}
-  - {fileID: 1785975198}
-  - {fileID: 1099086946}
-  - {fileID: 449951566}
-  - {fileID: 47018807}
-  - {fileID: 614912952}
-  - {fileID: 1372169879}
-  - {fileID: 529438573}
-  - {fileID: 2047094468}
-  - {fileID: 159223845}
-  - {fileID: 846725925}
   - {fileID: 412427730}
   - {fileID: 2282321969702482978}
   - {fileID: 1610893087}
   - {fileID: 1761793636}
+  - {fileID: 529438573}
+  - {fileID: 2047094468}
+  - {fileID: 159223845}
+  - {fileID: 846725925}
+  - {fileID: 449951566}
+  - {fileID: 47018807}
+  - {fileID: 614912952}
+  - {fileID: 1372169879}
+  - {fileID: 1637118412}
+  - {fileID: 889909041}
+  - {fileID: 1785975198}
+  - {fileID: 1099086946}
+  - {fileID: 6865536933113320284}
+  - {fileID: 1505631218}
+  - {fileID: 671965040}
+  - {fileID: 1345505755}
+  - {fileID: 780438267}
+  - {fileID: 133879111}
+  - {fileID: 1301552876}
+  - {fileID: 865202206}
+  - {fileID: 1143464739}
+  - {fileID: 2107785043}
+  - {fileID: 1606238197}
+  - {fileID: 780661973}
+  - {fileID: 1906882876}
+  - {fileID: 669127261}
+  - {fileID: 733407933}
+  - {fileID: 76338902}
   _setPromotionObjects:
   - {fileID: 6526113246624836398}
   - {fileID: 2149527742951829197}
@@ -22935,7 +22935,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253496697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

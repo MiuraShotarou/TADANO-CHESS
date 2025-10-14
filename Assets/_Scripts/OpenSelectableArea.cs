@@ -22,7 +22,7 @@ public class OpenSelectableArea : ColorPallet
     Vector3Int[] _moveAreas;
     List<Vector3Int> _renderingAreas = new List<Vector3Int>();
     List<Vector2Int> _memorizeRenderingAreas = new List<Vector2Int>();
-    Queue<Vector3Int> _beforeTurnMoveAreaQueue = new Queue<Vector3Int>(); //要素数 < 5, 前のターンに描画がリセットされなかったSquereの描画をDequeueでリセットする → 被りがあった場合はそこだけ描画をリセットしない
+    // Queue<Vector3Int> _beforeTurnMoveAreaQueue = new Queue<Vector3Int>(); //要素数 < 5, 前のターンに描画がリセットされなかったSquereの描画をDequeueでリセットする → 被りがあった場合はそこだけ描画をリセットしない
     List<GameObject> _memorizeRenderingPieceObjects = new List<GameObject>();
     int _pieceMoveCount = 0;
     int _prefabCount = 0;
@@ -103,29 +103,28 @@ public class OpenSelectableArea : ColorPallet
             _deceptionTileFieldArrays[_memorizeRenderingAreas[i].y][_memorizeRenderingAreas[i].x].gameObject.GetComponent<Collider2D>().enabled = false;
         }
         _memorizeRenderingPieceObjects.Clear();
-        if (_beforeTurnMoveAreaQueue.Count > 2)
-        {
-            Vector3Int selectedSquereTilePos = _beforeTurnMoveAreaQueue.Dequeue();
-            _deceptionTileFieldArrays[selectedSquereTilePos.y][selectedSquereTilePos.x].color = Color.clear;
-            _deceptionTileFieldArrays[selectedSquereTilePos.y][selectedSquereTilePos.x].gameObject.GetComponent<Collider2D>().enabled = false;
-            Vector3Int targetSquereTilePos = _beforeTurnMoveAreaQueue.Dequeue();
-            if (targetSquereTilePos == _targetSquere._SquereTilePos)
-            {
-                return;
-            }
-            else
-            {
-                _deceptionTileFieldArrays[targetSquereTilePos.y][targetSquereTilePos.x].color = Color.clear;
-                _deceptionTileFieldArrays[targetSquereTilePos.y][targetSquereTilePos.x].gameObject.GetComponent<Collider2D>().enabled = false;
-            }
-        }
+        // if (_beforeTurnMoveAreaQueue.Count > 2)
+        // {
+        //     Vector3Int selectedSquereTilePos = _beforeTurnMoveAreaQueue.Dequeue();
+        //     _deceptionTileFieldArrays[selectedSquereTilePos.y][selectedSquereTilePos.x].color = Color.clear;
+        //     _deceptionTileFieldArrays[selectedSquereTilePos.y][selectedSquereTilePos.x].gameObject.GetComponent<Collider2D>().enabled = false;
+        //     Vector3Int targetSquereTilePos = _beforeTurnMoveAreaQueue.Dequeue();
+        //     if (targetSquereTilePos == _targetSquere._SquereTilePos)
+        //     {
+        //         return;
+        //     }
+        //     else
+        //     {
+        //         _deceptionTileFieldArrays[targetSquereTilePos.y][targetSquereTilePos.x].color = Color.clear;
+        //         _deceptionTileFieldArrays[targetSquereTilePos.y][targetSquereTilePos.x].gameObject.GetComponent<Collider2D>().enabled = false;
+        //     }
+        // }
     }
     /// <summary>
     /// fieldにあるコレクションをすべて初期化する
     /// </summary>
     void Initialize()
     {
-        Debug.Log(_selectedSquere._SquereTilePos);
         _moveAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._MoveAreas().Length).ToArray();
         _attackAreas = Enumerable.Repeat(_selectedSquere._SquereTilePos, _selectedPiece._AttackAreas().Length).ToArray();
         _renderingAreas.Clear();
@@ -286,12 +285,11 @@ public class OpenSelectableArea : ColorPallet
             _memorizeRenderingPieceObjects.Remove(_targetSquere._IsOnPieceObj);
         }
         //ActiveになったSquereをListから削除
-        Array.ForEach(_memorizeRenderingAreas.ToArray(), a => Debug.Log(a));
-        _memorizeRenderingAreas.Remove(VectorIntConverter(_selectedSquere._SquereTilePos));
-        _memorizeRenderingAreas.Remove(VectorIntConverter(_targetSquere._SquereTilePos));
+        // _memorizeRenderingAreas.Remove(VectorIntConverter(_selectedSquere._SquereTilePos));
+        // _memorizeRenderingAreas.Remove(VectorIntConverter(_targetSquere._SquereTilePos));
         //次のターン終了時に描画のリセットを行う予定のSquereをQueueに追加する
-        _beforeTurnMoveAreaQueue.Enqueue(_selectedSquere._SquereTilePos);
-        _beforeTurnMoveAreaQueue.Enqueue(_targetSquere._SquereTilePos);
+        // _beforeTurnMoveAreaQueue.Enqueue(_selectedSquere._SquereTilePos);
+        // _beforeTurnMoveAreaQueue.Enqueue(_targetSquere._SquereTilePos);
         //地味に大事
         _turnDeside.enabled = true;
         _turnDeside.StartTurnDeside(_selectedPieceObj, _selectedPiece, _selectedSquere, _targetSquere);
