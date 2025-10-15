@@ -12,7 +12,6 @@ public class ArtificialIntelligence : MonoBehaviour
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;
     AddPieceFunction _addPieceFunction;
-    ArtificialIntelligence _artificialIntelligence;
     // HashSet<SquereID> _allyCanMoveRange;
     // HashSet<SquereID> _allyCanAttackRange;
     // HashSet<SquereID> _enemyAttackRange;
@@ -21,12 +20,12 @@ public class ArtificialIntelligence : MonoBehaviour
     SquereID[] _longDistanceIDs;
     Squere _checkedKingSquere;
     List<Squere> _checkAttackerSqueres;
-    bool _isCheck;
+    bool _isAllyCheck;
+    bool _isEnemyCheck;
     private void Start()
     {
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
-        _artificialIntelligence = GetComponent<ArtificialIntelligence>();
         _openSelectableArea = GetComponent<OpenSelectableArea>();
     }
     
@@ -34,7 +33,12 @@ public class ArtificialIntelligence : MonoBehaviour
     {
         Initialize();
         HashSet<SquereID> enemyAttackRange = CreateAttackRange(false);
-        _inGameManager.Check(_isCheck ,_checkedKingSquere, _checkAttackerSqueres);
+        _inGameManager.Check(_isEnemyCheck ,_checkedKingSquere, _checkAttackerSqueres);
+        // チェックがかけられていた場合、チェックメイトを判断する
+        if (_isEnemyCheck)
+        {
+            bool isEnemyCheckMate = JudgeCheckMate(enemyAttackRange);
+        }
         //Checkの場合はキャスリング出来ないようにだけ書くこと
         FilterCastling(enemyAttackRange);
     }
@@ -43,7 +47,8 @@ public class ArtificialIntelligence : MonoBehaviour
     /// </summary>
     void Initialize()
     {
-        _isCheck = false;
+        _isAllyCheck = false;
+        _isEnemyCheck = false;
         _checkedKingSquere = null;
         _checkAttackerSqueres = new List<Squere>();
         _canMovePieceObjectHash = new HashSet<GameObject>();
@@ -93,7 +98,6 @@ public class ArtificialIntelligence : MonoBehaviour
                     moverPiece = _addPieceFunction.AddLongCastlingArea(moverPiece);
                 }
             }
-            // Debug.Log($"T0 {allyPieceSqueres[i]._IsOnPieceObj.name}"); //現在行動しようとしている味方の駒の名前
             //駒が移動できる範囲を検索する回数。ここから先の処理はPieceが固定されている
             for (int c = 0; c < moverPiece._MoveCount(); c++)
             {
@@ -119,18 +123,15 @@ public class ArtificialIntelligence : MonoBehaviour
                         canMoveAreas[d].z = -1;
                         if ("K".Contains(search))
                         {
-                            if (_inGameManager.IsCastling.Any())
+                            if (_inGameManager.IsCastling.Any(b => b()))
                             {
                                 allyCanMoveRange.Add(_inGameManager._SquereArrays[alphabet][number]._SquereID);
-                                Debug.Log($"0 {_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj}");
-                                _canMovePieceObjectHash.Add(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj); //行動することが出来る駒を登録する。
                             }
                         }
                     }
                     else
                     {
                         allyCanMoveRange.Add(_inGameManager._SquereArrays[alphabet][number]._SquereID);
-                        Debug.Log($"1 {allyPieceSqueres[i]._IsOnPieceObj.name}"); //現在行動しようとしている駒の名前
                         _canMovePieceObjectHash.Add(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj);
                     }
                 }
@@ -190,7 +191,14 @@ public class ArtificialIntelligence : MonoBehaviour
                             //しかもチェックだった
                             if ("K".Contains(difendSquere._IsOnPieceObj.name.First().ToString()))
                             {
-                                _isCheck = true;
+                                if (isModeAlly)
+                                {
+                                    _isAllyCheck = true;
+                                }
+                                else
+                                {
+                                    _isEnemyCheck = true;
+                                }
                             }
                         }
                     }
@@ -206,7 +214,7 @@ public class ArtificialIntelligence : MonoBehaviour
     {
         //条件⓪ R / K が動いていた場合 → 省略：実際はTurnDeside.csで判断している
         //条件① チェック（チェックメイト）だった場合
-        if (_isCheck){return;}
+        if (_isAllyCheck){return;}
         //条件② 両キャスリング時の移動経路になにかしらの駒がある場合、攻撃範囲の検索を中断する
         bool isShortCastling = MinimalFilter(_shortDistanceIDs);
         bool isLongCastling = MinimalFilter(_longDistanceIDs);
@@ -215,7 +223,7 @@ public class ArtificialIntelligence : MonoBehaviour
         {
             isShortCastling = _shortDistanceIDs.All(condition => !enemyAttackRange.Contains(condition));
         }
-        else if (isLongCastling)
+        if (isLongCastling)
         {
             isLongCastling = _longDistanceIDs.All(condition => !enemyAttackRange.Contains(condition));
         }
@@ -240,6 +248,39 @@ public class ArtificialIntelligence : MonoBehaviour
         return isCanCastling;
     }
 
+    bool JudgeCheckMate(HashSet<SquereID> enemyAttackRange)
+    {
+        bool isCheckMate;
+        // 自身のキングを守れる状態であるか否か
+        string allyTag = _inGameManager.IsWhite? "White" : "Black";
+        string enemyTag = _inGameManager.IsWhite? "Black" : "White";
+        //自陣のコマが置いてあるマスの配列
+        Squere[] allyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(allyTag))).ToArray();
+        //まずはキングの移動する可能性があるマスをすべて考慮する
+        Squere allyKingSquere = allyPieceSqueres.FirstOrDefault(s => s._IsOnPieceObj.name.StartsWith("K"));
+        Piece moverKingPiece = Instantiate(_inGameManager._PieceDict["K"]);
+        Vector3Int[] canMoveAreas = Enumerable.Repeat(allyKingSquere._SquereTilePos, moverKingPiece._MoveAreas().Length).ToArray();
+        //for 駒が移動できる全方位のSquereを検索。何かの駒にぶつかったら検索しなくて良い
+        for (int d = 0; d < canMoveAreas.Length; d++)
+        {
+            canMoveAreas[d] += moverKingPiece._MoveAreas()[d]; //d == 方角
+            int alphabet = canMoveAreas[d].y;
+            int number = canMoveAreas[d].x;
+            //盤外である　は二度と検索しなくて良い条件 
+            if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
+            {
+                continue;
+            }
+            SquereID avoidID = _inGameManager._SquereArrays[alphabet][number]._SquereID;
+            // 回避できるマスがあるならメソッドを抜けて良い
+            if (!enemyAttackRange.Contains(avoidID))
+            {
+                return false;
+            }
+        }
+        
+    }
+
     public void MoveComputer()
     {
         HashSet<SquereID> allyCanMoveRange = CreateCanMoveRange(true); //味方が動ける範囲を取得
@@ -251,19 +292,13 @@ public class ArtificialIntelligence : MonoBehaviour
             .Select(squere => squere._SquereID).ToHashSet();//味方の駒が乗っているSquareのコレクションを作成する
         //動かすことが出来る駒を取得する
         GameObject[] canMovePieceObjArray = CreateCanMovePieceObject(true);
-
         //AIが移動先のSquare を選択し移動する処理
         // allyPieceSqueresから動けるコマを選別する。
-        // GameObject[] canMovePieceObjArray = _canMovePieceObjectHash.ToArray();
-        _canMovePieceObjectHash.Clear();
-        GameObject selectedPieceObj = canMovePieceObjArray[Random.Range(0, canMovePieceObjArray.Length)];//テスト用ランダム選出
-        // GameObject selectedPieceObj = allyPieceSqueres[Random.Range(0, allyPieceSqueres.Length)]._IsOnPieceObj; //テスト用ランダム選出
-        PointerEventData pointerData = new PointerEventData(EventSystem.current){position = Mouse.current.position.ReadValue()};
-        Debug.Log(canMovePieceObjArray.Length);
         Array.ForEach(canMovePieceObjArray, obj => Debug.Log(obj.name));
+        
+        GameObject selectedPieceObj = canMovePieceObjArray[Random.Range(0, canMovePieceObjArray.Length)];//テスト用ランダム選出
+        PointerEventData pointerData = new PointerEventData(EventSystem.current){position = Mouse.current.position.ReadValue()};
         selectedPieceObj.GetComponent<EventTrigger>()?.OnPointerClick(pointerData);
-        // PointerEventData ポインター入力に関する情報を保持しているクラス
-        // EventTrigger
         DOVirtual.DelayedCall(3, DecideComputer);
     }
     void DecideComputer()
@@ -280,6 +315,7 @@ public class ArtificialIntelligence : MonoBehaviour
     {
         isModeAlly = _inGameManager.IsWhite? isModeAlly : !isModeAlly;
         string groupTag = isModeAlly? "White" : "Black";
+        string antiGroupTag = isModeAlly? "Black" : "White";
         //自陣のコマが置いてあるマスの配列
         Squere[] allyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(groupTag))).ToArray();
         List<GameObject> canMovePieceObjArray = new List<GameObject>();
@@ -297,7 +333,7 @@ public class ArtificialIntelligence : MonoBehaviour
                 {
                     applicablePiece = _addPieceFunction.AddMoveCount(applicablePiece);
                 }
-                if (_inGameManager.IsWhite)
+                if (groupTag.Contains("Black"))
                 {
                     //ポーンの攻撃方向を修正
                     applicablePiece = _addPieceFunction.UpdatePoneGroup(applicablePiece);
@@ -315,7 +351,7 @@ public class ArtificialIntelligence : MonoBehaviour
                     applicablePiece = _addPieceFunction.AddLongCastlingArea(applicablePiece);
                 }
             }
-            //駒が移動できる範囲を検索する回数。ここから先の処理はPieceが固定されている
+            //移動範囲
             for (int c = 0; c < applicablePiece._MoveCount(); c++)
             {
                 //for 駒が移動できる全方位のSquereを検索。移動できるマスがあったら該当の駒を登録し、次の駒で検索を再開する
@@ -340,10 +376,11 @@ public class ArtificialIntelligence : MonoBehaviour
                         canMoveAreas[d].z = -1;
                         if ("K".Contains(search))
                         {
-                            if (_inGameManager.IsCastling.Any())
+                            if (_inGameManager.IsCastling.Any(b => b()))
                             {
-                                
-                                _canMovePieceObjectHash.Add(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj); //行動することが出来る駒を登録する。
+                                applicablePiece._MoveCount = () => 0;
+                                canMovePieceObjArray.Add(allyPieceSqueres[i]._IsOnPieceObj); //行動することが出来る駒を登録する。
+                                break;
                             }
                         }
                     }
@@ -351,10 +388,11 @@ public class ArtificialIntelligence : MonoBehaviour
                     {
                         applicablePiece._MoveCount = () => 0;
                         canMovePieceObjArray.Add(allyPieceSqueres[i]._IsOnPieceObj);
+                        break;
                     }
                 }
             }
-            //駒が攻撃できる範囲を検索する回数。ここから先の処理はPieceが固定されている
+            //攻撃範囲
             for (int c = 0; c < applicablePiece._MoveCount(); c++)
             {
                 //for 駒が攻撃できる全方位のSquereを検索。何かの駒にぶつかったら検索しなくて良い
@@ -373,17 +411,17 @@ public class ArtificialIntelligence : MonoBehaviour
                         canAttackAreas[d].z = -1;
                         continue;
                     }
-
                     Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
                     // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
                     if (difendSquere._IsOnPieceObj)
                     {
                         canAttackAreas[d].z = -1;
                         //敵の駒が見つかった場合の条件
-                        if (difendSquere._IsOnPieceObj.CompareTag(groupTag))
+                        if (difendSquere._IsOnPieceObj.CompareTag(antiGroupTag))
                         {
                             applicablePiece._MoveCount = () => 0;
                             canMovePieceObjArray.Add(allyPieceSqueres[i]._IsOnPieceObj);
+                            break;
                         }
                     }
                 }

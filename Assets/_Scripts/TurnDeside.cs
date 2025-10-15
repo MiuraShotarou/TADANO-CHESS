@@ -137,7 +137,7 @@ public class TurnDeside : ColorPallet
         //knightの時は攻撃の移動に合わせて始点と終点を指定したい
         AnimationCurve animationCurveX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.x, 1f, _targetSquere._SquerePiecePosition.x);
         AnimationCurve animationCurveY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.position.y, 1f, _targetSquere._SquerePiecePosition.y);
-        float adjustScale = _selectedPieceObj.transform.localScale.y + (_selectedSquere._SquereTilePos.y - _targetSquere._SquereTilePos.y) * 0.143f;
+        float adjustScale = _selectedPieceObj.transform.localScale.y + (_targetSquere._SquereTilePos.y - _selectedSquere._SquereTilePos.y) * 0.143f;
         AnimationCurve animationCurveSX = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.x, 1f, adjustScale);
         AnimationCurve animationCurveSY = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.y, 1f, adjustScale);
         AnimationCurve animationCurveSZ = AnimationCurve.Linear(0f, _selectedPieceObj.transform.localScale.z, 1f, adjustScale);

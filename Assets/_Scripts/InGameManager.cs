@@ -219,22 +219,23 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     /// <param name="allySquere"></param>
     /// <param name="enemySquere"></param>
-    public void Check(bool isCheck, Squere allySquere, List<Squere> enemySquere)
+    public void Check(bool isEnemyCheck, Squere allySquere, List<Squere> enemySquere)
     {
         if (IsWhite)
         {
-            _IsCheckedWhiteKing = isCheck;
+            _IsCheckedWhiteKing = isEnemyCheck;
         }
         else
         {
-            _IsCheckedBlackKing = isCheck;
+            _IsCheckedBlackKing = isEnemyCheck;
         }
-        if (isCheck){Debug.Log("Check");}
+        if (isEnemyCheck){Debug.Log("Check");}
+        // isEnemyCheck状態でかつ自陣のキングの移動先が敵の攻撃範囲に入っていた場合 でかつ他の駒を動かしてもキングが攻撃される状態であった場合
     }
     /// <summary>
     /// TurnBegin.cs にて moveRange全検索からのenemyRange全検索で判定できるかもしれないが、あまりにも難しすぎるので今回は断念する
     /// </summary>
-    void CheckMate()
+    public void CheckMate(bool isEnemyCheckMate)
     {
         
     }
