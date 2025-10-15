@@ -58,8 +58,10 @@ public class InGameManager : MonoBehaviour
     PlayableDirector _playableDirector;
     bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     public bool IsWhite{ get => _isWhite;}
-    public bool IsPlayerTurn { get; set; }
-    public int _TurnCount { get; set; }
+    public bool IsPlayerTurn;
+    public bool IsCheck { get; private set; }
+    public bool IsCheckMate { get; private set; }
+    public int _TurnCount;
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Dictionary<string, GameObject> _PromotionDict => _promotionDict;
@@ -219,25 +221,18 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     /// <param name="allySquere"></param>
     /// <param name="enemySquere"></param>
-    public void Check(bool isEnemyCheck, Squere allySquere, List<Squere> enemySquere)
+    public void Check(bool isCheck)
     {
-        if (IsWhite)
-        {
-            _IsCheckedWhiteKing = isEnemyCheck;
-        }
-        else
-        {
-            _IsCheckedBlackKing = isEnemyCheck;
-        }
-        if (isEnemyCheck){Debug.Log("Check");}
-        // isEnemyCheck状態でかつ自陣のキングの移動先が敵の攻撃範囲に入っていた場合 でかつ他の駒を動かしてもキングが攻撃される状態であった場合
+        IsCheck = isCheck;
+        if (IsCheck){Debug.Log("Check");}
     }
     /// <summary>
     /// TurnBegin.cs にて moveRange全検索からのenemyRange全検索で判定できるかもしれないが、あまりにも難しすぎるので今回は断念する
     /// </summary>
-    public void CheckMate(bool isEnemyCheckMate)
+    public void CheckMate(bool isCheckMate)
     {
-        
+        IsCheckMate = isCheckMate;
+        if (IsCheckMate){Debug.Log("CheckMate");}
     }
     public void PieceObjectPressed(GameObject pieceObj)
     {

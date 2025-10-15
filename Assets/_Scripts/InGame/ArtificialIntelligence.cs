@@ -1,10 +1,10 @@
 using System;
-using System.Linq; 
 using System.Collections.Generic;
+using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using DG.Tweening;
 using Random = UnityEngine.Random;
 
 public class ArtificialIntelligence : MonoBehaviour
@@ -12,16 +12,11 @@ public class ArtificialIntelligence : MonoBehaviour
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;
     AddPieceFunction _addPieceFunction;
-    // HashSet<SquereID> _allyCanMoveRange;
-    // HashSet<SquereID> _allyCanAttackRange;
-    // HashSet<SquereID> _enemyAttackRange;
     HashSet<GameObject> _canMovePieceObjectHash;
     SquereID[] _shortDistanceIDs;
     SquereID[] _longDistanceIDs;
     Squere _checkedKingSquere;
     List<Squere> _checkAttackerSqueres;
-    bool _isAllyCheck;
-    bool _isEnemyCheck;
     private void Start()
     {
         _inGameManager = GetComponent<InGameManager>();
@@ -33,13 +28,16 @@ public class ArtificialIntelligence : MonoBehaviour
     {
         Initialize();
         HashSet<SquereID> enemyAttackRange = CreateAttackRange(false);
-        _inGameManager.Check(_isEnemyCheck ,_checkedKingSquere, _checkAttackerSqueres);
+        _inGameManager.Check(JudgeCheck(false));
         // チェックがかけられていた場合、チェックメイトを判断する
-        if (_isEnemyCheck)
+        if (_inGameManager.IsCheck)
         {
-            bool isEnemyCheckMate = JudgeCheckMate(enemyAttackRange);
+            _inGameManager.CheckMate(JudgeCheckMate(false, enemyAttackRange));
         }
-        //Checkの場合はキャスリング出来ないようにだけ書くこと
+        else
+        {
+            _inGameManager.CheckMate(false);
+        }
         FilterCastling(enemyAttackRange);
     }
     /// <summary>
@@ -47,8 +45,6 @@ public class ArtificialIntelligence : MonoBehaviour
     /// </summary>
     void Initialize()
     {
-        _isAllyCheck = false;
-        _isEnemyCheck = false;
         _checkedKingSquere = null;
         _checkAttackerSqueres = new List<Squere>();
         _canMovePieceObjectHash = new HashSet<GameObject>();
@@ -80,7 +76,7 @@ public class ArtificialIntelligence : MonoBehaviour
                 {
                     moverPiece = _addPieceFunction.AddMoveCount(moverPiece);
                 }
-                if (_inGameManager.IsWhite)
+                if (groupTag.Contains("Black"))
                 {
                     //ポーンの攻撃方向を修正
                     moverPiece = _addPieceFunction.UpdatePoneGroup(moverPiece);
@@ -147,7 +143,7 @@ public class ArtificialIntelligence : MonoBehaviour
         isModeAlly = _inGameManager.IsWhite? isModeAlly : !isModeAlly;
         string groupTag = isModeAlly? "White" : "Black";
         string antiGroupTag = isModeAlly? "Black" : "White";
-        Squere[] enemyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(antiGroupTag))).ToArray();
+        Squere[] enemyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(groupTag))).ToArray();
         HashSet<SquereID> enemyAttackRange = new HashSet<SquereID>();
         //for すべての駒で
         for (int i = 0; i < enemyPieceSqueres.Length; i++)
@@ -155,7 +151,7 @@ public class ArtificialIntelligence : MonoBehaviour
             string search = enemyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
             Piece attackerPiece = Instantiate(_inGameManager._PieceDict[search]);
             Vector3Int[] attackAreas = Enumerable.Repeat(enemyPieceSqueres[i]._SquereTilePos, attackerPiece._AttackAreas().Length).ToArray();
-            if ("P".Contains(search) && !_inGameManager.IsWhite)
+            if ("P".Contains(search) && groupTag.Contains("Black"))
             {
                 //ポーンの攻撃方向を修正している
                 attackerPiece = _addPieceFunction.UpdatePoneGroup(attackerPiece);
@@ -184,22 +180,10 @@ public class ArtificialIntelligence : MonoBehaviour
                     if (difendSquere._IsOnPieceObj)
                     {
                         attackAreas[d].z = -1;
-                        //敵から見て敵の駒(ally)が見つかった場合の条件
-                        if (difendSquere._IsOnPieceObj.CompareTag(groupTag))
+                        //敵の駒が見つかった場合の条件
+                        if (difendSquere._IsOnPieceObj.CompareTag(antiGroupTag))
                         {
                             enemyAttackRange.Add(difendSquere._SquereID);
-                            //しかもチェックだった
-                            if ("K".Contains(difendSquere._IsOnPieceObj.name.First().ToString()))
-                            {
-                                if (isModeAlly)
-                                {
-                                    _isAllyCheck = true;
-                                }
-                                else
-                                {
-                                    _isEnemyCheck = true;
-                                }
-                            }
                         }
                     }
                 }
@@ -214,7 +198,7 @@ public class ArtificialIntelligence : MonoBehaviour
     {
         //条件⓪ R / K が動いていた場合 → 省略：実際はTurnDeside.csで判断している
         //条件① チェック（チェックメイト）だった場合
-        if (_isAllyCheck){return;}
+        if (_inGameManager.IsCheck){return;}
         //条件② 両キャスリング時の移動経路になにかしらの駒がある場合、攻撃範囲の検索を中断する
         bool isShortCastling = MinimalFilter(_shortDistanceIDs);
         bool isLongCastling = MinimalFilter(_longDistanceIDs);
@@ -247,38 +231,171 @@ public class ArtificialIntelligence : MonoBehaviour
         bool isCanCastling = distanceIDs.Select(id => (int)id).ToArray().All(id => _inGameManager._SquereArrays[id / 8][id % 8]._IsOnPieceObj == null);
         return isCanCastling;
     }
-
-    bool JudgeCheckMate(HashSet<SquereID> enemyAttackRange)
+    /// <summary>
+    /// チェックが起きているかを判断する
+    /// </summary>
+    /// <param name="isModeAlly"></param>
+    /// <returns></returns>
+    bool JudgeCheck(bool isModeAlly)
     {
-        bool isCheckMate;
-        // 自身のキングを守れる状態であるか否か
-        string allyTag = _inGameManager.IsWhite? "White" : "Black";
-        string enemyTag = _inGameManager.IsWhite? "Black" : "White";
-        //自陣のコマが置いてあるマスの配列
-        Squere[] allyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(allyTag))).ToArray();
-        //まずはキングの移動する可能性があるマスをすべて考慮する
-        Squere allyKingSquere = allyPieceSqueres.FirstOrDefault(s => s._IsOnPieceObj.name.StartsWith("K"));
-        Piece moverKingPiece = Instantiate(_inGameManager._PieceDict["K"]);
-        Vector3Int[] canMoveAreas = Enumerable.Repeat(allyKingSquere._SquereTilePos, moverKingPiece._MoveAreas().Length).ToArray();
-        //for 駒が移動できる全方位のSquereを検索。何かの駒にぶつかったら検索しなくて良い
-        for (int d = 0; d < canMoveAreas.Length; d++)
+        isModeAlly = _inGameManager.IsWhite? isModeAlly : !isModeAlly;
+        string groupTag = isModeAlly? "White" : "Black";
+        string antiGroupTag = isModeAlly? "Black" : "White";
+        Squere[] enemyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(groupTag))).ToArray();
+        //for すべての駒で
+        for (int i = 0; i < enemyPieceSqueres.Length; i++)
         {
-            canMoveAreas[d] += moverKingPiece._MoveAreas()[d]; //d == 方角
-            int alphabet = canMoveAreas[d].y;
-            int number = canMoveAreas[d].x;
-            //盤外である　は二度と検索しなくて良い条件 
-            if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
+            string search = enemyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
+            Piece attackerPiece = Instantiate(_inGameManager._PieceDict[search]);
+            Vector3Int[] attackAreas = Enumerable.Repeat(enemyPieceSqueres[i]._SquereTilePos, attackerPiece._AttackAreas().Length).ToArray();
+            if ("P".Contains(search) && groupTag.Contains("Black"))
             {
-                continue;
+                //ポーンの攻撃方向を修正している
+                attackerPiece = _addPieceFunction.UpdatePoneGroup(attackerPiece);
             }
-            SquereID avoidID = _inGameManager._SquereArrays[alphabet][number]._SquereID;
-            // 回避できるマスがあるならメソッドを抜けて良い
-            if (!enemyAttackRange.Contains(avoidID))
+            //駒が攻撃できる範囲を検索する回数。ここから先の処理はPieceが固定されている
+            for (int c = 0; c < attackerPiece._MoveCount(); c++)
             {
-                return false;
+                //for 駒が攻撃できる全方位のSquereを検索。何かの駒にぶつかったら検索しなくて良い
+                for (int d = 0; d < attackAreas.Length; d++)
+                {
+                    if (attackAreas[d].z == -1)
+                    {
+                        continue;
+                    }
+                    attackAreas[d] += attackerPiece._AttackAreas()[d]; //d == 方角
+                    int alphabet = attackAreas[d].y;
+                    int number = attackAreas[d].x;
+                    //盤外である　は二度と検索しなくて良い条件 
+                    if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
+                    {
+                        attackAreas[d].z = -1;
+                        continue;
+                    }
+                    Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
+                    // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
+                    if (difendSquere._IsOnPieceObj)
+                    {
+                        attackAreas[d].z = -1;
+                        //敵から見て敵の駒(ally)が見つかった場合の条件
+                        if (difendSquere._IsOnPieceObj.CompareTag(antiGroupTag) && "K".Contains(difendSquere._IsOnPieceObj.name.First().ToString()))
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
         }
-        
+        return false;
+    }
+
+    bool JudgeCheckMate(bool isModeAlly, HashSet<SquereID> enemyAttackRange)
+    {
+        // 自身のキングを守れる状態であるか否か
+        isModeAlly = _inGameManager.IsWhite? isModeAlly : !isModeAlly;
+        string groupTag = isModeAlly? "White" : "Black";
+        string antiGroupTag = isModeAlly? "Black" : "White";
+        //自陣のコマが置いてあるマスの配列
+        Squere[] allyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(groupTag))).ToArray();
+        // 味方が全員動くことを想定する
+        for (int i = 0; i < allyPieceSqueres.Length; i++)
+        {
+            GameObject memorizePieceObj = allyPieceSqueres[i]._IsOnPieceObj;
+            allyPieceSqueres[i]._IsOnPieceObj = null;
+            string search = memorizePieceObj.name.First().ToString();
+            Piece applicablePiece = Instantiate(_inGameManager._PieceDict[search]);
+            Vector3Int[] moveAreas = Enumerable.Repeat(allyPieceSqueres[i]._SquereTilePos, applicablePiece._MoveAreas().Length).ToArray();
+            Vector3Int[] attackAreas = Enumerable.Repeat(allyPieceSqueres[i]._SquereTilePos, applicablePiece._MoveAreas().Length).ToArray();
+            // 駒の能力を調整する
+            if ("P".Contains(search))
+            {
+                if ("1_6".Contains(allyPieceSqueres[i]._SquerePiecePosition.x.ToString()))
+                {
+                    applicablePiece = _addPieceFunction.AddMoveCount(applicablePiece);
+                }
+                if (groupTag.Contains("Black"))
+                {
+                    //ポーンの攻撃方向を修正
+                    applicablePiece = _addPieceFunction.UpdatePoneGroup(applicablePiece);
+                }
+            }
+            for (int c = 0; c < applicablePiece._MoveCount(); c++)
+            {
+                //for 
+                for (int d = 0; d < attackAreas.Length; d++)
+                {
+                    if (attackAreas[d].z == -1)
+                    {
+                        continue;
+                    }
+                    attackAreas[d] += applicablePiece._MoveAreas()[d]; //d == 方角
+                    int alphabet = attackAreas[d].y;
+                    int number = attackAreas[d].x;
+                    if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
+                    {
+                        attackAreas[d].z = -1;
+                        continue;
+                    }
+                    if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
+                    {
+                        attackAreas[d].z = -1;
+                    }
+                    else //駒が乗っていないなら
+                    {
+                        // 移動先のSquereに自分の駒を登録する
+                        _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
+                        // 仮に移動したとしてチェックが掛かっていなかった場合
+                        if (!JudgeCheck(false))
+                        {
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
+                            return false;
+                        }
+                        _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
+                    }
+                }
+            }
+            // 攻撃のパターン
+            for (int c = 0; c < applicablePiece._MoveCount(); c++)
+            {
+                for (int d = 0; d < attackAreas.Length; d++)
+                {
+                    if (attackAreas[d].z == -1)
+                    {
+                        continue;
+                    }
+                    attackAreas[d] += applicablePiece._AttackAreas()[d]; //d == 方角
+                    int alphabet = attackAreas[d].y;
+                    int number = attackAreas[d].x;
+                    //盤外である　は二度と検索しなくて良い条件 
+                    if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number)) //盤外のマスであるならば
+                    {
+                        attackAreas[d].z = -1;
+                        continue;
+                    }
+                    Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
+                    // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
+                    if (difendSquere._IsOnPieceObj)
+                    {
+                        attackAreas[d].z = -1;
+                        //敵の駒が見つかった場合の条件
+                        if (difendSquere._IsOnPieceObj.CompareTag(antiGroupTag))
+                        {
+                            GameObject memorizeAntiPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
+                            // 仮に移動したとしてチェックが掛かっていなかった場合
+                            if (!JudgeCheck(false))
+                            {
+                                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizeAntiPieceObj;
+                                return false;
+                            }
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizeAntiPieceObj;
+                        }
+                    }
+                }
+            }
+            allyPieceSqueres[i]._IsOnPieceObj = memorizePieceObj;
+        }
+        return true; //回避できるパターンがひとつもなかった場合
     }
 
     public void MoveComputer()
