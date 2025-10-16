@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &47018815
 Rigidbody2D:
@@ -1397,7 +1397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &76338909
 Rigidbody2D:
@@ -2960,7 +2960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &133879119
 Rigidbody2D:
@@ -3404,7 +3404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &159223852
 Rigidbody2D:
@@ -7794,7 +7794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &412427738
 Rigidbody2D:
@@ -8625,7 +8625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &449951573
 Rigidbody2D:
@@ -9885,7 +9885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &529438581
 Rigidbody2D:
@@ -11963,7 +11963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &614912959
 Rigidbody2D:
@@ -13056,7 +13056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &669127269
 Rigidbody2D:
@@ -13295,7 +13295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &671965047
 Rigidbody2D:
@@ -13934,7 +13934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &733407940
 Rigidbody2D:
@@ -14671,7 +14671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &780438274
 Rigidbody2D:
@@ -14865,7 +14865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &780661980
 Rigidbody2D:
@@ -16002,7 +16002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &846725932
 Rigidbody2D:
@@ -16498,7 +16498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &865202213
 Rigidbody2D:
@@ -16914,7 +16914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &889909049
 Rigidbody2D:
@@ -20170,7 +20170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1099086953
 Rigidbody2D:
@@ -21053,7 +21053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1143464747
 Rigidbody2D:
@@ -21206,7 +21206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba1aee7bf5f7cd44a2c44dd27904274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 0}
   _uiManager: {fileID: 0}
 --- !u!1 &1191561083
 GameObject:
@@ -21657,6 +21657,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4ec441c49fb979343b1ebc0eda65ec29, type: 3}
   - {fileID: 8300000, guid: feded60dd870ecf4e833b8c38ae332f9, type: 3}
   - {fileID: 8300000, guid: 949c21ab36eb0f743a153c1ecd520fe4, type: 3}
+  IsPlayerTurn: 0
+  _TurnCount: 0
 --- !u!4 &1218987140
 Transform:
   m_ObjectHideFlags: 0
@@ -21732,7 +21734,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218987132}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac75d8a737eaad64eb892cbab1df0e37, type: 3}
   m_Name: 
@@ -23564,7 +23566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1301552883
 Rigidbody2D:
@@ -26982,7 +26984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1345505762
 Rigidbody2D:
@@ -27435,7 +27437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1372169886
 Rigidbody2D:
@@ -30521,7 +30523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1505631226
 Rigidbody2D:
@@ -32569,7 +32571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1606238204
 Rigidbody2D:
@@ -32808,7 +32810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1610893094
 Rigidbody2D:
@@ -33120,7 +33122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!61 &1637118421
 BoxCollider2D:
@@ -34574,7 +34576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1761793643
 Rigidbody2D:
@@ -34858,7 +34860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1785975205
 Rigidbody2D:
@@ -36520,7 +36522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &1906882884
 Rigidbody2D:
@@ -38023,7 +38025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &2047094476
 Rigidbody2D:
@@ -40926,7 +40928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &2107785051
 Rigidbody2D:
@@ -41832,7 +41834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c424eaaca1bf1247b8faf5585312e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!212 &1722325464167481031
 SpriteRenderer:
@@ -42059,7 +42061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!1 &2282321969702482978
 GameObject:
@@ -42189,7 +42191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005a979a1c5c3714f9dc8f922c035495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!61 &3410661587746860580
 BoxCollider2D:
@@ -42389,7 +42391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8729379ab7e48064581070888aef4244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
   _targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &5087491195408426054
@@ -42404,7 +42406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!114 &5213082863075441397
 MonoBehaviour:
@@ -42945,7 +42947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 0}
   _uiManager: {fileID: 1218987149}
 --- !u!4 &8137322264664384363
 Transform:
@@ -43068,7 +43070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!50 &8729724295602200101
 Rigidbody2D:
@@ -43109,7 +43111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!4 &8757197625769784504
 Transform:
@@ -43255,7 +43257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a3591db460498428eb44148d5c896a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnDeside: {fileID: 1218987144}
+  _turnDecide: {fileID: 1218987144}
   _uiManager: {fileID: 1218987149}
 --- !u!114 &8898634527652080608
 MonoBehaviour:

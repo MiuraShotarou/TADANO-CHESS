@@ -24,15 +24,13 @@ public class AddPieceFunction : MonoBehaviour
     {
         // piece._AttackAreas = () => new Vector3Int[] { new Vector3Int(0, -3, 0)}.Concat(memorize).ToArray();
         Vector3Int[] memorize = piece._AttackAreas();
-        Func<Vector3Int[]> updateAttackArea = () => new Vector3Int[] { new Vector3Int(0, -3, 0)}.Concat(memorize).ToArray();
-        piece._AttackAreas = updateAttackArea;
+        piece._AttackAreas = () => new Vector3Int[] { new Vector3Int(0, 3, 0)}.Concat(memorize).ToArray(); 
         return piece;
     }
     public Piece AddLongCastlingArea(Piece piece)
     {
         Vector3Int[] memorize = piece._AttackAreas();
-        Func<Vector3Int[]> updateAttackArea = () => new Vector3Int[] { new Vector3Int(0, 4, 0)}.Concat(memorize).ToArray();
-        piece._AttackAreas = updateAttackArea;
+        piece._AttackAreas = () => new Vector3Int[] { new Vector3Int(0, -4, 0)}.Concat(memorize).ToArray();
         return piece;
     }
 }

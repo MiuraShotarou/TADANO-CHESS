@@ -5,7 +5,9 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 /// <summary>
-/// 
+/// <禁じ手/>
+/// 自殺手
+/// チェックを解除しない動き
 /// <ドロー条件/>
 /// チェックがかかってない（キングが直接的に攻撃されていない）状態でキング以外の駒がなく該当者のターンを迎えてしまった時（ステイルメイト）
 /// ３回同一局面
@@ -52,7 +54,7 @@ public class InGameManager : MonoBehaviour
     UIManager _uiManager;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
-    TurnDeside _turnDeside;
+    TurnDecide _turnDecide;
     ArtificialIntelligence _artificialIntelligence;
     Animator _animatorController;
     PlayableDirector _playableDirector;
@@ -219,8 +221,7 @@ public class InGameManager : MonoBehaviour
     /// <summary>
     /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる
     /// </summary>
-    /// <param name="allySquere"></param>
-    /// <param name="enemySquere"></param>
+    /// <param name="isCheck"></param>
     public void Check(bool isCheck)
     {
         IsCheck = isCheck;

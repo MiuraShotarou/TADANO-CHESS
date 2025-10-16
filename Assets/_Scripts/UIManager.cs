@@ -12,7 +12,6 @@ using UnityEngine.EventSystems;
 public class UIManager : ColorPallet
 {
     InGameManager _inGameManager;
-    TurnDeside _turnDeside;
     [SerializeField] GameObject _fadePanel;
     [SerializeField] GameObject _pieceIconWhite;
     [SerializeField] GameObject _pieceIconBlack;
@@ -31,12 +30,9 @@ public class UIManager : ColorPallet
     public Squere _TargetSquere {get;set;}
     public GameObject _TargetPieceObj {get;set;}
     public Squere _CastlingRookSquere {get;set;}
-    // public GameObject _CastlingRPieceObj {get;set;}
-    // bool _isPromotion;
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
-        _turnDeside = GetComponent<TurnDeside>();
         _DeathPieceObj = null;
         // _isPromotion = false;
         // _isPromotion = true;//デバッグ
@@ -141,18 +137,16 @@ public class UIManager : ColorPallet
         //内部的にDictionayValueの要素をひとつ追加し、Pの要素をひとつ現象させる
         if (_inGameManager.IsWhite)
         {
-            // t_squereIdsDictW["P"].Remove(t_shiftSquereId); Indexが変わってしまう
             t_squereIdsDictW[_TargetPieceObj.name.First().ToString()].Add(t_shiftSquereId);
         }
         else
         {
-            // t_squereIdsDictB["P"].Remove(t_shiftSquereId);
             t_squereIdsDictB[_TargetPieceObj.name.First().ToString()].Add(t_shiftSquereId);
         }
         // _isPromotion = false;
     }
     /// <summary>
-    /// _turnDeside._selectedPieceObj を プロモーション後のPieceObjに置き換えるだけのメソッド
+    /// _turnDecide._selectedPieceObj を プロモーション後のPieceObjに置き換えるだけのメソッド
     /// </summary>
     /// <param name="promotionName"></param>
     public void DesidePromotion(string promotionName)
