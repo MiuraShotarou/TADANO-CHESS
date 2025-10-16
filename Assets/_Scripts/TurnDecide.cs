@@ -1,16 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using TMPro.EditorUtilities;
 using UnityEngine;
-using UnityEngine.Analytics;
-using UnityEngine.Playables;
 using UnityEngine.Animations;
+using UnityEngine.Playables;
+
 //Colliderのデストロイタイミング
 /// <summary>
 /// 駒が目標地点まで移動していくまでの処理を実装するクラス
 /// </summary>
-public class TurnDeside : ColorPallet
+public class TurnDecide : ColorPallet
 {
     InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;

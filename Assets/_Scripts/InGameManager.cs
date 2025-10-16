@@ -3,9 +3,11 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-
+using UnityEngine.Timeline;
 /// <summary>
-/// 
+/// <禁じ手/>
+/// 自殺手
+/// チェックを解除しない動き
 /// <ドロー条件/>
 /// チェックがかかってない（キングが直接的に攻撃されていない）状態でキング以外の駒がなく該当者のターンを迎えてしまった時（ステイルメイト）
 /// ３回同一局面
@@ -20,8 +22,6 @@ public class InGameManager : MonoBehaviour
     public GameMode GameMode;
     public int ComputerLevel;
     bool _isWhite;
-    bool _IsCheckedWhiteKing { get; set; }
-    bool _IsCheckedBlackKing { get; set; }
     //値が変更可能なboolにアクセスできる状態から 固定値にしかアクセスできない状態を作る
     public bool _isWhiteShortCastlingSwitch;
     public bool _isWhiteLongCastlingSwitch;
@@ -44,6 +44,8 @@ public class InGameManager : MonoBehaviour
     [SerializeField] AudioSource _seAudioSource;
     [SerializeField] AudioClip[] _bgmAudioClips;
     [SerializeField] AudioClip[] _seAudioClips;
+    [SerializeField] TimelineAsset _titleTimeline;
+    [SerializeField] TimelineAsset _resultTimeline;
     Dictionary<string, Piece> _pieceDict;
     Dictionary<string, GameObject> _promotionDict;
     Squere[][] _squereArrays;
@@ -52,16 +54,16 @@ public class InGameManager : MonoBehaviour
     UIManager _uiManager;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
-    TurnDeside _turnDeside;
+    TurnDecide _turnDecide;
     ArtificialIntelligence _artificialIntelligence;
     Animator _animatorController;
     PlayableDirector _playableDirector;
     bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     public bool IsWhite{ get => _isWhite;}
-    public bool IsPlayerTurn;
     public bool IsCheck { get; private set; }
     public bool IsCheckMate { get; private set; }
-    public int _TurnCount;
+    public bool IsPlayerTurn;
+    public int TurnCount;
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Dictionary<string, GameObject> _PromotionDict => _promotionDict;
@@ -140,6 +142,7 @@ public class InGameManager : MonoBehaviour
         GameMode = GameMode.None;
         _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
         _BGMAudioSource.Play();
+        _playableDirector.playableAsset = _titleTimeline;
         _playableDirector.Play();
         Time.timeScale = 10;
     }
@@ -173,10 +176,10 @@ public class InGameManager : MonoBehaviour
     /// <summary>
     /// StartComputer.animの再生後にEventから一度だけ呼び出される
     /// </summary>
-    void StartDesideMultiPlayerGroup()
+    void StartDecideMultiPlayerGroup()
     {
         _uiManager.UpdateMultiPlayerGroupUI();
-        _animatorController.Play("StartDesideMultiPlayerGroup");
+        _animatorController.Play("StartDecideMultiPlayerGroup");
     }
     /// <summary>
     /// 攻撃側のグループを変更させるメソッド。IsWhiteが変更されると"StartTurn".animが再生される
@@ -194,11 +197,12 @@ public class InGameManager : MonoBehaviour
         _turnBegin.StartTurn();
         _artificialIntelligence.StartArtificialIntelligence();
         _uiManager.StartUpdateTurnUI();
-        if (_TurnCount == 1)
+        if (TurnCount == 1)
         {
             _playableDirector.enabled = false;
             IsPlayerTurn = true;
-            // IsPlayerTurn = Random.Range(0, 2) == 1; 実機で使用する場合
+            // IsPlayerTurn = Random.Range(0, 2) == 1; 本番で使用する場合
+            Time.timeScale = 1;
             _AnimatorController.Play("StartInGame");
         }
         else
@@ -219,12 +223,12 @@ public class InGameManager : MonoBehaviour
     /// <summary>
     /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる
     /// </summary>
-    /// <param name="allySquere"></param>
-    /// <param name="enemySquere"></param>
+    /// <param name="isCheck"></param>
     public void Check(bool isCheck)
     {
         IsCheck = isCheck;
         if (IsCheck){Debug.Log("Check");}
+        _uiManager.UpdateCheckUI();
     }
     /// <summary>
     /// TurnBegin.cs にて moveRange全検索からのenemyRange全検索で判定できるかもしれないが、あまりにも難しすぎるので今回は断念する
@@ -232,6 +236,11 @@ public class InGameManager : MonoBehaviour
     public void CheckMate(bool isCheckMate)
     {
         IsCheckMate = isCheckMate;
+        if (IsCheckMate)
+        {
+            _uiManager.UpdateCheckMateUI();
+            _playableDirector.playableAsset = _resultTimeline;
+        }
         if (IsCheckMate){Debug.Log("CheckMate");}
     }
     public void PieceObjectPressed(GameObject pieceObj)

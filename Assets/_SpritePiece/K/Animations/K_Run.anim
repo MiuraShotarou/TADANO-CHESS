@@ -20,17 +20,17 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 3.271377, y: 1.8782872, z: 0}
+        value: {x: 4.33, y: 1.17, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: -0.33137703, y: 0.22171271, z: 0}
+        outSlope: {x: -1.21, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0, y: 0, z: 0.33333334}
         outWeight: {x: 0, y: 0, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: 2.94, y: 2.1, z: 0}
-        inSlope: {x: -0.33137703, y: 0.22171271, z: 0}
+        value: {x: 3.12, y: 1.17, z: 0}
+        inSlope: {x: -1.21, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
@@ -46,17 +46,17 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 3.1809084, y: 3.1809084, z: 3.1809084}
+        value: {x: 3.0719998, y: 3.0719998, z: 3.0719998}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0.14299989, y: 0.14299989, z: 0.14299989}
+        outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0, y: 0, z: 0}
         outWeight: {x: 0, y: 0, z: 0}
       - serializedVersion: 3
         time: 1
-        value: {x: 3.3239083, y: 3.3239083, z: 3.3239083}
-        inSlope: {x: 0.14299989, y: 0.14299989, z: 0.14299989}
+        value: {x: 3.0719998, y: 3.0719998, z: 3.0719998}
+        inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
@@ -109,20 +109,20 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 0
-      attribute: 3
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 0
       attribute: 0
       script: {fileID: 0}
       typeID: 212
       customType: 23
       isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 0
+      attribute: 3
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:

@@ -17,7 +17,7 @@ public class TurnBegin : MonoBehaviour
     }
     void AddTurnCount()
     {
-        _inGameManager._TurnCount++;
+        _inGameManager.TurnCount++;
     }
     void ChangePlayerTurn()
     {

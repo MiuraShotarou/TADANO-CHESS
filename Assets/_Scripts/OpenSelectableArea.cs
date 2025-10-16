@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -11,7 +12,7 @@ public class OpenSelectableArea : ColorPallet
     [SerializeField] Sprite _canSelectedSprite;//これはあって良い
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
-    TurnDeside _turnDeside;
+    TurnDecide _turnDecide;
     UIManager _uiManager;
     GameObject _selectedPieceObj;
     SpriteRenderer[][] _deceptionTileFieldArrays;
@@ -34,7 +35,7 @@ public class OpenSelectableArea : ColorPallet
     {
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
-        _turnDeside = GetComponent<TurnDeside>();
+        _turnDecide = GetComponent<TurnDecide>();
         _uiManager = GetComponent<UIManager>();
         _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
     }
@@ -177,9 +178,9 @@ public class OpenSelectableArea : ColorPallet
             int number = _attackAreas[i].x;
             if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number))//盤外のマスであるならば
             {
-                _attackAreas[i] = new Vector3Int(0, 0, -1);
+                _attackAreas[i] = new Vector3Int(0, 0, -1);_PrefabCount--;continue;
             }
-            else if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
+            if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
                 if (!IsCanAttackTargetObject(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj))
                 {
@@ -291,8 +292,8 @@ public class OpenSelectableArea : ColorPallet
         // _beforeTurnMoveAreaQueue.Enqueue(_selectedSquere._SquereTilePos);
         // _beforeTurnMoveAreaQueue.Enqueue(_targetSquere._SquereTilePos);
         //地味に大事
-        _turnDeside.enabled = true;
-        _turnDeside.StartTurnDeside(_selectedPieceObj, _selectedPiece, _selectedSquere, _targetSquere);
+        _turnDecide.enabled = true;
+        _turnDecide.StartTurnDeside(_selectedPieceObj, _selectedPiece, _selectedSquere, _targetSquere);
     }
     Vector2Int VectorIntConverter(Vector3Int vector2Int) => new (vector2Int.x, vector2Int.y);  //zを除去する必要は、実はないのかもしれない → Squereの修正をすれば直るかも → tilePosY座標を反転させる必要がある → Tilemapを利用しているわけではないのでScriptableObjectから書き換えるだけで良いのかも
     Vector2Int[] VectorIntConverter(Vector3Int[] vector2IntArray)

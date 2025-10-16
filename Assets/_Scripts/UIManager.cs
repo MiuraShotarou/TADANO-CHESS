@@ -1,28 +1,34 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
 /// <summary>
 /// UIのバックエンドを担当
 /// </summary>
 public class UIManager : ColorPallet
 {
     InGameManager _inGameManager;
-    TurnDeside _turnDeside;
     [SerializeField] GameObject _fadePanel;
     [SerializeField] GameObject _pieceIconWhite;
     [SerializeField] GameObject _pieceIconBlack;
-    [SerializeField] GameObject _countMask;
+    [SerializeField] Image i_activeTurnWhite;
+    [SerializeField] Image i_activeTurnBlack;
+    [SerializeField] Image i_countMask;
     [SerializeField] TextMeshProUGUI t_deceptionMoveCount;
     [SerializeField] TextMeshProUGUI t_truthMoveCount;
+    [SerializeField] TextMeshProUGUI t_checkWhite;
+    [SerializeField] TextMeshProUGUI t_checkBlack;
+    [SerializeField] TextMeshProUGUI t_checkMateWhite;
+    [SerializeField] TextMeshProUGUI t_checkMateBlack;
+    [SerializeField] TextMeshProUGUI t_pinchWhite;
+    [SerializeField] TextMeshProUGUI t_pinchBlack;
     [SerializeField] TextMeshProUGUI[] t_residuesCountW;
     [SerializeField] TextMeshProUGUI[] t_residuesCountB;
     [SerializeField] TextMeshProUGUI[] t_squereIdsW;
     [SerializeField] TextMeshProUGUI[] t_squereIdsB;
+    [SerializeField] TextMeshProUGUI t_resultGroup;
     Dictionary<string, TextMeshProUGUI> t_residuesDictW;
     Dictionary<string, TextMeshProUGUI> t_residuesDictB;
     Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictW;
@@ -31,12 +37,9 @@ public class UIManager : ColorPallet
     public Squere _TargetSquere {get;set;}
     public GameObject _TargetPieceObj {get;set;}
     public Squere _CastlingRookSquere {get;set;}
-    // public GameObject _CastlingRPieceObj {get;set;}
-    // bool _isPromotion;
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
-        _turnDeside = GetComponent<TurnDeside>();
         _DeathPieceObj = null;
         // _isPromotion = false;
         // _isPromotion = true;//デバッグ
@@ -53,6 +56,7 @@ public class UIManager : ColorPallet
     public void StartUpdateTurnUI()
     {
         UpdateTurnCountUI();
+        UpdateActiveTurnUI();
         if (_DeathPieceObj)
         {
             DecreaseDeathPieceUI();
@@ -71,8 +75,8 @@ public class UIManager : ColorPallet
     /// </summary>
     void UpdateTurnCountUI()
     {
-        t_deceptionMoveCount.text = (_inGameManager._TurnCount - 1).ToString();
-        t_truthMoveCount.text = _inGameManager._TurnCount.ToString();
+        t_deceptionMoveCount.text = (_inGameManager.TurnCount - 1).ToString();
+        t_truthMoveCount.text = _inGameManager.TurnCount.ToString();
         if (_inGameManager.IsWhite)
         {
             t_deceptionMoveCount.color = Color.black;
@@ -86,6 +90,64 @@ public class UIManager : ColorPallet
             t_deceptionMoveCount.fontStyle = FontStyles.Normal;
             t_truthMoveCount.color = Color.black;
             t_truthMoveCount.fontStyle = FontStyles.Bold;
+        }
+        if (_inGameManager.TurnCount % 10 == 0)
+        {
+            int baseWidth = 10;
+            int baseHeight = 30;
+            i_countMask.rectTransform.sizeDelta = new Vector2(baseWidth * _inGameManager.TurnCount.ToString().Length, baseHeight);
+        }
+    }
+    void UpdateActiveTurnUI()
+    {
+        if (_inGameManager.IsWhite)
+        {
+            i_activeTurnWhite.color = Color.white;
+            i_activeTurnBlack.color = ChangeAlpha(Color.black, 50);
+        }
+        else
+        {
+            i_activeTurnWhite.color = ChangeAlpha(Color.white, 50);
+            i_activeTurnBlack.color = Color.black;
+        }
+    }
+    public void UpdateCheckUI()
+    {
+        if (_inGameManager.IsCheck)
+        {
+            if (!_inGameManager.IsWhite)
+            {
+                t_checkWhite.gameObject.SetActive(true);
+                t_checkBlack.gameObject.SetActive(false);
+                t_pinchWhite.gameObject.SetActive(false);
+                t_pinchBlack.gameObject.SetActive(true);
+            }
+            else
+            {
+                t_checkWhite.gameObject.SetActive(false);
+                t_checkBlack.gameObject.SetActive(true);
+                t_pinchWhite.gameObject.SetActive(true);
+                t_pinchBlack.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            t_checkWhite.gameObject.SetActive(false);
+            t_checkBlack.gameObject.SetActive(false);
+            t_pinchWhite.gameObject.SetActive(false);
+            t_pinchBlack.gameObject.SetActive(false);
+        }
+    }
+    public void UpdateCheckMateUI()
+    {
+        if (_inGameManager.IsCheckMate)
+        {
+            t_checkWhite.gameObject.SetActive(false);
+            t_checkMateBlack.gameObject.SetActive(true);
+        }
+        else
+        {
+            
         }
     }
     /// <summary>
@@ -141,18 +203,15 @@ public class UIManager : ColorPallet
         //内部的にDictionayValueの要素をひとつ追加し、Pの要素をひとつ現象させる
         if (_inGameManager.IsWhite)
         {
-            // t_squereIdsDictW["P"].Remove(t_shiftSquereId); Indexが変わってしまう
             t_squereIdsDictW[_TargetPieceObj.name.First().ToString()].Add(t_shiftSquereId);
         }
         else
         {
-            // t_squereIdsDictB["P"].Remove(t_shiftSquereId);
             t_squereIdsDictB[_TargetPieceObj.name.First().ToString()].Add(t_shiftSquereId);
         }
-        // _isPromotion = false;
     }
     /// <summary>
-    /// _turnDeside._selectedPieceObj を プロモーション後のPieceObjに置き換えるだけのメソッド
+    /// _turnDecide._selectedPieceObj を プロモーション後のPieceObjに置き換えるだけのメソッド
     /// </summary>
     /// <param name="promotionName"></param>
     public void DesidePromotion(string promotionName)
@@ -176,6 +235,20 @@ public class UIManager : ColorPallet
         UpdatePromotionUI(promotionName);
         _inGameManager.StartInactivePromotionRelay();
     }
+    public void ActiveResultUI()
+    {
+        if (_inGameManager.IsWhite)
+        {
+            t_resultGroup.text = "White";
+            t_resultGroup.color = Color.white;
+        }
+        else
+        {
+            t_resultGroup.text = "Black";
+            t_resultGroup.color = Color.black;
+        }
+        _inGameManager._AnimatorController.Play("Result");
+    }
     /// <summary>
     /// 
     /// </summary>
@@ -183,7 +256,6 @@ public class UIManager : ColorPallet
     {
         
     }
-    
     public void ActiveFadePanel()
     {
         _fadePanel.SetActive(true);
@@ -196,5 +268,8 @@ public class UIManager : ColorPallet
     {
         _pieceIconWhite.SetActive(true);
         _pieceIconBlack.SetActive(true);
+        i_activeTurnWhite.gameObject.SetActive(true);
+        i_activeTurnBlack.gameObject.SetActive(true);
     }
+
 }

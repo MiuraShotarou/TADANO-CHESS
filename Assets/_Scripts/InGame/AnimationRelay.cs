@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationRelay : MonoBehaviour
 {
-    [SerializeField] TurnDeside _turnDeside;
+    [SerializeField] TurnDecide _turnDecide;
     [SerializeField] UIManager _uiManager;
     // Animator _thisAnimator;
     // void Start()
@@ -16,32 +13,32 @@ public class AnimationRelay : MonoBehaviour
     // }
     void StartAttackAnimationRelay()
     {
-        _turnDeside.StartAttackAnimation();
+        _turnDecide.StartAttackAnimation();
     }
 
     void StartRunAnimationRelay()
     {
-        _turnDeside.StartRunAnimation();
+        _turnDecide.StartRunAnimation();
     }
 
     void StartIdleAnimationRelay()
     {
-        _turnDeside.StartIdleAnimation();
+        _turnDecide.StartIdleAnimation();
     }
 
     void StartTakeHitAnimationRelay()
     {
-        _turnDeside.StartTakeHitAnimation();
+        _turnDecide.StartTakeHitAnimation();
     }
 
     void StartDeathAnimationRelay()
     {
-        _turnDeside.StartDeathAnimation();
+        _turnDecide.StartDeathAnimation();
     }
 
     void StartStageOutAddForceRelay()
     {
-        _turnDeside.StartStageOutAddForce();
+        _turnDecide.StartStageOutAddForce();
     }
 
     /// <summary>
@@ -49,11 +46,11 @@ public class AnimationRelay : MonoBehaviour
     /// </summary>
     void StartCastlingRelay()
     {
-        _turnDeside.StartCastlingAnimation();
+        _turnDecide.StartCastlingAnimation();
     }
     void StartInactiveTargetPlayableRelay()
     {
-        _turnDeside.StartInactiveTargetPlayable();
+        _turnDecide.StartInactiveTargetPlayable();
     }
 
     /// <summary>
@@ -61,21 +58,21 @@ public class AnimationRelay : MonoBehaviour
     /// </summary>
     void StartRAttackEffectRelay()
     {
-        _turnDeside.StartRAttackEffect();
+        _turnDecide.StartRAttackEffect();
     }
     /// <summary>
     /// ビショップの魔弾オブジェクトをアクティブにするメソッド。B_AttackEffect内のAnimationEventからしか呼ばれない
     /// </summary>
     void StartBAttackEffectRelay()
     {
-        _turnDeside.StartBAttackEffect();
+        _turnDecide.StartBAttackEffect();
     }
     /// <summary>
     /// クイーンの火炎放射オブジェクトをアクティブにするメソッド。Q_AttackEffect内のAnimationEventからしか呼ばれない
     /// </summary>
     void StartQAttackEffectRelay()
     {
-        _turnDeside.StartQAttackEffect();
+        _turnDecide.StartQAttackEffect();
     }
     // void PauseAnimator()
     // {
