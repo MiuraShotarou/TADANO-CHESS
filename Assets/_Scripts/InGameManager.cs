@@ -147,11 +147,6 @@ public class InGameManager : MonoBehaviour
         Time.timeScale = 10;
     }
 
-    void StartTitle()
-    {
-        _AnimatorController.Play("Title");
-    }
-
     public void StartComputer()
     {
         GameMode = GameMode.Computer;
@@ -239,7 +234,7 @@ public class InGameManager : MonoBehaviour
         if (IsCheckMate)
         {
             _uiManager.UpdateCheckMateUI();
-            _playableDirector.playableAsset = _resultTimeline;
+            _uiManager.ActiveResultUI();
         }
         if (IsCheckMate){Debug.Log("CheckMate");}
     }

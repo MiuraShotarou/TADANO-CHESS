@@ -249,6 +249,15 @@ public class UIManager : ColorPallet
         }
         _inGameManager._AnimatorController.Play("Result");
     }
+
+    public void ReturnTitle()
+    {
+        _inGameManager._AnimatorController.Play("ReturnTitle");
+    }
+    public void TitleUI()
+    {
+        
+    }
     /// <summary>
     /// 
     /// </summary>
