@@ -1,8 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animation/InGame/UI/ReturnTitle.anim.meta
 guid: c7407505aad368b448b3f0de18c37888
 NativeFormatImporter:
+========
+guid: 1242a308828495848b3cd9ced2c93717
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> 5f87aaf755b4c4281732469f619420d1b7e6e748:Assets/Editor.meta
   externalObjects: {}
-  mainObjectFileID: 7400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
