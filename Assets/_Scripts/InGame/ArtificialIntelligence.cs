@@ -235,7 +235,7 @@ public class ArtificialIntelligence : MonoBehaviour
     /// </summary>
     /// <param name="isModeAlly"></param>
     /// <returns></returns>
-    bool JudgeCheck(bool isModeAlly)
+    public bool JudgeCheck(bool isModeAlly)
     {
         isModeAlly = _inGameManager.IsWhite? isModeAlly : !isModeAlly;
         string groupTag = isModeAlly? "White" : "Black";
@@ -407,6 +407,7 @@ public class ArtificialIntelligence : MonoBehaviour
 
     public void MoveComputer()
     {
+        _inGameManager.LockSafety();
         //動かすことが出来る駒を取得する
         GameObject[] canMovePieceObjArray = CreateCanMovePieceObject(true);
         // AIが移動先のSquare を選択し移動する処理
@@ -414,17 +415,16 @@ public class ArtificialIntelligence : MonoBehaviour
         GameObject selectedPieceObj = canMovePieceObjArray[Random.Range(0, canMovePieceObjArray.Length)];//テスト用ランダム選出
         PointerEventData pointerData = new PointerEventData(EventSystem.current){position = Mouse.current.position.ReadValue()};
         selectedPieceObj.GetComponent<EventTrigger>()?.OnPointerClick(pointerData);
-        DOVirtual.DelayedCall(3, DecideComputer);
+        DOVirtual.DelayedCall(1, DecideComputer);
     }
     void DecideComputer()
     {
         SpriteRenderer[] pieceCanMoveRange = _inGameManager._DeceptionTileFieldArrays.SelectMany(array => array.Where(field => field.gameObject.GetComponent<BoxCollider2D>().enabled)).ToArray();
-        var hoge = pieceCanMoveRange[Random.Range(0, pieceCanMoveRange.Length)];
-        _openSelectableArea.TurnDesideRelay(hoge);
-        // _openSelectableArea.TurnDesideRelay(pieceCanMoveRange[Random.Range(0, pieceCanMoveRange.Length)]);
+        var decideSpriteRenderer = pieceCanMoveRange[Random.Range(0, pieceCanMoveRange.Length)];
+        _openSelectableArea.TurnDesideRelay(decideSpriteRenderer);
     }
     /// <summary>
-    /// 自身の駒が移動可能な範囲をすべて取得する // 攻撃範囲は除外する
+    /// 自身の駒が移動可能な範囲をすべて取得する
     /// </summary>
     GameObject[] CreateCanMovePieceObject(bool isModeAlly)
     {
@@ -432,19 +432,19 @@ public class ArtificialIntelligence : MonoBehaviour
         string groupTag = isModeAlly? "White" : "Black";
         string antiGroupTag = isModeAlly? "Black" : "White";
         //自陣のコマが置いてあるマスの配列
-        Squere[] allyPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(groupTag))).ToArray();
+        Squere[] groupPieceSqueres = _inGameManager._SquereArrays.SelectMany(flatSqueres => flatSqueres.Where(squere => squere._IsOnPieceObj && squere._IsOnPieceObj.CompareTag(groupTag))).ToArray();
         List<GameObject> canMovePieceObjArray = new List<GameObject>();
         //for すべての駒で
-        for (int i = 0; i < allyPieceSqueres.Length; i++)
+        for (int i = 0; i < groupPieceSqueres.Length; i++)
         {
-            string search = allyPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
+            string search = groupPieceSqueres[i]._IsOnPieceObj.name.First().ToString();
             Piece applicablePiece = Instantiate(_inGameManager._PieceDict[search]);
-            Vector3Int[] canMoveAreas = Enumerable.Repeat(allyPieceSqueres[i]._SquereTilePos, applicablePiece._MoveAreas().Length).ToArray();
-            Vector3Int[] canAttackAreas = Enumerable.Repeat(allyPieceSqueres[i]._SquereTilePos, applicablePiece._AttackAreas().Length).ToArray();
+            Vector3Int[] canMoveAreas = Enumerable.Repeat(groupPieceSqueres[i]._SquereTilePos, applicablePiece._MoveAreas().Length).ToArray();
+            Vector3Int[] canAttackAreas = Enumerable.Repeat(groupPieceSqueres[i]._SquereTilePos, applicablePiece._AttackAreas().Length).ToArray();
             // 駒の能力を調整する
             if ("P".Contains(search))
             {
-                if ("1_6".Contains(allyPieceSqueres[i]._SquerePiecePosition.x.ToString()))
+                if ("1_6".Contains(groupPieceSqueres[i]._SquerePiecePosition.x.ToString()))
                 {
                     applicablePiece = _addPieceFunction.AddMoveCount(applicablePiece);
                 }
@@ -493,16 +493,23 @@ public class ArtificialIntelligence : MonoBehaviour
                         {
                             if (_inGameManager.IsCastling.Any(b => b()))
                             {
-                                applicablePiece._MoveCount = () => 0;
-                                canMovePieceObjArray.Add(allyPieceSqueres[i]._IsOnPieceObj); //行動することが出来る駒を登録する。
+                                canMovePieceObjArray.Add(groupPieceSqueres[i]._IsOnPieceObj); //行動することが出来る駒を登録する。
                                 break;
                             }
                         }
                     }
                     else
                     {
-                        applicablePiece._MoveCount = () => 0;
-                        canMovePieceObjArray.Add(allyPieceSqueres[i]._IsOnPieceObj);
+                        //キングが取られる選択肢は排除するように設定
+                        _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = groupPieceSqueres[i]._IsOnPieceObj;
+                        groupPieceSqueres[i]._IsOnPieceObj = null;
+                        if (!JudgeCheck(false))
+                        {
+                            applicablePiece._MoveCount = () => 0;
+                            canMovePieceObjArray.Add(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj);
+                        }
+                        groupPieceSqueres[i]._IsOnPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
+                        _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
                         break;
                     }
                 }
@@ -534,8 +541,17 @@ public class ArtificialIntelligence : MonoBehaviour
                         //敵の駒が見つかった場合の条件
                         if (difendSquere._IsOnPieceObj.CompareTag(antiGroupTag))
                         {
-                            applicablePiece._MoveCount = () => 0;
-                            canMovePieceObjArray.Add(allyPieceSqueres[i]._IsOnPieceObj);
+                            //キングが取られる選択肢は排除するように設定
+                            GameObject memorizePieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = groupPieceSqueres[i]._IsOnPieceObj;
+                            groupPieceSqueres[i]._IsOnPieceObj = null;
+                            if (!JudgeCheck(false))
+                            {
+                                applicablePiece._MoveCount = () => 0;
+                                canMovePieceObjArray.Add(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj);
+                            }
+                            groupPieceSqueres[i]._IsOnPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
                             break;
                         }
                     }

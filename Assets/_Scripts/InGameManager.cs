@@ -203,13 +203,13 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     void StartTurnRelay()
     {
+        _selectTileController.enabled = false;
         Initialize();
         AddTurnCount();
         _artificialIntelligence.StartArtificialIntelligence();
         _uiManager.StartUpdateTurnUI();
         if (TurnCount == 1)
         {
-            Time.timeScale = 1;
             _playableDirector.enabled = false;
             IsPlayerTurn = Random.Range(0, 2) == 0; //プレイヤー１、２が白側・黒側どちらに所属されるのかを決定する
             _AnimatorController.Play("GameStart");
@@ -230,16 +230,6 @@ public class InGameManager : MonoBehaviour
     void ChangePlayerTurn()
     {
         IsPlayerTurn = !IsPlayerTurn;
-    }
-
-    void UnLockSafety()
-    {
-        _uiManager.InactiveFadePanel();
-    }
-
-    void LockSafety()
-    {
-        _uiManager.ActiveFadePanel();
     }
     /// <summary>
     /// CreateEnemyAtackRange() にてキングが攻撃範囲内にいた時、チェックのフラグを立てる
@@ -270,8 +260,11 @@ public class InGameManager : MonoBehaviour
     }
     public void StartSelectTileRelay()
     {
-        UnLockSafety();
-        _selectTileController.enabled = true;
+        if (IsPlayerTurn)
+        {
+            UnLockSafety();
+            _selectTileController.enabled = true;
+        }
     }
 
     public void StartActivePromotionRelay()
@@ -289,6 +282,10 @@ public class InGameManager : MonoBehaviour
         {
             _artificialIntelligence.MoveComputer();
         }
+        else
+        {
+            UnLockSafety();
+        }
     }
     void Initialize()
     {
@@ -300,6 +297,16 @@ public class InGameManager : MonoBehaviour
     {
         // _isSecondPlay = true; ※
         SceneManager.LoadScene("InGameScene");
+    }
+
+    public void LockSafety()
+    {
+        _AnimatorController.Play("LockSafety");
+    }
+
+    public void UnLockSafety()
+    {
+        _AnimatorController.Play("UnLockSafety");
     }
 }
 

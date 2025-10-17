@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// _canSelectedTileBaseを描画するためのクラス
@@ -12,8 +13,8 @@ public class OpenSelectableArea : ColorPallet
     [SerializeField] Sprite _canSelectedSprite;//これはあって良い
     InGameManager _inGameManager;
     AddPieceFunction _addPieceFunction;
+    ArtificialIntelligence _artificialIntelligence;
     TurnDecide _turnDecide;
-    UIManager _uiManager;
     GameObject _selectedPieceObj;
     SpriteRenderer[][] _deceptionTileFieldArrays;
     Piece _selectedPiece;
@@ -23,20 +24,17 @@ public class OpenSelectableArea : ColorPallet
     Vector3Int[] _moveAreas;
     List<Vector3Int> _renderingAreas = new List<Vector3Int>();
     List<Vector2Int> _memorizeRenderingAreas = new List<Vector2Int>();
-    // Queue<Vector3Int> _beforeTurnMoveAreaQueue = new Queue<Vector3Int>(); //要素数 < 5, 前のターンに描画がリセットされなかったSquereの描画をDequeueでリセットする → 被りがあった場合はそこだけ描画をリセットしない
     List<GameObject> _memorizeRenderingPieceObjects = new List<GameObject>();
     int _pieceMoveCount = 0;
     int _prefabCount = 0;
     GameObject _collider2DPrefab;
-    int _PrefabCount {get {return _prefabCount;} set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();}}}
-    bool _isShortCasting;
-    bool _isLongCasting; //試験的
+    int _PrefabCount {get => _prefabCount; set {_prefabCount = value; if (_prefabCount == 0){RenderingOneLine();}}}
     void Awake()
     {
         _inGameManager = GetComponent<InGameManager>();
         _addPieceFunction = GetComponent<AddPieceFunction>();
+        _artificialIntelligence = GetComponent<ArtificialIntelligence>();
         _turnDecide = GetComponent<TurnDecide>();
-        _uiManager = GetComponent<UIManager>();
         _deceptionTileFieldArrays = _inGameManager._DeceptionTileFieldArrays;
     }
     /// <summary>
@@ -49,7 +47,7 @@ public class OpenSelectableArea : ColorPallet
             || 
             (_inGameManager.IsWhite && pieceObj.CompareTag("Black")) || (!_inGameManager.IsWhite && pieceObj.CompareTag("White"))){ return; }
         //ユーザーの入力を遮る
-        _uiManager.ActiveFadePanel();
+        _inGameManager.LockSafety();
         if (_selectedPieceObj)
         {
             BeforeRendereringClear();
@@ -155,7 +153,16 @@ public class OpenSelectableArea : ColorPallet
                 &&
                 !_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
-                _renderingAreas.Add(_moveAreas[i]);
+                // 動かしてキングが取られるのであれば移動できなくさせる処理
+                _selectedSquere._IsOnPieceObj = null;
+                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = _selectedPieceObj;
+                if (!_artificialIntelligence.JudgeCheck(false))
+                {
+                    Debug.Log($"Move_{_inGameManager._SquereArrays[alphabet][number]}");
+                    _renderingAreas.Add(_moveAreas[i]);
+                }
+                _selectedSquere._IsOnPieceObj = _selectedPieceObj;
+                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
             }
             else
             {
@@ -178,9 +185,9 @@ public class OpenSelectableArea : ColorPallet
             int number = _attackAreas[i].x;
             if (!(-1 < alphabet && 8 > alphabet && -1 < number && 8 > number))//盤外のマスであるならば
             {
-                _attackAreas[i] = new Vector3Int(0, 0, -1);_PrefabCount--;continue;
+                _attackAreas[i] = new Vector3Int(0, 0, -1);
             }
-            if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
+            else if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
             {
                 if (!IsCanAttackTargetObject(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj))
                 {
@@ -188,8 +195,17 @@ public class OpenSelectableArea : ColorPallet
                     _attackAreas[i] = new Vector3Int(0, 0, -1);
                     continue;
                 }
-                _renderingAreas.Add(_attackAreas[i]);
-                _attackAreas[i] = new Vector3Int(0, 0, -1);
+                _selectedSquere._IsOnPieceObj = null;
+                GameObject memorizePieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
+                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = _selectedPieceObj;
+                if (!_artificialIntelligence.JudgeCheck(false))
+                {
+                    Debug.Log($"Attack_{_inGameManager._SquereArrays[alphabet][number]}");
+                    _renderingAreas.Add(_attackAreas[i]);
+                    _attackAreas[i] = new Vector3Int(0, 0, -1);
+                }
+                _selectedSquere._IsOnPieceObj = _selectedPieceObj;
+                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
                 //z = -1で次回の検索を回避する
             }
             _PrefabCount--;

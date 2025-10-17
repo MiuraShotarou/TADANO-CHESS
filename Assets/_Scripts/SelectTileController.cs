@@ -8,17 +8,13 @@ public class SelectTileController : ColorPallet
 {
     SpriteRenderer _currentSpriteRenderer;
     SpriteRenderer _beforeSpriteRenderer;
-    InGameManager _inGameManager;
     OpenSelectableArea _openSelectableArea;
-    UIManager _uiManager;
     Camera _camera;
     int _maskID;
     RaycastHit2D _memoraizedHit;
     void Awake()
     {
         _openSelectableArea = GetComponent<OpenSelectableArea>();
-        _inGameManager = GetComponent<InGameManager>();
-        _uiManager = GetComponent<UIManager>();
         _camera = Camera.main;
         _maskID = LayerMask.GetMask("DeceptionTileField");
     }
@@ -69,7 +65,7 @@ public class SelectTileController : ColorPallet
                 //SelectedTileBaseの上でマウスをクリックすると一度だけ呼び出される
                 else if (checkColor.a == 255 && Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    _openSelectableArea.TurnDesideRelay(_currentSpriteRenderer);//
+                    _openSelectableArea.TurnDesideRelay(_currentSpriteRenderer);
                     enabled = false;
                 }
             }

@@ -142,8 +142,16 @@ public class UIManager : ColorPallet
     {
         if (_inGameManager.IsCheckMate)
         {
-            t_checkWhite.gameObject.SetActive(false);
-            t_checkMateBlack.gameObject.SetActive(true);
+            if (_inGameManager.IsWhite)
+            {
+                t_checkBlack.gameObject.SetActive(false);
+                t_checkMateBlack.gameObject.SetActive(true);
+            }
+            else
+            {
+                t_checkWhite.gameObject.SetActive(false);
+                t_checkMateWhite.gameObject.SetActive(true);
+            }
         }
         else
         {
@@ -285,14 +293,7 @@ public class UIManager : ColorPallet
     {
         
     }
-    public void ActiveFadePanel()
-    {
-        _fadePanel.SetActive(true);
-    }
-    public void InactiveFadePanel()
-    {
-        _fadePanel.SetActive(false);
-    }
+
     void ActivePieceIconUI()
     {
         _pieceIconWhite.SetActive(true);
