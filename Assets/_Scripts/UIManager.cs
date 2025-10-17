@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 /// <summary>
 /// UIのバックエンドを担当
 /// </summary>
@@ -15,6 +16,8 @@ public class UIManager : ColorPallet
     [SerializeField] GameObject _pieceIconBlack;
     [SerializeField] Image i_activeTurnWhite;
     [SerializeField] Image i_activeTurnBlack;
+    [SerializeField] TextMeshProUGUI t_decideGroup;
+    [SerializeField] TextMeshProUGUI t_yourGroup;
     [SerializeField] Image i_countMask;
     [SerializeField] TextMeshProUGUI t_deceptionMoveCount;
     [SerializeField] TextMeshProUGUI t_truthMoveCount;
@@ -41,11 +44,8 @@ public class UIManager : ColorPallet
     {
         _inGameManager = GetComponent<InGameManager>();
         _DeathPieceObj = null;
-        // _isPromotion = false;
-        // _isPromotion = true;//デバッグ
         t_residuesDictW = t_residuesCountW.ToDictionary(t => t.name.Last().ToString(), t => t);
         t_residuesDictB = t_residuesCountB.ToDictionary(t => t.name.Last().ToString(), t => t);
-        //(KeyGroupCollection(Key, Value[])) ← Valueが配列なのでToArrayが必要
         t_squereIdsDictW = t_squereIdsW.GroupBy(t => t.name[3].ToString()).ToDictionary(gc => gc.Key, gc => gc.ToList());
         t_squereIdsDictB = t_squereIdsB.GroupBy(t => t.name[3].ToString()).ToDictionary(gc => gc.Key, gc => gc.ToList());
         //すべてのDicのKeyは同一にしてあるが、コードが悪いのでそれがわかりずらい
@@ -184,6 +184,26 @@ public class UIManager : ColorPallet
         t_squereId.text = _TargetSquere._SquereID.ToString();
     }
 
+    void StartGroupRollUI()
+    {
+        if (_inGameManager.IsPlayerTurn) //メインプレイヤーが白側の陣営になる
+        {
+            t_decideGroup.color = Color.white;
+            t_decideGroup.text = "白";
+            t_yourGroup.color = Color.white;
+            t_yourGroup.text = "あなたは白\n先攻です";
+            _inGameManager._AnimatorController.Play("GroupRollWhite");
+        }
+        else
+        {
+            t_decideGroup.color = Color.black;
+            t_decideGroup.text = "黒";
+            t_yourGroup.color = Color.black;
+            t_yourGroup.text = "あなたは黒\n後攻です";
+            _inGameManager._AnimatorController.Play("GroupRollBlack");
+        }
+    }
+
     void UpdatePromotionUI(string promotionName)
     {
         //自身が属している駒カテゴリのTMPをエディタ上で移動させる → t_residuesの子に設定すれば良い
@@ -273,12 +293,15 @@ public class UIManager : ColorPallet
     {
         _fadePanel.SetActive(false);
     }
-    void AdjustUI()
+    void ActivePieceIconUI()
     {
         _pieceIconWhite.SetActive(true);
         _pieceIconBlack.SetActive(true);
+    }
+
+    void ActiveActiveTurnUI()
+    {
         i_activeTurnWhite.gameObject.SetActive(true);
         i_activeTurnBlack.gameObject.SetActive(true);
     }
-
 }

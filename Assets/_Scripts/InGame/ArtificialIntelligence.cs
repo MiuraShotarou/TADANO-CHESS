@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -410,7 +409,7 @@ public class ArtificialIntelligence : MonoBehaviour
     {
         //動かすことが出来る駒を取得する
         GameObject[] canMovePieceObjArray = CreateCanMovePieceObject(true);
-        //AIが移動先のSquare を選択し移動する処理
+        // AIが移動先のSquare を選択し移動する処理
         // allyPieceSqueresから動けるコマを選別する。
         GameObject selectedPieceObj = canMovePieceObjArray[Random.Range(0, canMovePieceObjArray.Length)];//テスト用ランダム選出
         PointerEventData pointerData = new PointerEventData(EventSystem.current){position = Mouse.current.position.ReadValue()};

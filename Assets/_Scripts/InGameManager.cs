@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 /// <summary>
 /// <禁じ手/>
 /// 自殺手
@@ -51,7 +52,6 @@ public class InGameManager : MonoBehaviour
     Dictionary<string, GameObject> _promotionDict;
     Squere[][] _squereArrays;
     SpriteRenderer[][] _deceptionTileFieldArrays;
-    TurnBegin _turnBegin;
     UIManager _uiManager;
     OpenSelectableArea _openSelectableArea;
     SelectTileController _selectTileController;
@@ -124,7 +124,6 @@ public class InGameManager : MonoBehaviour
         _uiManager = GetComponent<UIManager>();
         _openSelectableArea = GetComponent<OpenSelectableArea>();
         _selectTileController = GetComponent<SelectTileController>();
-        _turnBegin = GetComponent<TurnBegin>();
         _animatorController = GetComponent<Animator>();
         _playableDirector = GetComponent<PlayableDirector>();
         _artificialIntelligence = GetComponent<ArtificialIntelligence>();
@@ -183,7 +182,6 @@ public class InGameManager : MonoBehaviour
         GameMode = GameMode.Computer;
         ComputerLevel = 1;
         _AnimatorController.Play("StartComputer");
-        Debug.Log("StartComputer");
     }
     /// <summary>
     /// StartComputer.animの再生後にEventから一度だけ呼び出される
@@ -206,21 +204,32 @@ public class InGameManager : MonoBehaviour
     void StartTurnRelay()
     {
         Initialize();
-        _turnBegin.StartTurn();
+        AddTurnCount();
         _artificialIntelligence.StartArtificialIntelligence();
         _uiManager.StartUpdateTurnUI();
         if (TurnCount == 1)
         {
+            Time.timeScale = 1;
             _playableDirector.enabled = false;
-            IsPlayerTurn = true;
-            // IsPlayerTurn = Random.Range(0, 2) == 1; 本番で使用する場合
-            // _AnimatorController.Play("StartTutorial");
+            IsPlayerTurn = Random.Range(0, 2) == 0; //プレイヤー１、２が白側・黒側どちらに所属されるのかを決定する
             _AnimatorController.Play("GameStart");
         }
         else
         {
+            ChangePlayerTurn();
             _AnimatorController.Play("StartTurn");
         }
+    }
+    void AddTurnCount()
+    {
+        TurnCount++;
+    }
+    /// <summary>
+    /// プレイヤーターンの切り替え
+    /// </summary>
+    void ChangePlayerTurn()
+    {
+        IsPlayerTurn = !IsPlayerTurn;
     }
 
     void UnLockSafety()
@@ -276,9 +285,7 @@ public class InGameManager : MonoBehaviour
     }
     public void MoveComputerRelay()
     {
-        if (GameMode == GameMode.Computer ||  GameMode == GameMode.Multi //テスト用マルチプレイ
-            &&
-            !IsPlayerTurn)
+        if (GameMode == GameMode.Computer && !IsPlayerTurn)
         {
             _artificialIntelligence.MoveComputer();
         }
