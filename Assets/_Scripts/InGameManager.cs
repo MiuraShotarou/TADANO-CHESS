@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// <禁じ手/>
 /// 自殺手
@@ -45,7 +46,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] AudioClip[] _bgmAudioClips;
     [SerializeField] AudioClip[] _seAudioClips;
     [SerializeField] TimelineAsset _titleTimeline;
-    [SerializeField] TimelineAsset _resultTimeline;
+    [SerializeField] TimelineAsset _rebootTitleTimeline;
     Dictionary<string, Piece> _pieceDict;
     Dictionary<string, GameObject> _promotionDict;
     Squere[][] _squereArrays;
@@ -64,6 +65,7 @@ public class InGameManager : MonoBehaviour
     public bool IsCheckMate { get; private set; }
     public bool IsPlayerTurn;
     public int TurnCount;
+    static bool _isSecondPlay = false;
     // // valueが変わった時、次のターンを開始するメソッドの投入・条件式は最悪いらない
     public Dictionary<string, Piece> _PieceDict => _pieceDict; //s
     public Dictionary<string, GameObject> _PromotionDict => _promotionDict;
@@ -142,17 +144,25 @@ public class InGameManager : MonoBehaviour
         GameMode = GameMode.None;
         _BGMAudioSource.clip = _BGMAudioClipDict["I"].FirstOrDefault(c => c.name.Contains("1")); //鐘の音
         _BGMAudioSource.Play();
-        _playableDirector.playableAsset = _titleTimeline;
+        if (!_isSecondPlay)
+        {
+            _playableDirector.playableAsset = _titleTimeline;
+        }
+        else
+        {
+            _playableDirector.playableAsset = _rebootTitleTimeline;
+        }
         _playableDirector.Play();
         Time.timeScale = 10;
     }
-
-    public void StartComputer()
+    /// <summary>
+    /// _titleTimeLineから一度だけ呼び出される
+    /// </summary>
+    void StartTitle()
     {
-        GameMode = GameMode.Computer;
-        ComputerLevel = 1;
-        _AnimatorController.Play("StartComputer");
+        _AnimatorController.Play("Title");
     }
+
     /// <summary>
     /// StartComputer.animの再生後にEventから一度だけ呼び出される
     /// </summary>
@@ -167,6 +177,13 @@ public class InGameManager : MonoBehaviour
     {
         GameMode = GameMode.Multi;
         _AnimatorController.Play("StartMulti");
+    }
+    public void StartComputer()
+    {
+        GameMode = GameMode.Computer;
+        ComputerLevel = 1;
+        _AnimatorController.Play("StartComputer");
+        Debug.Log("StartComputer");
     }
     /// <summary>
     /// StartComputer.animの再生後にEventから一度だけ呼び出される
@@ -197,8 +214,8 @@ public class InGameManager : MonoBehaviour
             _playableDirector.enabled = false;
             IsPlayerTurn = true;
             // IsPlayerTurn = Random.Range(0, 2) == 1; 本番で使用する場合
-            Time.timeScale = 1;
-            _AnimatorController.Play("StartInGame");
+            // _AnimatorController.Play("StartTutorial");
+            _AnimatorController.Play("GameStart");
         }
         else
         {
@@ -270,6 +287,12 @@ public class InGameManager : MonoBehaviour
     {
         IsCastling = _IsWhite? new[] { _isWhiteShortCastling, _isWhiteLongCastling }:
                                 new []{ _isBlackShortCastling, _isBlackLongCastling};
+    }
+
+    void ReturnTitleInit()
+    {
+        // _isSecondPlay = true; ※
+        SceneManager.LoadScene("InGameScene");
     }
 }
 
