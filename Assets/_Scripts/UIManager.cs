@@ -267,13 +267,13 @@ public class UIManager : ColorPallet
     {
         if (_inGameManager.IsWhite)
         {
-            t_resultGroup.text = "White";
-            t_resultGroup.color = Color.white;
+            t_resultGroup.text = "Black";
+            t_resultGroup.color = Color.black;
         }
         else
         {
-            t_resultGroup.text = "Black";
-            t_resultGroup.color = Color.black;
+            t_resultGroup.text = "White";
+            t_resultGroup.color = Color.white;
         }
         _inGameManager._AnimatorController.Play("Result");
     }

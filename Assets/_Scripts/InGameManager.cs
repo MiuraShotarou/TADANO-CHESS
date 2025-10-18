@@ -214,7 +214,7 @@ public class InGameManager : MonoBehaviour
             IsPlayerTurn = Random.Range(0, 2) == 0; //プレイヤー１、２が白側・黒側どちらに所属されるのかを決定する
             _AnimatorController.Play("GameStart");
         }
-        else
+        else if (!IsCheckMate)
         {
             ChangePlayerTurn();
             _AnimatorController.Play("StartTurn");
@@ -242,13 +242,14 @@ public class InGameManager : MonoBehaviour
         _uiManager.UpdateCheckUI();
     }
     /// <summary>
-    /// TurnBegin.cs にて moveRange全検索からのenemyRange全検索で判定できるかもしれないが、あまりにも難しすぎるので今回は断念する
+    /// 
     /// </summary>
     public void CheckMate(bool isCheckMate)
     {
         IsCheckMate = isCheckMate;
         if (IsCheckMate)
         {
+            Time.timeScale = 0.5f;
             _uiManager.UpdateCheckMateUI();
             _uiManager.ActiveResultUI();
         }
