@@ -32,6 +32,7 @@ public class UIManager : ColorPallet
     [SerializeField] TextMeshProUGUI[] t_squereIdsW;
     [SerializeField] TextMeshProUGUI[] t_squereIdsB;
     [SerializeField] TextMeshProUGUI t_resultGroup;
+    [SerializeField] TextMeshProUGUI t_resultMessage;
     Dictionary<string, TextMeshProUGUI> t_residuesDictW;
     Dictionary<string, TextMeshProUGUI> t_residuesDictB;
     Dictionary<string, List<TextMeshProUGUI>> t_squereIdsDictW;
@@ -269,11 +270,13 @@ public class UIManager : ColorPallet
         {
             t_resultGroup.text = "Black";
             t_resultGroup.color = Color.black;
+            t_resultMessage.color = Color.black;
         }
         else
         {
             t_resultGroup.text = "White";
             t_resultGroup.color = Color.white;
+            t_resultMessage.color = Color.white;
         }
         _inGameManager._AnimatorController.Play("Result");
     }
