@@ -284,6 +284,7 @@ public class ArtificialIntelligence : MonoBehaviour
                     }
                 }
             }
+            Destroy(attackerPiece);
         }
         return false;
     }
@@ -350,7 +351,6 @@ public class ArtificialIntelligence : MonoBehaviour
                         // 仮に移動したとしてチェックが掛かっていなかった場合
                         if (!JudgeCheck(false))
                         {
-                            // Debug.Log("NoCheckMate_Move");
                             _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
                             groupPieceSqueres[i]._IsOnPieceObj = memorizePieceObj;
                             return false;
@@ -390,7 +390,6 @@ public class ArtificialIntelligence : MonoBehaviour
                             // 仮に移動したとしてチェックが掛かっていなかった場合
                             if (!JudgeCheck(false))
                             {
-                                // Debug.Log("NoCheckMate_Attack");
                                 _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizeAntiPieceObj;
                                 groupPieceSqueres[i]._IsOnPieceObj = memorizePieceObj;
                                 return false;
@@ -412,10 +411,13 @@ public class ArtificialIntelligence : MonoBehaviour
         GameObject[] canMovePieceObjArray = CreateCanMovePieceObject(true);
         // AIが移動先のSquare を選択し移動する処理
         // allyPieceSqueresから動けるコマを選別する。
-        GameObject selectedPieceObj = canMovePieceObjArray[Random.Range(0, canMovePieceObjArray.Length)];//テスト用ランダム選出
-        PointerEventData pointerData = new PointerEventData(EventSystem.current){position = Mouse.current.position.ReadValue()};
-        selectedPieceObj.GetComponent<EventTrigger>()?.OnPointerClick(pointerData);
-        DOVirtual.DelayedCall(1, DecideComputer);
+        if (canMovePieceObjArray.Length > 0)
+        {
+            GameObject selectedPieceObj = canMovePieceObjArray[Random.Range(0, canMovePieceObjArray.Length)];//テスト用ランダム選出
+            PointerEventData pointerData = new PointerEventData(EventSystem.current){position = Mouse.current.position.ReadValue()};
+            selectedPieceObj.GetComponent<EventTrigger>()?.OnPointerClick(pointerData);
+            DOVirtual.DelayedCall(3, DecideComputer);
+        }
     }
     void DecideComputer()
     {
@@ -507,10 +509,12 @@ public class ArtificialIntelligence : MonoBehaviour
                         {
                             applicablePiece._MoveCount = () => 0;
                             canMovePieceObjArray.Add(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj);
+                            groupPieceSqueres[i]._IsOnPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
+                            break;
                         }
                         groupPieceSqueres[i]._IsOnPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
                         _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
-                        break;
                     }
                 }
             }
@@ -549,10 +553,12 @@ public class ArtificialIntelligence : MonoBehaviour
                             {
                                 applicablePiece._MoveCount = () => 0;
                                 canMovePieceObjArray.Add(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj);
+                                groupPieceSqueres[i]._IsOnPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
+                                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
+                                break;
                             }
                             groupPieceSqueres[i]._IsOnPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
                             _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
-                            break;
                         }
                     }
                 }

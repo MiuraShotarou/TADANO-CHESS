@@ -94,7 +94,6 @@ public class OpenSelectableArea : ColorPallet
     }
     public void BeforeRendereringClear()
     {
-        // obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/_Outline");
         Array.ForEach(_memorizeRenderingPieceObjects.ToArray(), obj => obj.GetComponent<SpriteRenderer>().color = ChangeAlpha(obj.GetComponent<SpriteRenderer>().color, 150));
         for (int i = 0; i < _memorizeRenderingAreas.Count; i++)
         {
@@ -158,7 +157,6 @@ public class OpenSelectableArea : ColorPallet
                 _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = _selectedPieceObj;
                 if (!_artificialIntelligence.JudgeCheck(false))
                 {
-                    Debug.Log($"Move_{_inGameManager._SquereArrays[alphabet][number]}");
                     _renderingAreas.Add(_moveAreas[i]);
                 }
                 _selectedSquere._IsOnPieceObj = _selectedPieceObj;
@@ -200,7 +198,6 @@ public class OpenSelectableArea : ColorPallet
                 _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = _selectedPieceObj;
                 if (!_artificialIntelligence.JudgeCheck(false))
                 {
-                    Debug.Log($"Attack_{_inGameManager._SquereArrays[alphabet][number]}");
                     _renderingAreas.Add(_attackAreas[i]);
                     _attackAreas[i] = new Vector3Int(0, 0, -1);
                 }
@@ -263,7 +260,7 @@ public class OpenSelectableArea : ColorPallet
     void RenderingOneLine()
     {
         _memorizeRenderingAreas = _memorizeRenderingAreas.Union(VectorIntConverter(_renderingAreas.ToArray())).ToList();
-        if (_renderingAreas.Count == 0)
+        if (_renderingAreas.Count == 0 && !_inGameManager.IsCheck) //動けなくなる対策
         {
             _inGameManager.StartSelectTileRelay();
             return;
