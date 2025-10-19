@@ -152,7 +152,6 @@ public class InGameManager : MonoBehaviour
             _playableDirector.playableAsset = _rebootTitleTimeline;
         }
         _playableDirector.Play();
-        Time.timeScale = 10;
     }
     /// <summary>
     /// _titleTimeLineから一度だけ呼び出される
@@ -210,7 +209,8 @@ public class InGameManager : MonoBehaviour
         _uiManager.StartUpdateTurnUI();
         if (TurnCount == 1)
         {
-            _playableDirector.enabled = false;
+            // _playableDirector.enabled = false;
+            _uiManager.InactiveTitle();
             IsPlayerTurn = Random.Range(0, 2) == 0; //プレイヤー１、２が白側・黒側どちらに所属されるのかを決定する
             _AnimatorController.Play("GameStart");
         }
@@ -249,7 +249,6 @@ public class InGameManager : MonoBehaviour
         IsCheckMate = isCheckMate;
         if (IsCheckMate)
         {
-            Time.timeScale = 0.5f;
             _uiManager.UpdateCheckMateUI();
             _uiManager.ActiveResultUI();
         }
@@ -261,7 +260,7 @@ public class InGameManager : MonoBehaviour
     }
     public void StartSelectTileRelay()
     {
-        if (IsPlayerTurn)
+        if (IsPlayerTurn || GameMode != GameMode.Computer)
         {
             UnLockSafety();
             _selectTileController.enabled = true;
@@ -296,7 +295,6 @@ public class InGameManager : MonoBehaviour
 
     void ReturnTitleInit()
     {
-        // _isSecondPlay = true; ※
         SceneManager.LoadScene("InGameScene");
     }
 

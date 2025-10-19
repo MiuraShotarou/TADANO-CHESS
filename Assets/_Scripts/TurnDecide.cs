@@ -608,7 +608,7 @@ public class TurnDecide : ColorPallet
         //enpassantObjの生成
         GameObject enpassantObj = new GameObject();// EmptyObj
         //ennpassantObjの名前をポジションと同一にする
-        enpassantObj.name = new string($"P_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
+        enpassantObj.name = new string($"E_{alphabet}_{enpassantNumber}_{search[3]}_{search[4]}");
         enpassantObj.transform.SetParent(_selectedPieceObj.transform);
         _enpassantSquere._IsOnPieceObj = enpassantObj;//
     }

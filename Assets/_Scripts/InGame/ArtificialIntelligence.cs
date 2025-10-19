@@ -272,8 +272,8 @@ public class ArtificialIntelligence : MonoBehaviour
                         continue;
                     }
                     Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
-                    // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
-                    if (difendSquere._IsOnPieceObj)
+                    // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンオブジェクトがあった場合は次の攻撃範囲検索を中断しない
+                    if (difendSquere._IsOnPieceObj&& !"E".Contains(difendSquere._IsOnPieceObj.name.First().ToString()))
                     {
                         attackAreas[d].z = -1;
                         //敵の駒が見つかった場合の条件
@@ -284,7 +284,6 @@ public class ArtificialIntelligence : MonoBehaviour
                     }
                 }
             }
-            Destroy(attackerPiece);
         }
         return false;
     }
@@ -342,7 +341,25 @@ public class ArtificialIntelligence : MonoBehaviour
                     }
                     if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
                     {
-                        moveAreas[d].z = -1;
+                        // アンパッサンオブジェクトが不正の状況で検出されてしまった時
+                        if (!"P".Contains(applicablePiece._PieceName) &&
+                             "E".Contains(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj.name.First().ToString()))
+                        {
+                            //移動できるマスである
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
+                            // 仮に移動したとしてチェックが掛かっていなかった場合
+                            if (!JudgeCheck(false))
+                            {
+                                _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
+                                groupPieceSqueres[i]._IsOnPieceObj = memorizePieceObj;
+                                return false;
+                            }
+                            _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = null;
+                        }
+                        else
+                        {
+                            moveAreas[d].z = -1;
+                        }
                     }
                     else //駒が乗っていないなら
                     {
@@ -378,13 +395,19 @@ public class ArtificialIntelligence : MonoBehaviour
                         continue;
                     }
                     Squere difendSquere = _inGameManager._SquereArrays[alphabet][number];
-                    // 駒がある の場合も二度と検索しなくて良い条件 + アンパッサンは通常のポーンの攻撃範囲と変わらないので条件にかける必要がない
+                    // 駒がある の場合も二度と検索しなくて良い条件 + 駒があってもアンパッサンが引っかかっては意味がない
                     if (difendSquere._IsOnPieceObj)
                     {
                         attackAreas[d].z = -1;
                         //敵の駒が見つかった場合の条件
                         if (difendSquere._IsOnPieceObj.CompareTag(groupTag))
                         {
+                            //アンパッサンではないのにアンパッサンオブジェクトが検出された時
+                            if ("E".Contains(difendSquere._IsOnPieceObj.name.First().ToString()) &&
+                                !"P".Contains(applicablePiece._PieceName))
+                            {
+                                attackAreas[d].z = 0;
+                            }
                             GameObject memorizeAntiPieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
                             _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = memorizePieceObj;
                             // 仮に移動したとしてチェックが掛かっていなかった場合
@@ -491,6 +514,12 @@ public class ArtificialIntelligence : MonoBehaviour
                     if (_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj)
                     {
                         canMoveAreas[d].z = -1;
+                        // アンパッサンオブジェクト不正検出
+                        if ("E".Contains(_inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj.name.First().ToString()) &&
+                            !"P".Contains(applicablePiece._PieceName))
+                        {
+                            canMoveAreas[d].z = 0;
+                        }
                         if ("K".Contains(search))
                         {
                             if (_inGameManager.IsCastling.Any(b => b()))
@@ -545,6 +574,12 @@ public class ArtificialIntelligence : MonoBehaviour
                         //敵の駒が見つかった場合の条件
                         if (difendSquere._IsOnPieceObj.CompareTag(antiGroupTag))
                         {
+                            //アンパッサンではないのにアンパッサンオブジェクトが検出された時
+                            if ("E".Contains(difendSquere._IsOnPieceObj.name.First().ToString()) &&
+                                !"P".Contains(applicablePiece._PieceName))
+                            {
+                                canAttackAreas[d].z = 0;
+                            }
                             //キングが取られる選択肢は排除するように設定
                             GameObject memorizePieceObj = _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj;
                             _inGameManager._SquereArrays[alphabet][number]._IsOnPieceObj = groupPieceSqueres[i]._IsOnPieceObj;

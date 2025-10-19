@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using DG.Tweening;
+using UnityEngine.UI;
+
 /// <summary>
 /// UIのバックエンドを担当
 /// </summary>
@@ -12,8 +12,11 @@ public class UIManager : ColorPallet
 {
     InGameManager _inGameManager;
     [SerializeField] GameObject _fadePanel;
+    [SerializeField] GameObject _title;
     [SerializeField] GameObject _pieceIconWhite;
     [SerializeField] GameObject _pieceIconBlack;
+    [SerializeField] GameObject _pieceIconWhiteBackGround;
+    [SerializeField] GameObject _pieceIconBlackBackGround;
     [SerializeField] Image i_activeTurnWhite;
     [SerializeField] Image i_activeTurnBlack;
     [SerializeField] TextMeshProUGUI t_decideGroup;
@@ -200,7 +203,7 @@ public class UIManager : ColorPallet
             t_decideGroup.color = Color.white;
             t_decideGroup.text = "白";
             t_yourGroup.color = Color.white;
-            t_yourGroup.text = "あなたは白\n先攻です";
+            t_yourGroup.text = _inGameManager.GameMode == GameMode.Computer? "あなたは白\n先攻です" : "プレイヤー１は白\n先攻です";
             _inGameManager._AnimatorController.Play("GroupRollWhite");
         }
         else
@@ -208,7 +211,7 @@ public class UIManager : ColorPallet
             t_decideGroup.color = Color.black;
             t_decideGroup.text = "黒";
             t_yourGroup.color = Color.black;
-            t_yourGroup.text = "あなたは黒\n後攻です";
+            t_yourGroup.text = _inGameManager.GameMode == GameMode.Computer? "あなたは黒\n後攻です" : "プレイヤー１は黒\n後攻です";
             _inGameManager._AnimatorController.Play("GroupRollBlack");
         }
     }
@@ -297,10 +300,17 @@ public class UIManager : ColorPallet
         
     }
 
+    public void InactiveTitle()
+    {
+        _title.SetActive(false);
+    }
+
     void ActivePieceIconUI()
     {
         _pieceIconWhite.SetActive(true);
         _pieceIconBlack.SetActive(true);
+        _pieceIconBlackBackGround.SetActive(true);
+        _pieceIconWhiteBackGround.SetActive(true);
     }
 
     void ActiveActiveTurnUI()
