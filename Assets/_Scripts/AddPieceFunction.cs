@@ -22,7 +22,6 @@ public class AddPieceFunction : MonoBehaviour
 
     public Piece AddShortCastlingArea(Piece piece)
     {
-        // piece._AttackAreas = () => new Vector3Int[] { new Vector3Int(0, -3, 0)}.Concat(memorize).ToArray();
         Vector3Int[] memorize = piece._AttackAreas();
         piece._AttackAreas = () => new Vector3Int[] { new Vector3Int(0, 3, 0)}.Concat(memorize).ToArray(); 
         return piece;

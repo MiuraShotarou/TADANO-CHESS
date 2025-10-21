@@ -58,7 +58,7 @@ public class InGameManager : MonoBehaviour
     TurnDecide _turnDecide;
     ArtificialIntelligence _artificialIntelligence;
     Animator _animatorController;
-    PlayableDirector _playableDirector;
+    public PlayableDirector _playableDirector;
     bool _IsWhite {get => _isWhite; set { _isWhite = value; StartTurnRelay();}}
     public bool IsWhite{ get => _isWhite;}
     public bool IsCheck { get; private set; }
@@ -152,6 +152,9 @@ public class InGameManager : MonoBehaviour
             _playableDirector.playableAsset = _rebootTitleTimeline;
         }
         _playableDirector.Play();
+#if UNITY_EDITOR
+        Time.timeScale = 10;
+#endif
     }
     /// <summary>
     /// _titleTimeLineから一度だけ呼び出される
